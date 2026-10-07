@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guide de survie ENSTP</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1d2433;--mut:#667085;--acc:#c2410c;--line:#e5e1d8}
+@media(prefers-color-scheme:dark){:root{--bg:#14171f;--card:#1f2430;--ink:#eef0f5;--mut:#9aa3b5;--acc:#fb923c;--line:#2d3342}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:var(--acc);color:#fff;padding:18px 16px 14px}
+header h1{margin:0;font-size:1.35rem}
+header p{margin:4px 0 0;opacity:.9;font-size:.9rem}
+.langs{display:flex;gap:6px;margin-top:10px}
+.langs button{background:rgba(255,255,255,.2);color:#fff;border:0;padding:6px 12px;border-radius:20px;font-size:.85rem;cursor:pointer;font-weight:600}
+.langs button.on{background:#fff;color:var(--acc)}
+.search{padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line)}
+.search input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-size:1rem;outline:none}
+main{max-width:640px;margin:0 auto;padding:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;font-size:.92rem;font-weight:600;color:var(--ink);text-decoration:none}
+.tile b{display:block;font-size:1.8rem;margin-bottom:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0}
+.card h3{margin:0 0 6px;font-size:1.02rem}
+.card p{margin:2px 0;color:var(--mut);font-size:.93rem}
+.btn{display:inline-block;margin-top:8px;padding:8px 14px;background:var(--acc);color:#fff;border-radius:20px;text-decoration:none;font-size:.9rem;border:0;cursor:pointer}
+.back{background:none;border:0;color:var(--acc);font-size:1rem;padding:6px 0;cursor:pointer;font-weight:600}
+h2{margin:6px 0}
+.empty{text-align:center;padding:40px 20px;color:var(--mut)}
+.empty b{display:block;font-size:2.5rem;margin-bottom:10px}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="siteName">Guide de survie ENSTP</h1>
+  <p id="tagline">Ton premier jour, dans ta poche.</p>
+  <div class="langs">
+    <button onclick="setLang('fr')" id="btn-fr">🇫🇷 FR</button>
+    <button onclick="setLang('ar')" id="btn-ar">🇩🇿 AR</button>
+    <button onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+  </div>
+</header>
+<div class="search">
+  <input id="q" placeholder="🔎 Chercher..." oninput="doSearch(this.value)">
+</div>
+<main id="app"></main>
+<script src="data.js"></script>
+<script>
+let LANG = localStorage.getItem('lang') || CONFIG.defaultLang;
+let CURRENT_SECTION = null;
+const T = {
+  fr: { search: "🔎 Chercher : photocopie, bus, sport…", back: "← Retour", noResult: "Aucun résultat", tryOther: "Essayez un autre mot", viewMap: "📍 Voir sur Maps" },
+  ar: { search: "🔎 ابحث: تصوير، حافلة، رياضة…", back: "→ رجوع", noResult: "لا توجد نتائج", tryOther: "جرّب كلمة أخرى", viewMap: "📍 عرض على الخريطة" },
+  en: { search: "🔎 Search: photocopy, bus, sport…", back: "← Back", noResult: "No results", tryOther: "Try another word", viewMap: "📍 View on Maps" }
+};
+function setLang(l) {
+  LANG = l;
+  localStorage.setItem('lang', l);
+  document.documentElement.lang = l;
+  document.documentElement.dir = (l === 'ar') ? 'rtl' : 'ltr';
+  document.getElementById('siteName').textContent = CONFIG.siteName[l];
+  document.getElementById('tagline').textContent = CONFIG.tagline[l];
+  document.getElementById('q').placeholder = T[l].search;
+  document.querySelectorAll('.langs button').forEach(b => b.classList.remove('on'));
+  document.getElementById('btn-' + l).classList.add('on');
+  if (CURRENT_SECTION) { renderSection(CURRENT_SECTION); } else { renderHome(); }
+}
+function renderHome() {
+  CURRENT_SECTION = null;
+  const app = document.getElementById('app');
+  app.innerHTML = '<div class="grid" id="grid"></div>';
+  const grid = document.getElementById('grid');
+  SECTIONS.forEach(s => {
+    const a = document.createElement('a');
+    a.className = 'tile';
+    a.href = '#' + s.id;
+    a.innerHTML = '<b>' + s.icon + '</b>' + s.title[LANG];
+    a.onclick = (e) => { e.preventDefault(); openSection(s.id); };
+    grid.appendChild(a);
+  });
+}
+function openSection(id) {
+  const s = SECTIONS.find(x => x.id === id);
+  if (!s) return;
+  CURRENT_SECTION = id;
+  renderSection(id);
+}
+function renderSection(id) {
+  const s = SECTIONS.find(x => x.id === id);
+  if (!s) return;
+  const app = document.getElementById('app');
+  let html = '<button class="back" onclick="renderHome()">' + T[LANG].back + '</button>';
+  html += '<h2>' + s.icon + ' ' + s.title[LANG] + '</h2>';
+  html += '<p>' + s.intro[LANG] + '</p>';
+  s.items.forEach(item => {
+    html += '<div class="card">';
+    html += '<h3>' + item.title[LANG] + '</h3>';
+    if (item.desc) html += '<p>' + item.desc[LANG] + '</p>';
+    if (item.map) {
+      const url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(item.map);
+      html += '<a class="btn" target="_blank" rel="noopener" href="' + url + '">' + T[LANG].viewMap + '</a>';
+    }
+    html += '</div>';
+  });
+  app.innerHTML = html;
+  window.scrollTo(0, 0);
+}
+function doSearch(q) {
+  q = q.trim().toLowerCase();
+  if (!q) { renderHome(); return; }
+  const results = [];
+  SECTIONS.forEach(s => {
+    s.items.forEach(item => {
+      const text = (item.title.fr + ' ' + item.title.ar + ' ' + item.title.en + ' ' + (item.desc ? item.desc.fr + ' ' + item.desc.ar + ' ' + item.desc.en : '')).toLowerCase();
+      if (text.includes(q)) results.push({ section: s, item: item });
+    });
+  });
+  const app = document.getElementById('app');
+  if (results.length === 0) {
+    app.innerHTML = '<div class="empty"><b>🔍</b>' + T[LANG].noResult + '<br><small>' + T[LANG].tryOther + '</small></div>';
+    return;
+  }
+  let html = '<h2>🔍 ' + results.length + '</h2>';
+  results.forEach(r => {
+    html += '<div class="card">';
+    html += '<h3>' + r.section.icon + ' ' + r.item.title[LANG] + '</h3>';
+    if (r.item.desc) html += '<p>' + r.item.desc[LANG] + '</p>';
+    if (r.item.map) {
+      const url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(r.item.map);
+      html += '<a class="btn" target="_blank" rel="noopener" href="' + url + '">' + T[LANG].viewMap + '</a>';
+    }
+    html += '</div>';
+  });
+  app.innerHTML = html;
+}
+setLang(LANG);
+</script>
+</body>
+</html>
