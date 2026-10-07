@@ -496,3 +496,14 @@ const QR_LIST = [
   { id: "07", label: { fr: "Sport", ar: "الرياضة", en: "Sport" }, url: "guide.html#sport" },
   { id: "08", label: { fr: "Alger", ar: "الجزائر", en: "Algiers" }, url: "guide.html#alger" }
 ];
+<p>
+  Nous sommes <strong>des étudiants de 3<sup>ème</sup> année — département
+  Infrastructures de Base (منشآت قاعدية)</strong> à l'ENSTP. Ce guide est
+  un projet bénévole, né de notre propre expérience : nous sommes passés par là,
+  et nous voulons faciliter l'arrivée des nouvelles promotions.
+</p>
+<p>
+  Notre mission : <strong>aider chaque nouvel étudiant à s'intégrer rapidement</strong>
+  et à ne jamais rester seul face à un problème. Nous ne sommes pas une structure
+  officielle de l'école — nous sommes des étudiants qui aident d'autres étudiants.
+</p>
