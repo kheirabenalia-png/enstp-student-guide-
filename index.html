@@ -1,140 +1,161 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Guide de survie ENSTP</title>
+<title>ENSTP — Guide de survie</title>
 <style>
-:root{--bg:#f6f4ef;--card:#fff;--ink:#1d2433;--mut:#667085;--acc:#c2410c;--line:#e5e1d8}
-@media(prefers-color-scheme:dark){:root{--bg:#14171f;--card:#1f2430;--ink:#eef0f5;--mut:#9aa3b5;--acc:#fb923c;--line:#2d3342}}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header{background:var(--acc);color:#fff;padding:18px 16px 14px}
-header h1{margin:0;font-size:1.35rem}
-header p{margin:4px 0 0;opacity:.9;font-size:.9rem}
-.langs{display:flex;gap:6px;margin-top:10px}
-.langs button{background:rgba(255,255,255,.2);color:#fff;border:0;padding:6px 12px;border-radius:20px;font-size:.85rem;cursor:pointer;font-weight:600}
-.langs button.on{background:#fff;color:var(--acc)}
-.search{padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line)}
-.search input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-size:1rem;outline:none}
-main{max-width:640px;margin:0 auto;padding:14px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;font-size:.92rem;font-weight:600;color:var(--ink);text-decoration:none}
-.tile b{display:block;font-size:1.8rem;margin-bottom:4px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0}
-.card h3{margin:0 0 6px;font-size:1.02rem}
-.card p{margin:2px 0;color:var(--mut);font-size:.93rem}
-.btn{display:inline-block;margin-top:8px;padding:8px 14px;background:var(--acc);color:#fff;border-radius:20px;text-decoration:none;font-size:.9rem;border:0;cursor:pointer}
-.back{background:none;border:0;color:var(--acc);font-size:1rem;padding:6px 0;cursor:pointer;font-weight:600}
-h2{margin:6px 0}
-.empty{text-align:center;padding:40px 20px;color:var(--mut)}
-.empty b{display:block;font-size:2.5rem;margin-bottom:10px}
+:root{--acc:#c2410c;--acc2:#9a3412;--bg:#0f1117;--ink:#fff;--mut:#cbd5e1}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
+
+/* Hero section */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:40px 20px;text-align:center;
+background:linear-gradient(135deg,rgba(194,65,12,.9),rgba(15,17,23,.95)),url('https://images.unsplash.com/photo-1562774053-701939374585?w=1200&q=80');
+background-size:cover;background-position:center;background-attachment:fixed}
+.hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.3);z-index:0}
+.hero>*{position:relative;z-index:1}
+
+.logo{width:90px;height:90px;margin:0 auto 20px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;box-shadow:0 8px 30px rgba(0,0,0,.3)}
+h1{font-size:clamp(1.8rem,6vw,3rem);font-weight:800;margin-bottom:12px;line-height:1.2;letter-spacing:-.5px}
+.subtitle{font-size:clamp(1rem,3.5vw,1.3rem);opacity:.9;margin-bottom:8px;font-weight:300}
+.tagline{font-size:1rem;opacity:.75;margin-bottom:30px;font-style:italic}
+
+.badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:30px}
+.badge{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);padding:6px 14px;border-radius:20px;font-size:.85rem}
+
+.start-btn{display:inline-block;background:#fff;color:var(--acc);padding:18px 50px;border-radius:50px;font-size:1.2rem;font-weight:800;text-decoration:none;box-shadow:0 10px 40px rgba(0,0,0,.3);transition:transform .2s,box-shadow .2s;border:0;cursor:pointer}
+.start-btn:hover{transform:translateY(-3px);box-shadow:0 15px 50px rgba(0,0,0,.4)}
+.start-btn:active{transform:translateY(0)}
+.start-btn span{display:inline-block;margin-left:8px;transition:transform .3s}
+.start-btn:hover span{transform:translateX(5px)}
+
+/* About section */
+.about{padding:60px 20px;background:#fff;color:#1d2433}
+.about-inner{max-width:800px;margin:0 auto}
+.about h2{font-size:clamp(1.4rem,4vw,2rem);color:var(--acc);margin-bottom:20px;text-align:center}
+.about p{font-size:1.05rem;line-height:1.8;color:#475569;margin-bottom:16px;text-align:justify}
+
+/* Gallery */
+.gallery{padding:60px 20px;background:#f8fafc}
+.gallery-inner{max-width:1000px;margin:0 auto}
+.gallery h2{font-size:clamp(1.4rem,4vw,2rem);color:var(--acc);margin-bottom:30px;text-align:center}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.gallery-item{border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08);aspect-ratio:4/3;background:#e2e8f0;position:relative;transition:transform .3s}
+.gallery-item:hover{transform:scale(1.03)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;display:block}
+.gallery-item .cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#fff;padding:20px 14px 10px;font-size:.9rem;font-weight:600}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:700px;margin:40px auto 0;padding:0 20px}
+.stat{text-align:center;background:#fff;padding:24px 12px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.stat b{display:block;font-size:2rem;color:var(--acc);font-weight:800}
+.stat span{font-size:.85rem;color:#64748b}
+
+/* Final CTA */
+.final-cta{background:linear-gradient(135deg,var(--acc),var(--acc2));padding:60px 20px;text-align:center;color:#fff}
+.final-cta h2{font-size:clamp(1.3rem,4vw,1.8rem);margin-bottom:12px}
+.final-cta p{opacity:.9;margin-bottom:30px}
+
+/* Footer */
+footer{background:#0f1117;color:#94a3b8;text-align:center;padding:30px 20px;font-size:.85rem}
+footer a{color:var(--acc);text-decoration:none}
+
+@media(max-width:600px){
+  .hero{background-attachment:scroll}
+  .stats{grid-template-columns:1fr}
+  .start-btn{padding:16px 40px;font-size:1.1rem}
+}
 </style>
 </head>
 <body>
-<header>
-  <h1 id="siteName">Guide de survie ENSTP</h1>
-  <p id="tagline">Ton premier jour, dans ta poche.</p>
-  <div class="langs">
-    <button onclick="setLang('fr')" id="btn-fr">🇫🇷 FR</button>
-    <button onclick="setLang('ar')" id="btn-ar">🇩🇿 AR</button>
-    <button onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="logo">🎓</div>
+  <h1>École Nationale Supérieure<br>des Travaux Publics</h1>
+  <p class="subtitle">ENSTP — Alger, Garidi Kouba</p>
+  <p class="tagline">« Former les ingénieurs qui construisent l'Algérie de demain »</p>
+
+  <div class="badges">
+    <span class="badge">🏗️ Génie Civil</span>
+    <span class="badge">🛣️ Routes</span>
+    <span class="badge">🌉 Ouvrages d'art</span>
+    <span class="badge">💧 Hydraulique</span>
+    <span class="badge">📐 Topographie</span>
   </div>
-</header>
-<div class="search">
-  <input id="q" placeholder="🔎 Chercher..." oninput="doSearch(this.value)">
-</div>
-<main id="app"></main>
-<script src="data.js"></script>
-<script>
-let LANG = localStorage.getItem('lang') || CONFIG.defaultLang;
-let CURRENT_SECTION = null;
-const T = {
-  fr: { search: "🔎 Chercher : photocopie, bus, sport…", back: "← Retour", noResult: "Aucun résultat", tryOther: "Essayez un autre mot", viewMap: "📍 Voir sur Maps" },
-  ar: { search: "🔎 ابحث: تصوير، حافلة، رياضة…", back: "→ رجوع", noResult: "لا توجد نتائج", tryOther: "جرّب كلمة أخرى", viewMap: "📍 عرض على الخريطة" },
-  en: { search: "🔎 Search: photocopy, bus, sport…", back: "← Back", noResult: "No results", tryOther: "Try another word", viewMap: "📍 View on Maps" }
-};
-function setLang(l) {
-  LANG = l;
-  localStorage.setItem('lang', l);
-  document.documentElement.lang = l;
-  document.documentElement.dir = (l === 'ar') ? 'rtl' : 'ltr';
-  document.getElementById('siteName').textContent = CONFIG.siteName[l];
-  document.getElementById('tagline').textContent = CONFIG.tagline[l];
-  document.getElementById('q').placeholder = T[l].search;
-  document.querySelectorAll('.langs button').forEach(b => b.classList.remove('on'));
-  document.getElementById('btn-' + l).classList.add('on');
-  if (CURRENT_SECTION) { renderSection(CURRENT_SECTION); } else { renderHome(); }
-}
-function renderHome() {
-  CURRENT_SECTION = null;
-  const app = document.getElementById('app');
-  app.innerHTML = '<div class="grid" id="grid"></div>';
-  const grid = document.getElementById('grid');
-  SECTIONS.forEach(s => {
-    const a = document.createElement('a');
-    a.className = 'tile';
-    a.href = '#' + s.id;
-    a.innerHTML = '<b>' + s.icon + '</b>' + s.title[LANG];
-    a.onclick = (e) => { e.preventDefault(); openSection(s.id); };
-    grid.appendChild(a);
-  });
-}
-function openSection(id) {
-  const s = SECTIONS.find(x => x.id === id);
-  if (!s) return;
-  CURRENT_SECTION = id;
-  renderSection(id);
-}
-function renderSection(id) {
-  const s = SECTIONS.find(x => x.id === id);
-  if (!s) return;
-  const app = document.getElementById('app');
-  let html = '<button class="back" onclick="renderHome()">' + T[LANG].back + '</button>';
-  html += '<h2>' + s.icon + ' ' + s.title[LANG] + '</h2>';
-  html += '<p>' + s.intro[LANG] + '</p>';
-  s.items.forEach(item => {
-    html += '<div class="card">';
-    html += '<h3>' + item.title[LANG] + '</h3>';
-    if (item.desc) html += '<p>' + item.desc[LANG] + '</p>';
-    if (item.map) {
-      const url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(item.map);
-      html += '<a class="btn" target="_blank" rel="noopener" href="' + url + '">' + T[LANG].viewMap + '</a>';
-    }
-    html += '</div>';
-  });
-  app.innerHTML = html;
-  window.scrollTo(0, 0);
-}
-function doSearch(q) {
-  q = q.trim().toLowerCase();
-  if (!q) { renderHome(); return; }
-  const results = [];
-  SECTIONS.forEach(s => {
-    s.items.forEach(item => {
-      const text = (item.title.fr + ' ' + item.title.ar + ' ' + item.title.en + ' ' + (item.desc ? item.desc.fr + ' ' + item.desc.ar + ' ' + item.desc.en : '')).toLowerCase();
-      if (text.includes(q)) results.push({ section: s, item: item });
-    });
-  });
-  const app = document.getElementById('app');
-  if (results.length === 0) {
-    app.innerHTML = '<div class="empty"><b>🔍</b>' + T[LANG].noResult + '<br><small>' + T[LANG].tryOther + '</small></div>';
-    return;
-  }
-  let html = '<h2>🔍 ' + results.length + '</h2>';
-  results.forEach(r => {
-    html += '<div class="card">';
-    html += '<h3>' + r.section.icon + ' ' + r.item.title[LANG] + '</h3>';
-    if (r.item.desc) html += '<p>' + r.item.desc[LANG] + '</p>';
-    if (r.item.map) {
-      const url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(r.item.map);
-      html += '<a class="btn" target="_blank" rel="noopener" href="' + url + '">' + T[LANG].viewMap + '</a>';
-    }
-    html += '</div>';
-  });
-  app.innerHTML = html;
-}
-setLang(LANG);
-</script>
+
+  <a href="guide.html" class="start-btn">
+    ابدأ <span>→</span>
+  </a>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about">
+  <div class="about-inner">
+    <h2>🏫 À propos de l'ENSTP</h2>
+    <p>
+      L'École Nationale Supérieure des Travaux Publics (ENSTP) est un établissement
+      public algérien d'enseignement supérieur et de recherche, placé sous la tutelle
+      du Ministère des Travaux Publics. Située à Garidi, Kouba (Alger), elle forme
+      depuis des décennies des ingénieurs d'État spécialisés dans les domaines
+      stratégiques des travaux publics.
+    </p>
+    <p>
+      L'école assure une formation d'excellence à travers un cycle préparatoire intégré
+      suivi d'un cycle ingénieur, couvrant des spécialités telles que les routes,
+      les ouvrages d'art, la géotechnique, l'hydraulique et la topographie.
+      Ses diplômés contribuent activement au développement des infrastructures
+      à travers tout le territoire national.
+    </p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>1967</b><span>Année de création</span></div>
+    <div class="stat"><b>+5000</b><span>Ingénieurs diplômés</span></div>
+    <div class="stat"><b>5</b><span>Spécialités</span></div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="gallery">
+  <div class="gallery-inner">
+    <h2>📸 Découvrir l'école</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80" alt="Campus">
+        <div class="cap">Le campus</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80" alt="Étudiants">
+        <div class="cap">Nos étudiants</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80" alt="Laboratoire">
+        <div class="cap">Laboratoires</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80" alt="Chantier">
+        <div class="cap">Travaux pratiques</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final-cta">
+  <h2>Prêt à découvrir ton guide ?</h2>
+  <p>Tout ce dont tu as besoin pour ton premier jour à l'ENSTP.</p>
+  <a href="guide.html" class="start-btn">
+    ابدأ <span>→</span>
+  </a>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <p>Guide de survie ENSTP — Fait par les étudiants, pour les étudiants.</p>
+  <p style="margin-top:8px">100% gratuit · <a href="guide.html">Accéder au guide</a></p>
+</footer>
+
 </body>
 </html>
