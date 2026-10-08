@@ -1,284 +1,161 @@
+ 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ENSTP — Guide de survie</title>
+<title>Guide de survie ENSTP</title>
 <style>
-:root{--acc:#c2410c;--acc2:#9a3412;--bg:#0f1117;--ink:#fff}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
-
-/* Language switcher */
-.lang-switch{position:fixed;top:20px;right:20px;z-index:100;display:flex;gap:6px;background:rgba(0,0,0,.5);backdrop-filter:blur(12px);padding:6px;border-radius:30px;border:1px solid rgba(255,255,255,.15)}
-.lang-switch button{background:transparent;color:#fff;border:0;padding:6px 12px;border-radius:20px;font-size:.8rem;cursor:pointer;font-weight:600;transition:all .2s;font-family:inherit}
-.lang-switch button:hover{background:rgba(255,255,255,.15)}
-.lang-switch button.on{background:#fff;color:var(--acc)}
-
-/* Hero */
-.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:90px 20px 40px;text-align:center;
-background:linear-gradient(135deg,rgba(194,65,12,.85),rgba(15,17,23,.92)),url('https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=80');
-background-size:cover;background-position:center;background-attachment:fixed}
-.hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.25);z-index:0}
-.hero>*{position:relative;z-index:1}
-.logo{width:100px;height:100px;margin:0 auto 24px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.8rem;box-shadow:0 10px 40px rgba(0,0,0,.4)}
-h1{font-size:clamp(1.6rem,5.5vw,2.8rem);font-weight:800;margin-bottom:14px;line-height:1.25;letter-spacing:-.5px;text-shadow:0 2px 20px rgba(0,0,0,.3)}
-.subtitle{font-size:clamp(1rem,3.5vw,1.3rem);opacity:.95;margin-bottom:8px;font-weight:300}
-.tagline{font-size:clamp(.9rem,3vw,1.05rem);opacity:.85;margin-bottom:30px;font-style:italic;max-width:600px;margin-left:auto;margin-right:auto}
-.badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:36px;max-width:700px;margin-left:auto;margin-right:auto}
-.badge{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25);padding:7px 16px;border-radius:20px;font-size:.85rem;font-weight:500}
-.start-btn{display:inline-block;background:#fff;color:var(--acc);padding:18px 54px;border-radius:50px;font-size:1.2rem;font-weight:800;text-decoration:none;box-shadow:0 10px 40px rgba(0,0,0,.35);transition:transform .2s,box-shadow .2s;border:0;cursor:pointer}
-.start-btn:hover{transform:translateY(-3px);box-shadow:0 15px 50px rgba(0,0,0,.5)}
-.start-btn span{display:inline-block;margin-left:8px;transition:transform .3s}
-.start-btn:hover span{transform:translateX(5px)}
-
-/* Sections */
-section{padding:70px 20px}
-.about{background:#fff;color:#1d2433}
-.about-inner{max-width:820px;margin:0 auto}
-.about h2{font-size:clamp(1.4rem,4vw,2rem);color:var(--acc);margin-bottom:24px;text-align:center}
-.about p{font-size:1.05rem;line-height:1.85;color:#475569;margin-bottom:16px;text-align:justify}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:700px;margin:40px auto 0;padding:0 10px}
-.stat{text-align:center;background:#f8fafc;padding:26px 14px;border-radius:16px;border:1px solid #e2e8f0}
-.stat b{display:block;font-size:2rem;color:var(--acc);font-weight:800;margin-bottom:4px}
-.stat span{font-size:.85rem;color:#64748b;font-weight:500}
-.gallery{background:#f8fafc}
-.gallery-inner{max-width:1000px;margin:0 auto}
-.gallery h2{font-size:clamp(1.4rem,4vw,2rem);color:var(--acc);margin-bottom:30px;text-align:center}
-.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-.gallery-item{border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08);aspect-ratio:4/3;background:#e2e8f0;position:relative;transition:transform .3s}
-.gallery-item:hover{transform:scale(1.03)}
-.gallery-item img{width:100%;height:100%;object-fit:cover;display:block}
-.gallery-item .cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;padding:24px 14px 12px;font-size:.9rem;font-weight:600}
-.team{background:linear-gradient(135deg,#fef3c7,#fff)}
-.team-inner{max-width:820px;margin:0 auto}
-.team h2{font-size:clamp(1.4rem,4vw,2rem);color:var(--acc);margin-bottom:24px;text-align:center}
-.team p{font-size:1.05rem;line-height:1.85;color:#475569;margin-bottom:16px;text-align:justify}
-.team p strong{color:var(--acc)}
-.values{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:30px 0}
-.value{background:#fff;border:1px solid #fed7aa;padding:8px 18px;border-radius:30px;font-size:.9rem;font-weight:600;color:var(--acc)}
-.quote{text-align:center;margin-top:30px;font-style:italic;color:#94a3b8;font-size:1.05rem}
-.learn-more{display:block;text-align:center;margin-top:24px;color:var(--acc);font-weight:700;text-decoration:none;font-size:1rem}
-.final-cta{background:linear-gradient(135deg,var(--acc),var(--acc2));text-align:center;color:#fff}
-.final-cta h2{font-size:clamp(1.3rem,4vw,1.8rem);margin-bottom:12px}
-.final-cta p{opacity:.95;margin-bottom:30px;max-width:600px;margin-left:auto;margin-right:auto}
-footer{background:#0f1117;color:#94a3b8;text-align:center;padding:36px 20px;font-size:.9rem;line-height:1.7}
-footer strong{color:#e2e8f0}
-footer a{color:#c2410c;text-decoration:none;font-weight:600}
-
-@media(max-width:600px){
-  .hero{background-attachment:scroll;padding:70px 16px 40px}
-  .stats{grid-template-columns:1fr;gap:12px}
-  .start-btn{padding:16px 42px;font-size:1.1rem}
-  .lang-switch{top:12px;right:12px}
-  .lang-switch button{padding:5px 10px;font-size:.75rem}
-}
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1d2433;--mut:#667085;--acc:#c2410c;--line:#e5e1d8}
+@media(prefers-color-scheme:dark){:root{--bg:#14171f;--card:#1f2430;--ink:#eef0f5;--mut:#9aa3b5;--acc:#fb923c;--line:#2d3342}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:var(--acc);color:#fff;padding:18px 16px 14px;position:relative}
+header h1{margin:0;font-size:1.35rem}
+header p{margin:4px 0 0;opacity:.9;font-size:.9rem}
+.home-link{position:absolute;top:18px;right:16px;color:#fff;text-decoration:none;font-size:.85rem;opacity:.85;font-weight:600}
+.langs{display:flex;gap:6px;margin-top:10px}
+.langs button{background:rgba(255,255,255,.2);color:#fff;border:0;padding:6px 12px;border-radius:20px;font-size:.85rem;cursor:pointer;font-weight:600;font-family:inherit}
+.langs button.on{background:#fff;color:var(--acc)}
+.search{padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line)}
+.search input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-size:1rem;outline:none}
+main{max-width:640px;margin:0 auto;padding:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;font-size:.92rem;font-weight:600;color:var(--ink);text-decoration:none;transition:transform .15s}
+.tile:active{transform:scale(.97)}
+.tile b{display:block;font-size:1.8rem;margin-bottom:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0}
+.card h3{margin:0 0 6px;font-size:1.02rem}
+.card p{margin:2px 0;color:var(--mut);font-size:.93rem}
+.btn{display:inline-block;margin-top:8px;padding:8px 14px;background:var(--acc);color:#fff;border-radius:20px;text-decoration:none;font-size:.9rem;border:0;cursor:pointer}
+.back{background:none;border:0;color:var(--acc);font-size:1rem;padding:6px 0;cursor:pointer;font-weight:600;font-family:inherit}
+h2{margin:6px 0}
+.empty{text-align:center;padding:40px 20px;color:var(--mut)}
+.empty b{display:block;font-size:2.5rem;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;color:var(--ink);font-size:.95rem;cursor:pointer;font-family:inherit}
+.opt>div{margin-top:8px;color:var(--mut);font-size:.9rem;line-height:1.6}
 </style>
 </head>
 <body>
-
-<div class="lang-switch">
-  <button onclick="setLang('fr')" data-lang="fr">🇫🇷 FR</button>
-  <button onclick="setLang('ar')" data-lang="ar">🇩🇿 AR</button>
-  <button onclick="setLang('en')" data-lang="en">🇬🇧 EN</button>
+<header>
+  <a href="index.html" class="home-link">🏠 Accueil</a>
+  <h1 id="siteName">Guide de survie ENSTP</h1>
+  <p id="tagline">Ton premier jour, dans ta poche.</p>
+  <div class="langs">
+    <button onclick="setLang('fr')" id="btn-fr">🇫🇷 FR</button>
+    <button onclick="setLang('ar')" id="btn-ar">🇩🇿 AR</button>
+    <button onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+  </div>
+</header>
+<div class="search">
+  <input id="q" placeholder="🔎 Chercher..." oninput="doSearch(this.value)">
 </div>
-
-<section class="hero">
-  <div class="logo">🎓</div>
-  <h1 id="hero-title">École Nationale Supérieure<br>des Travaux Publics</h1>
-  <p class="subtitle" id="hero-subtitle">ENSTP — Alger, Garidi Kouba</p>
-  <p class="tagline" id="hero-tagline">« Former les ingénieurs qui construisent l'Algérie de demain »</p>
-  <div class="badges">
-    <span class="badge">🏗️ Génie Civil</span>
-    <span class="badge">🛣️ Routes</span>
-    <span class="badge">🌉 Ouvrages d'art</span>
-    <span class="badge">🏛️ Infrastructures de Base</span>
-    <span class="badge">🔩 Matériaux & Structures</span>
-    <span class="badge">💧 Hydraulique</span>
-    <span class="badge">📐 Topographie</span>
-  </div>
-  <a href="guide.html" class="start-btn"><span id="hero-btn">ابدأ</span> <span>→</span></a>
-</section>
-
-<section class="about">
-  <div class="about-inner">
-    <h2 id="about-title">🏫 À propos de l'ENSTP</h2>
-    <p id="about-p1">L'École Nationale Supérieure des Travaux Publics (ENSTP) est un établissement public algérien d'enseignement supérieur et de recherche, placé sous la tutelle du Ministère des Travaux Publics. Située à Garidi, Kouba (Alger), elle forme depuis des décennies des ingénieurs d'État spécialisés dans les domaines stratégiques des travaux publics.</p>
-    <p id="about-p2">L'école assure une formation d'excellence à travers un cycle préparatoire intégré suivi d'un cycle ingénieur, couvrant des spécialités telles que les routes, les ouvrages d'art, la géotechnique, l'hydraulique et la topographie. Ses diplômés contribuent activement au développement des infrastructures à travers tout le territoire national.</p>
-  </div>
-  <div class="stats">
-    <div class="stat"><b>1967</b><span id="stat1">Année de création</span></div>
-    <div class="stat"><b>+5000</b><span id="stat2">Ingénieurs diplômés</span></div>
-    <div class="stat"><b>5</b><span id="stat3">Spécialités</span></div>
-  </div>
-</section>
-
-<section class="gallery">
-  <div class="gallery-inner">
-    <h2 id="gallery-title">📸 Découvrir l'école</h2>
-    <div class="gallery-grid">
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80" alt="ENSTP">
-        <div class="cap" id="cap1">L'ENSTP</div>
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80" alt="Étudiants">
-        <div class="cap" id="cap2">Nos étudiants</div>
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80" alt="Laboratoire">
-        <div class="cap" id="cap3">Laboratoires</div>
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80" alt="Travaux pratiques">
-        <div class="cap" id="cap4">Travaux pratiques</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="team">
-  <div class="team-inner">
-    <h2 id="team-title">👥 Qui sommes-nous ?</h2>
-    <p id="team-p1"><strong>Guide de survie ENSTP</strong> est un projet étudiant, à but non lucratif, né d'un constat simple : chaque année, des centaines de nouveaux étudiants arrivent à l'ENSTP sans savoir où aller, à qui parler, ni comment s'organiser.</p>
-    <p id="team-p2">Nous sommes <strong>des étudiants de 1ère année Ingénieur — Groupe 2, département Infrastructures de Base (منشآت قاعدية), promotion 2024/2025</strong> à l'ENSTP. Ce guide est un projet bénévole, né de notre propre expérience : nous venons de vivre notre première année, et nous voulons faciliter l'arrivée des nouvelles promotions.</p>
-    <p id="team-p3">Notre mission : <strong>aider chaque nouvel étudiant à s'intégrer rapidement</strong> et à ne jamais rester seul face à un problème. Nous ne sommes pas une structure officielle de l'école — nous sommes des étudiants qui aident d'autres étudiants.</p>
-    <div class="values">
-      <span class="value">🤝 Entraide</span>
-      <span class="value">💯 Gratuité</span>
-      <span class="value">🎯 Respect</span>
-      <span class="value">🔍 Transparence</span>
-      <span class="value">💛 Confiance</span>
-    </div>
-    <div class="stats">
-      <div class="stat"><b>100%</b><span id="team-stat1">Gratuit</span></div>
-      <div class="stat"><b>3</b><span id="team-stat2">Langues</span></div>
-      <div class="stat"><b>8</b><span id="team-stat3">Rubriques</span></div>
-    </div>
-    <p class="quote" id="team-quote">« Ne jamais rester sans savoir quoi faire. »</p>
-    <a href="guide.html#equipe" class="learn-more" id="team-link">En savoir plus →</a>
-  </div>
-</section>
-
-<section class="final-cta">
-  <h2 id="final-title">Prêt à découvrir ton guide ?</h2>
-  <p id="final-p">Tout ce dont tu as besoin pour ton premier jour à l'ENSTP.</p>
-  <a href="guide.html" class="start-btn"><span id="final-btn">ابدأ</span> <span>→</span></a>
-</section>
-
-<footer>
-  <p><strong>Guide de survie ENSTP</strong> — Un projet des étudiants de 1ère année Ingénieur,<br>Groupe 2 — Département Infrastructures de Base (منشآت قاعدية) — Promotion 2024/2025.</p>
-  <p style="margin-top:10px">100% gratuit · 3 langues · Bénévole</p>
-  <p style="margin-top:8px"><a href="guide.html">Accéder au guide →</a></p>
-</footer>
-
+<main id="app"></main>
+<script src="data.js"></script>
 <script>
-const LANG_DATA = {
-  fr: {
-    heroTitle: "École Nationale Supérieure<br>des Travaux Publics",
-    heroSubtitle: "ENSTP — Alger, Garidi Kouba",
-    heroTagline: "« Former les ingénieurs qui construisent l'Algérie de demain »",
-    heroBtn: "ابدأ",
-    aboutTitle: "🏫 À propos de l'ENSTP",
-    aboutP1: "L'École Nationale Supérieure des Travaux Publics (ENSTP) est un établissement public algérien d'enseignement supérieur et de recherche, placé sous la tutelle du Ministère des Travaux Publics. Située à Garidi, Kouba (Alger), elle forme depuis des décennies des ingénieurs d'État spécialisés dans les domaines stratégiques des travaux publics.",
-    aboutP2: "L'école assure une formation d'excellence à travers un cycle préparatoire intégré suivi d'un cycle ingénieur, couvrant des spécialités telles que les routes, les ouvrages d'art, la géotechnique, l'hydraulique et la topographie. Ses diplômés contribuent activement au développement des infrastructures à travers tout le territoire national.",
-    stat1: "Année de création", stat2: "Ingénieurs diplômés", stat3: "Spécialités",
-    galleryTitle: "📸 Découvrir l'école",
-    cap1: "L'ENSTP", cap2: "Nos étudiants", cap3: "Laboratoires", cap4: "Travaux pratiques",
-    teamTitle: "👥 Qui sommes-nous ?",
-    teamP1: "Guide de survie ENSTP est un projet étudiant, à but non lucratif, né d'un constat simple : chaque année, des centaines de nouveaux étudiants arrivent à l'ENSTP sans savoir où aller, à qui parler, ni comment s'organiser.",
-    teamP2: "Nous sommes des étudiants de 1ère année Ingénieur — Groupe 2, département Infrastructures de Base (منشآت قاعدية), promotion 2024/2025 à l'ENSTP. Ce guide est un projet bénévole, né de notre propre expérience : nous venons de vivre notre première année, et nous voulons faciliter l'arrivée des nouvelles promotions.",
-    teamP3: "Notre mission : aider chaque nouvel étudiant à s'intégrer rapidement et à ne jamais rester seul face à un problème. Nous ne sommes pas une structure officielle de l'école — nous sommes des étudiants qui aident d'autres étudiants.",
-    teamStat1: "Gratuit", teamStat2: "Langues", teamStat3: "Rubriques",
-    teamQuote: "« Ne jamais rester sans savoir quoi faire. »",
-    teamLink: "En savoir plus →",
-    finalTitle: "Prêt à découvrir ton guide ?",
-    finalP: "Tout ce dont tu as besoin pour ton premier jour à l'ENSTP.",
-    finalBtn: "ابدأ"
-  },
-  ar: {
-    heroTitle: "المدرسة الوطنية العليا<br>للأشغال العمومية",
-    heroSubtitle: "ENSTP — الجزائر، قاريدي القبة",
-    heroTagline: "« نُكوّن المهندسين الذين يبنون جزائر الغد »",
-    heroBtn: "ابدأ",
-    aboutTitle: "🏫 عن المدرسة",
-    aboutP1: "المدرسة الوطنية العليا للأشغال العمومية (ENSTP) مؤسسة عمومية جزائرية للتعليم العالي والبحث العلمي، تحت وصاية وزارة الأشغال العمومية. تقع في قاريدي، القبة (الجزائر العاصمة)، وتكوّن منذ عقود مهندسي دولة متخصصين في المجالات الاستراتيجية للأشغال العمومية.",
-    aboutP2: "توفّر المدرسة تكويناً متميزاً عبر طور تحضيري مدمج يتبعه طور مهندس، يشمل تخصصات مثل الطرق، المنشآت الفنية، الجيوتقنية، الهيدروليك والطبوغرافيا. يساهم خريجوها بنشاط في تطوير البنى التحتية عبر كامل التراب الوطني.",
-    stat1: "سنة التأسيس", stat2: "مهندس متخرج", stat3: "تخصصات",
-    galleryTitle: "📸 اكتشف المدرسة",
-    cap1: "المدرسة", cap2: "طلابنا", cap3: "المخابر", cap4: "الأعمال التطبيقية",
-    teamTitle: "👥 من نحن؟",
-    teamP1: "دليل البقاء ENSTP مشروع طلابي غير ربحي، وُلد من ملاحظة بسيطة: كل سنة، مئات الطلاب الجدد يصلون إلى المدرسة دون معرفة أين يذهبون، بمن يتحدثون، أو كيف ينظمون أنفسهم.",
-    teamP2: "نحن طلاب السنة الأولى مهندس — المجموعة 2، قسم المنشآت القاعدية، دفعة 2024/2025 في المدرسة. هذا الدليل مشروع تطوعي، وُلد من تجربتنا الشخصية: عشنا أول سنة لنا للتو، ونريد تسهيل وصول الدفعات الجديدة.",
-    teamP3: "مهمتنا: مساعدة كل طالب جديد على الاندماج بسرعة وعدم البقاء وحيداً أمام أي مشكلة. لسنا هيكلاً رسمياً للمدرسة — نحن طلاب نساعد طلاباً آخرين.",
-    teamStat1: "مجاني", teamStat2: "لغات", teamStat3: "أقسام",
-    teamQuote: "« لا تبقَ أبداً دون أن تعرف ماذا تفعل. »",
-    teamLink: "اعرف المزيد ←",
-    finalTitle: "جاهز لاكتشاف دليلك؟",
-    finalP: "كل ما تحتاجه ليومك الأول في المدرسة.",
-    finalBtn: "ابدأ"
-  },
-  en: {
-    heroTitle: "National Higher School<br>of Public Works",
-    heroSubtitle: "ENSTP — Algiers, Garidi Kouba",
-    heroTagline: "\"Training the engineers who build tomorrow's Algeria\"",
-    heroBtn: "Start",
-    aboutTitle: "🏫 About ENSTP",
-    aboutP1: "The National Higher School of Public Works (ENSTP) is an Algerian public institution for higher education and research, under the supervision of the Ministry of Public Works. Located in Garidi, Kouba (Algiers), it has trained state engineers specialized in strategic public works fields for decades.",
-    aboutP2: "The school provides excellent training through an integrated preparatory cycle followed by an engineering cycle, covering specialties such as roads, bridges, geotechnics, hydraulics and topography. Its graduates actively contribute to infrastructure development across the entire national territory.",
-    stat1: "Year of creation", stat2: "Graduate engineers", stat3: "Specialties",
-    galleryTitle: "📸 Discover the school",
-    cap1: "ENSTP", cap2: "Our students", cap3: "Laboratories", cap4: "Practical work",
-    teamTitle: "👥 Who are we?",
-    teamP1: "ENSTP Survival Guide is a student project, non-profit, born from a simple observation: every year, hundreds of new students arrive at ENSTP without knowing where to go, who to talk to, or how to organize themselves.",
-    teamP2: "We are 1st year Engineering students — Group 2, Infrastructures de Base department (منشآت قاعدية), promotion 2024/2025 at ENSTP. This guide is a volunteer project, born from our own experience: we just lived our first year, and we want to make it easier for new generations.",
-    teamP3: "Our mission: help every new student integrate quickly and never stay alone facing a problem. We are not an official school structure — we are students helping other students.",
-    teamStat1: "Free", teamStat2: "Languages", teamStat3: "Sections",
-    teamQuote: "\"Never stay without knowing what to do.\"",
-    teamLink: "Learn more →",
-    finalTitle: "Ready to discover your guide?",
-    finalP: "Everything you need for your first day at ENSTP.",
-    finalBtn: "Start"
-  }
+let LANG = localStorage.getItem('lang') || (typeof CONFIG !== 'undefined' && CONFIG.defaultLang) || 'fr';
+let CURRENT_SECTION = null;
+const T = {
+  fr: { search: "🔎 Chercher : salle, bus, médecin…", back: "← Retour", noResult: "Aucun résultat", tryOther: "Essayez un autre mot", viewMap: "📍 Voir sur Maps" },
+  ar: { search: "🔎 ابحث: قاعة، حافلة، طبيب…", back: "→ رجوع", noResult: "لا توجد نتائج", tryOther: "جرّب كلمة أخرى", viewMap: "📍 عرض على الخريطة" },
+  en: { search: "🔎 Search: room, bus, doctor…", back: "← Back", noResult: "No results", tryOther: "Try another word", viewMap: "📍 View on Maps" }
 };
-
-function setLang(lang) {
-  localStorage.setItem('lang', lang);
-  document.documentElement.lang = lang;
-  document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-  const d = LANG_DATA[lang];
-  document.getElementById('hero-title').innerHTML = d.heroTitle;
-  document.getElementById('hero-subtitle').textContent = d.heroSubtitle;
-  document.getElementById('hero-tagline').textContent = d.heroTagline;
-  document.getElementById('hero-btn').textContent = d.heroBtn;
-  document.getElementById('about-title').textContent = d.aboutTitle;
-  document.getElementById('about-p1').textContent = d.aboutP1;
-  document.getElementById('about-p2').textContent = d.aboutP2;
-  document.getElementById('stat1').textContent = d.stat1;
-  document.getElementById('stat2').textContent = d.stat2;
-  document.getElementById('stat3').textContent = d.stat3;
-  document.getElementById('gallery-title').textContent = d.galleryTitle;
-  document.getElementById('cap1').textContent = d.cap1;
-  document.getElementById('cap2').textContent = d.cap2;
-  document.getElementById('cap3').textContent = d.cap3;
-  document.getElementById('cap4').textContent = d.cap4;
-  document.getElementById('team-title').textContent = d.teamTitle;
-  document.getElementById('team-p1').textContent = d.teamP1;
-  document.getElementById('team-p2').textContent = d.teamP2;
-  document.getElementById('team-p3').textContent = d.teamP3;
-  document.getElementById('team-stat1').textContent = d.teamStat1;
-  document.getElementById('team-stat2').textContent = d.teamStat2;
-  document.getElementById('team-stat3').textContent = d.teamStat3;
-  document.getElementById('team-quote').textContent = d.teamQuote;
-  document.getElementById('team-link').textContent = d.teamLink;
-  document.getElementById('final-title').textContent = d.finalTitle;
-  document.getElementById('final-p').textContent = d.finalP;
-  document.getElementById('final-btn').textContent = d.finalBtn;
-  document.querySelectorAll('.lang-switch button').forEach(b => {
-    b.classList.toggle('on', b.dataset.lang === lang);
+function setLang(l) {
+  LANG = l;
+  localStorage.setItem('lang', l);
+  document.documentElement.lang = l;
+  document.documentElement.dir = (l === 'ar') ? 'rtl' : 'ltr';
+  document.getElementById('siteName').textContent = CONFIG.siteName[l];
+  document.getElementById('tagline').textContent = CONFIG.tagline[l];
+  document.getElementById('q').placeholder = T[l].search;
+  document.querySelectorAll('.langs button').forEach(b => b.classList.remove('on'));
+  document.getElementById('btn-' + l).classList.add('on');
+  if (CURRENT_SECTION) { renderSection(CURRENT_SECTION); } else { renderHome(); }
+}
+function renderHome() {
+  CURRENT_SECTION = null;
+  const app = document.getElementById('app');
+  app.innerHTML = '<div class="grid" id="grid"></div>';
+  const grid = document.getElementById('grid');
+  SECTIONS.forEach(s => {
+    const a = document.createElement('a');
+    a.className = 'tile';
+    a.href = '#' + s.id;
+    a.innerHTML = '<b>' + s.icon + '</b>' + s.title[LANG];
+    a.onclick = (e) => { e.preventDefault(); openSection(s.id); };
+    grid.appendChild(a);
   });
 }
-setLang(localStorage.getItem('lang') || 'fr');
+function openSection(id) {
+  const s = SECTIONS.find(x => x.id === id);
+  if (!s) return;
+  CURRENT_SECTION = id;
+  renderSection(id);
+}
+function renderSection(id) {
+  const s = SECTIONS.find(x => x.id === id);
+  if (!s) return;
+  const app = document.getElementById('app');
+  let html = '<button class="back" onclick="renderHome()">' + T[LANG].back + '</button>';
+  html += '<h2>' + s.icon + ' ' + s.title[LANG] + '</h2>';
+  html += '<p>' + s.intro[LANG] + '</p>';
+
+  if (s.type === 'tree' && s.tree) {
+    s.tree.forEach((node, i) => {
+      html += '<button class="opt" onclick="toggleTree(' + i + ')">' + node.q[LANG] + '<div id="tree-' + i + '" hidden>➡️ <b>' + node.a.service[LANG] + '</b><br>' + node.a.procedure[LANG] + '</div></button>';
+    });
+  } else if (s.items) {
+    s.items.forEach(item => {
+      html += '<div class="card">';
+      html += '<h3>' + item.title[LANG] + '</h3>';
+      if (item.desc) html += '<p>' + item.desc[LANG] + '</p>';
+      if (item.map) {
+        const url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(item.map);
+        html += '<a class="btn" target="_blank" rel="noopener" href="' + url + '">' + T[LANG].viewMap + '</a>';
+      }
+      html += '</div>';
+    });
+  }
+  app.innerHTML = html;
+  window.scrollTo(0, 0);
+}
+function toggleTree(i) {
+  const el = document.getElementById('tree-' + i);
+  if (el) el.hidden = !el.hidden;
+}
+function doSearch(q) {
+  q = q.trim().toLowerCase();
+  if (!q) { renderHome(); return; }
+  const results = [];
+  SECTIONS.forEach(s => {
+    if (s.items) {
+      s.items.forEach(item => {
+        const text = (item.title.fr + ' ' + item.title.ar + ' ' + item.title.en + ' ' + (item.desc ? item.desc.fr + ' ' + item.desc.ar + ' ' + item.desc.en : '')).toLowerCase();
+        if (text.includes(q)) results.push({ section: s, item: item });
+      });
+    }
+    if (s.tree) {
+      s.tree.forEach(node => {
+        const text = (node.q.fr + ' ' + node.q.ar + ' ' + node.q.en + ' ' + node.a.service.fr + ' ' + node.a.service.ar + ' ' + node.a.service.en).toLowerCase();
+        if (text.includes(q)) results.push({ section: s, item: { title: node.q, desc: node.a.service } });
+      });
+    }
+  });
+  const app = document.getElementById('app');
+  if (results.length === 0) {
+    app.innerHTML = '<div class="empty"><b>🔍</b>' + T[LANG].noResult + '<br><small>' + T[LANG].tryOther + '</small></div>';
+    return;
+  }
+  let html = '<h2>🔍 ' + results.length + '</h2>';
+  results.forEach(r => {
+    html += '<div class="card">';
+    html += '<h3>' + r.section.icon + ' ' + r.item.title[LANG] + '</h3>';
+    if (r.item.desc) html += '<p>' + r.item.desc[LANG] + '</p>';
+    html += '</div>';
+  });
+  app.innerHTML = html;
+}
+setLang(LANG);
 </script>
 </body>
 </html>
