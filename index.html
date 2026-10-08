@@ -1,10 +1,21 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ENSTP — Guide de survie</title>
+
+<!-- PWA Meta Tags -->
+<meta name="theme-color" content="#c2410c">
+<meta name="description" content="Guide de survie pour les nouveaux étudiants de l'ENSTP — 3 langues, hors ligne, gratuit.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ENSTP Guide">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+
 <style>
 :root{--acc:#c2410c;--acc2:#9a3412;--bg:#0f1117;--ink:#fff}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -13,29 +24,58 @@ body{font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;backgrou
 .lang-switch button{background:transparent;color:#fff;border:0;padding:6px 12px;border-radius:20px;font-size:.8rem;cursor:pointer;font-weight:600;transition:all .2s;font-family:inherit}
 .lang-switch button:hover{background:rgba(255,255,255,.15)}
 .lang-switch button.on{background:#fff;color:var(--acc)}
+
+/* Offline banner */
+.offline-banner{display:none;position:fixed;top:0;left:0;right:0;background:#f59e0b;color:#fff;text-align:center;padding:6px;font-size:.8rem;font-weight:600;z-index:9999}
+body.offline .offline-banner{display:block}
+
+/* Hero */
 .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:90px 20px 40px;text-align:center;background:linear-gradient(135deg,rgba(194,65,12,.85),rgba(15,17,23,.92)),url('https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=80');background-size:cover;background-position:center;background-attachment:fixed}
 .hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.25);z-index:0}
 .hero>*{position:relative;z-index:1}
 .logo{width:100px;height:100px;margin:0 auto 24px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.8rem;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.logo img{width:100%;height:100%;border-radius:50%;object-fit:cover}
 h1{font-size:clamp(1.6rem,5.5vw,2.8rem);font-weight:800;margin-bottom:14px;line-height:1.25;letter-spacing:-.5px;text-shadow:0 2px 20px rgba(0,0,0,.3)}
 .subtitle{font-size:clamp(1rem,3.5vw,1.3rem);opacity:.95;margin-bottom:8px;font-weight:300}
 .tagline{font-size:clamp(.9rem,3vw,1.05rem);opacity:.85;margin-bottom:30px;font-style:italic;max-width:600px;margin-left:auto;margin-right:auto}
 .badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:36px;max-width:700px;margin-left:auto;margin-right:auto}
 .badge{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25);padding:7px 16px;border-radius:20px;font-size:.85rem;font-weight:500}
-.start-btn{display:inline-block;background:#fff;color:var(--acc);padding:18px 54px;border-radius:50px;font-size:1.2rem;font-weight:800;text-decoration:none;box-shadow:0 10px 40px rgba(0,0,0,.35);transition:transform .2s,box-shadow .2s;border:0;cursor:pointer}
+
+/* Buttons */
+.cta-group{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:10px}
+.start-btn{display:inline-block;background:#fff;color:var(--acc);padding:18px 54px;border-radius:50px;font-size:1.2rem;font-weight:800;text-decoration:none;box-shadow:0 10px 40px rgba(0,0,0,.35);transition:transform .2s,box-shadow .2s;border:0;cursor:pointer;font-family:inherit}
 .start-btn:hover{transform:translateY(-3px);box-shadow:0 15px 50px rgba(0,0,0,.5)}
 .start-btn span{display:inline-block;margin-left:8px;transition:transform .3s}
 .start-btn:hover span{transform:translateX(5px)}
+.install-btn{display:none;align-items:center;gap:8px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:14px 32px;border-radius:50px;font-size:1rem;font-weight:700;text-decoration:none;box-shadow:0 10px 40px rgba(0,0,0,.35);border:0;cursor:pointer;font-family:inherit;transition:transform .2s}
+.install-btn:hover{transform:translateY(-3px)}
+.install-btn.show{display:inline-flex}
+
+/* Sections */
 section{padding:70px 20px}
 .about{background:#fff;color:#1d2433}
 .about-inner{max-width:820px;margin:0 auto}
 .about h2{font-size:clamp(1.4rem,4vw,2rem);color:var(--acc);margin-bottom:24px;text-align:center}
 .about p{font-size:1.05rem;line-height:1.85;color:#475569;margin-bottom:16px;text-align:justify}
+.about p strong{color:var(--acc)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:700px;margin:40px auto 0;padding:0 10px}
 .stat{text-align:center;background:#f8fafc;padding:26px 14px;border-radius:16px;border:1px solid #e2e8f0}
 .stat b{display:block;font-size:2rem;color:var(--acc);font-weight:800;margin-bottom:4px}
 .stat span{font-size:.85rem;color:#64748b;font-weight:500}
-.gallery{background:#f8fafc}
+
+/* Features */
+.features{background:#f8fafc}
+.features-inner{max-width:1000px;margin:0 auto}
+.features h2{font-size:clamp(1.4rem,4vw,2rem);color:var(--acc);margin-bottom:30px;text-align:center}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.feature{background:#fff;padding:26px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06);text-align:center;transition:transform .3s}
+.feature:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.feature .icon{font-size:2.5rem;margin-bottom:12px;display:block}
+.feature h3{color:var(--acc);margin-bottom:8px;font-size:1.1rem}
+.feature p{color:#64748b;font-size:.9rem;line-height:1.6}
+
+/* Gallery */
+.gallery{background:#fff}
 .gallery-inner{max-width:1000px;margin:0 auto}
 .gallery h2{font-size:clamp(1.4rem,4vw,2rem);color:var(--acc);margin-bottom:30px;text-align:center}
 .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
@@ -43,6 +83,8 @@ section{padding:70px 20px}
 .gallery-item:hover{transform:scale(1.03)}
 .gallery-item img{width:100%;height:100%;object-fit:cover;display:block}
 .gallery-item .cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;padding:24px 14px 12px;font-size:.9rem;font-weight:600}
+
+/* Team */
 .team{background:linear-gradient(135deg,#fef3c7,#fff)}
 .team-inner{max-width:820px;margin:0 auto}
 .team h2{font-size:clamp(1.4rem,4vw,2rem);color:var(--acc);margin-bottom:24px;text-align:center}
@@ -52,22 +94,40 @@ section{padding:70px 20px}
 .value{background:#fff;border:1px solid #fed7aa;padding:8px 18px;border-radius:30px;font-size:.9rem;font-weight:600;color:var(--acc)}
 .quote{text-align:center;margin-top:30px;font-style:italic;color:#94a3b8;font-size:1.05rem}
 .learn-more{display:block;text-align:center;margin-top:24px;color:var(--acc);font-weight:700;text-decoration:none;font-size:1rem}
+.learn-more:hover{text-decoration:underline}
+
+/* Final CTA */
 .final-cta{background:linear-gradient(135deg,var(--acc),var(--acc2));text-align:center;color:#fff}
 .final-cta h2{font-size:clamp(1.3rem,4vw,1.8rem);margin-bottom:12px}
 .final-cta p{opacity:.95;margin-bottom:30px;max-width:600px;margin-left:auto;margin-right:auto}
+
+/* Footer */
 footer{background:#0f1117;color:#94a3b8;text-align:center;padding:36px 20px;font-size:.9rem;line-height:1.7}
 footer strong{color:#e2e8f0}
 footer a{color:#c2410c;text-decoration:none;font-weight:600}
+
+/* Install banner bottom */
+.install-banner{display:none;position:fixed;bottom:20px;left:20px;right:20px;background:#fff;padding:14px 18px;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.25);z-index:1000;align-items:center;gap:12px;max-width:440px;margin:0 auto}
+.install-banner.show{display:flex}
+.install-banner .ib-icon{font-size:1.8rem;flex-shrink:0}
+.install-banner .ib-text{flex:1;color:#1d2433;font-size:.88rem;line-height:1.4}
+.install-banner .ib-text strong{display:block;color:var(--acc);font-size:.95rem;margin-bottom:2px}
+.install-banner .ib-btn{background:var(--acc);color:#fff;border:0;padding:10px 18px;border-radius:10px;font-weight:600;cursor:pointer;font-family:inherit;font-size:.88rem;flex-shrink:0}
+.install-banner .ib-close{background:none;border:0;color:#94a3b8;font-size:1.3rem;cursor:pointer;padding:0 4px;font-family:inherit}
+
 @media(max-width:600px){
   .hero{background-attachment:scroll;padding:70px 16px 40px}
   .stats{grid-template-columns:1fr;gap:12px}
   .start-btn{padding:16px 42px;font-size:1.1rem}
   .lang-switch{top:12px;right:12px}
   .lang-switch button{padding:5px 10px;font-size:.75rem}
+  .install-banner{left:12px;right:12px;bottom:12px}
 }
 </style>
 </head>
 <body>
+
+<div class="offline-banner" id="offline-banner">📴 Mode hors ligne</div>
 
 <div class="lang-switch">
   <button onclick="setLang('fr')" data-lang="fr">🇫🇷 FR</button>
@@ -76,10 +136,11 @@ footer a{color:#c2410c;text-decoration:none;font-weight:600}
 </div>
 
 <section class="hero">
-  <div class="logo">🎓</div>
+  <div class="logo" id="app-logo">🎓</div>
   <h1 id="hero-title">École Nationale Supérieure<br>des Travaux Publics</h1>
   <p class="subtitle" id="hero-subtitle">ENSTP — Alger, Garidi Kouba</p>
   <p class="tagline" id="hero-tagline">« Former les ingénieurs qui construisent l'Algérie de demain »</p>
+
   <div class="badges">
     <span class="badge">🏗️ Génie Civil</span>
     <span class="badge">🛣️ Routes</span>
@@ -89,7 +150,13 @@ footer a{color:#c2410c;text-decoration:none;font-weight:600}
     <span class="badge">💧 Hydraulique</span>
     <span class="badge">📐 Topographie</span>
   </div>
-  <a href="guide.html" class="start-btn"><span id="hero-btn">ابدأ</span> <span>→</span></a>
+
+  <div class="cta-group">
+    <a href="guide.html" class="start-btn"><span id="hero-btn">ابدأ</span> <span>→</span></a>
+    <button id="install-btn-hero" class="install-btn" onclick="installApp()">
+      <span>📱</span> <span id="install-text-hero">Installer l'app</span>
+    </button>
+  </div>
 </section>
 
 <section class="about">
@@ -105,14 +172,52 @@ footer a{color:#c2410c;text-decoration:none;font-weight:600}
   </div>
 </section>
 
+<section class="features">
+  <div class="features-inner">
+    <h2 id="features-title">✨ Pourquoi utiliser cette app ?</h2>
+    <div class="features-grid">
+      <div class="feature">
+        <span class="icon">📱</span>
+        <h3 id="f1-title">Installable</h3>
+        <p id="f1-desc">Installez l'application sur votre téléphone en un clic.</p>
+      </div>
+      <div class="feature">
+        <span class="icon">📴</span>
+        <h3 id="f2-title">Hors ligne</h3>
+        <p id="f2-desc">Fonctionne sans Internet après le premier chargement.</p>
+      </div>
+      <div class="feature">
+        <span class="icon">🌍</span>
+        <h3 id="f3-title">3 langues</h3>
+        <p id="f3-desc">Français, Arabe et Anglais — dans la même app.</p>
+      </div>
+      <div class="feature">
+        <span class="icon">🔎</span>
+        <h3 id="f4-title">Recherche intelligente</h3>
+        <p id="f4-desc">Trouvez salles, professeurs et services en quelques secondes.</p>
+      </div>
+      <div class="feature">
+        <span class="icon">📱</span>
+        <h3 id="f5-title">QR codes</h3>
+        <p id="f5-desc">Partagez chaque section via un QR code à scanner.</p>
+      </div>
+      <div class="feature">
+        <span class="icon">💯</span>
+        <h3 id="f6-title">100% gratuit</h3>
+        <p id="f6-desc">Aucune publicité, aucun paiement, fait par des étudiants.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="gallery">
   <div class="gallery-inner">
     <h2 id="gallery-title">📸 Découvrir l'école</h2>
     <div class="gallery-grid">
-      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80" alt="ENSTP"><div class="cap" id="cap1">L'ENSTP</div></div>
-      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80" alt="Étudiants"><div class="cap" id="cap2">Nos étudiants</div></div>
-      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80" alt="Laboratoire"><div class="cap" id="cap3">Laboratoires</div></div>
-      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80" alt="Travaux pratiques"><div class="cap" id="cap4">Travaux pratiques</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80" alt="ENSTP" loading="lazy"><div class="cap" id="cap1">L'ENSTP</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80" alt="Étudiants" loading="lazy"><div class="cap" id="cap2">Nos étudiants</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80" alt="Laboratoire" loading="lazy"><div class="cap" id="cap3">Laboratoires</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80" alt="Travaux pratiques" loading="lazy"><div class="cap" id="cap4">Travaux pratiques</div></div>
     </div>
   </div>
 </section>
@@ -148,117 +253,62 @@ footer a{color:#c2410c;text-decoration:none;font-weight:600}
 
 <footer>
   <p><strong>Guide de survie ENSTP</strong> — Un projet des étudiants de 1ère année Ingénieur,<br>Groupe 2 — Département Infrastructures de Base (منشآت قاعدية) — Promotion 2024/2025.</p>
-  <p style="margin-top:10px">100% gratuit · 3 langues · Bénévole</p>
+  <p style="margin-top:10px">100% gratuit · 3 langues · Bénévole · Hors ligne</p>
   <p style="margin-top:8px"><a href="guide.html">Accéder au guide →</a></p>
 </footer>
 
+<!-- Banner install -->
+<div class="install-banner" id="install-banner">
+  <span class="ib-icon">📱</span>
+  <div class="ib-text">
+    <strong id="ib-title">Installer l'app</strong>
+    <span id="ib-desc">Accès rapide, hors ligne</span>
+  </div>
+  <button class="ib-btn" onclick="installApp()" id="ib-btn">Installer</button>
+  <button class="ib-close" onclick="dismissBanner()">×</button>
+</div>
+
 <script>
+// ============================================
+// نصوص 3 لغات
+// ============================================
 const LANG_DATA = {
   fr: {
     heroTitle: "École Nationale Supérieure<br>des Travaux Publics",
     heroSubtitle: "ENSTP — Alger, Garidi Kouba",
     heroTagline: "« Former les ingénieurs qui construisent l'Algérie de demain »",
-    heroBtn: "ابدأ",
+    heroBtn: "ابدأ", installBtn: "📱 Installer l'app",
     aboutTitle: "🏫 À propos de l'ENSTP",
     aboutP1: "L'École Nationale Supérieure des Travaux Publics (ENSTP) est un établissement public algérien d'enseignement supérieur et de recherche, placé sous la tutelle du Ministère des Travaux Publics. Située à Garidi, Kouba (Alger), elle forme depuis des décennies des ingénieurs d'État spécialisés dans les domaines stratégiques des travaux publics.",
-    aboutP2: "L'école assure une formation d'excellence à travers un cycle préparatoire intégré suivi d'un cycle ingénieur, couvrant des spécialités telles que les routes, les ouvrages d'art, la géotechnique, l'hydraulique et la topographie. Ses diplômés contribuent activement au développement des infrastructures à travers tout le territoire national.",
+    aboutP2: "L'école assure une formation d'excellence à travers un cycle préparatoire intégré suivi d'un cycle ingénieur, couvrant des spécialités telles que les routes, les ouvrages d'art, la géotechnique, l'hydraulique et la topographie.",
     stat1: "Année de création", stat2: "Ingénieurs diplômés", stat3: "Spécialités",
+    featuresTitle: "✨ Pourquoi utiliser cette app ?",
+    f1Title: "Installable", f1Desc: "Installez l'application en un clic.",
+    f2Title: "Hors ligne", f2Desc: "Fonctionne sans Internet.",
+    f3Title: "3 langues", f3Desc: "Français, Arabe, Anglais.",
+    f4Title: "Recherche intelligente", f4Desc: "Trouvez tout en secondes.",
+    f5Title: "QR codes", f5Desc: "Partagez chaque section.",
+    f6Title: "100% gratuit", f6Desc: "Sans publicité, par des étudiants.",
     galleryTitle: "📸 Découvrir l'école",
     cap1: "L'ENSTP", cap2: "Nos étudiants", cap3: "Laboratoires", cap4: "Travaux pratiques",
     teamTitle: "👥 Qui sommes-nous ?",
     teamP1: "Guide de survie ENSTP est un projet étudiant, à but non lucratif, né d'un constat simple : chaque année, des centaines de nouveaux étudiants arrivent à l'ENSTP sans savoir où aller, à qui parler, ni comment s'organiser.",
-    teamP2: "Nous sommes des étudiants de 1ère année Ingénieur — Groupe 2, département Infrastructures de Base (منشآت قاعدية), promotion 2024/2025 à l'ENSTP. Ce guide est un projet bénévole, né de notre propre expérience : nous venons de vivre notre première année, et nous voulons faciliter l'arrivée des nouvelles promotions.",
-    teamP3: "Notre mission : aider chaque nouvel étudiant à s'intégrer rapidement et à ne jamais rester seul face à un problème. Nous ne sommes pas une structure officielle de l'école — nous sommes des étudiants qui aident d'autres étudiants.",
+    teamP2: "Nous sommes des étudiants de 1ère année Ingénieur — Groupe 2, département Infrastructures de Base (منشآت قاعدية), promotion 2024/2025 à l'ENSTP. Ce guide est un projet bénévole, né de notre propre expérience.",
+    teamP3: "Notre mission : aider chaque nouvel étudiant à s'intégrer rapidement et à ne jamais rester seul face à un problème.",
     teamStat1: "Gratuit", teamStat2: "Langues", teamStat3: "Rubriques",
     teamQuote: "« Ne jamais rester sans savoir quoi faire. »",
     teamLink: "En savoir plus →",
     finalTitle: "Prêt à découvrir ton guide ?",
     finalP: "Tout ce dont tu as besoin pour ton premier jour à l'ENSTP.",
-    finalBtn: "ابدأ"
+    finalBtn: "ابدأ",
+    ibTitle: "Installer l'app", ibDesc: "Accès rapide, hors ligne", ibBtn: "Installer"
   },
   ar: {
     heroTitle: "المدرسة الوطنية العليا<br>للأشغال العمومية",
     heroSubtitle: "ENSTP — الجزائر، قاريدي القبة",
     heroTagline: "« نُكوّن المهندسين الذين يبنون جزائر الغد »",
-    heroBtn: "ابدأ",
+    heroBtn: "ابدأ", installBtn: "📱 ثبّت التطبيق",
     aboutTitle: "🏫 عن المدرسة",
     aboutP1: "المدرسة الوطنية العليا للأشغال العمومية (ENSTP) مؤسسة عمومية جزائرية للتعليم العالي والبحث العلمي، تحت وصاية وزارة الأشغال العمومية. تقع في قاريدي، القبة (الجزائر العاصمة)، وتكوّن منذ عقود مهندسي دولة متخصصين في المجالات الاستراتيجية للأشغال العمومية.",
-    aboutP2: "توفّر المدرسة تكويناً متميزاً عبر طور تحضيري مدمج يتبعه طور مهندس، يشمل تخصصات مثل الطرق، المنشآت الفنية، الجيوتقنية، الهيدروليك والطبوغرافيا. يساهم خريجوها بنشاط في تطوير البنى التحتية عبر كامل التراب الوطني.",
-    stat1: "سنة التأسيس", stat2: "مهندس متخرج", stat3: "تخصصات",
-    galleryTitle: "📸 اكتشف المدرسة",
-    cap1: "المدرسة", cap2: "طلابنا", cap3: "المخابر", cap4: "الأعمال التطبيقية",
-    teamTitle: "👥 من نحن؟",
-    teamP1: "دليل البقاء ENSTP مشروع طلابي غير ربحي، وُلد من ملاحظة بسيطة: كل سنة، مئات الطلاب الجدد يصلون إلى المدرسة دون معرفة أين يذهبون، بمن يتحدثون، أو كيف ينظمون أنفسهم.",
-    teamP2: "نحن طلاب السنة الأولى مهندس — المجموعة 2، قسم المنشآت القاعدية، دفعة 2024/2025 في المدرسة. هذا الدليل مشروع تطوعي، وُلد من تجربتنا الشخصية: عشنا أول سنة لنا للتو، ونريد تسهيل وصول الدفعات الجديدة.",
-    teamP3: "مهمتنا: مساعدة كل طالب جديد على الاندماج بسرعة وعدم البقاء وحيداً أمام أي مشكلة. لسنا هيكلاً رسمياً للمدرسة — نحن طلاب نساعد طلاباً آخرين.",
-    teamStat1: "مجاني", teamStat2: "لغات", teamStat3: "أقسام",
-    teamQuote: "« لا تبقَ أبداً دون أن تعرف ماذا تفعل. »",
-    teamLink: "اعرف المزيد ←",
-    finalTitle: "جاهز لاكتشاف دليلك؟",
-    finalP: "كل ما تحتاجه ليومك الأول في المدرسة.",
-    finalBtn: "ابدأ"
-  },
-  en: {
-    heroTitle: "National Higher School<br>of Public Works",
-    heroSubtitle: "ENSTP — Algiers, Garidi Kouba",
-    heroTagline: "\"Training the engineers who build tomorrow's Algeria\"",
-    heroBtn: "Start",
-    aboutTitle: "🏫 About ENSTP",
-    aboutP1: "The National Higher School of Public Works (ENSTP) is an Algerian public institution for higher education and research, under the supervision of the Ministry of Public Works. Located in Garidi, Kouba (Algiers), it has trained state engineers specialized in strategic public works fields for decades.",
-    aboutP2: "The school provides excellent training through an integrated preparatory cycle followed by an engineering cycle, covering specialties such as roads, bridges, geotechnics, hydraulics and topography. Its graduates actively contribute to infrastructure development across the entire national territory.",
-    stat1: "Year of creation", stat2: "Graduate engineers", stat3: "Specialties",
-    galleryTitle: "📸 Discover the school",
-    cap1: "ENSTP", cap2: "Our students", cap3: "Laboratories", cap4: "Practical work",
-    teamTitle: "👥 Who are we?",
-    teamP1: "ENSTP Survival Guide is a student project, non-profit, born from a simple observation: every year, hundreds of new students arrive at ENSTP without knowing where to go, who to talk to, or how to organize themselves.",
-    teamP2: "We are 1st year Engineering students — Group 2, Infrastructures de Base department (منشآت قاعدية), promotion 2024/2025 at ENSTP. This guide is a volunteer project, born from our own experience: we just lived our first year, and we want to make it easier for new generations.",
-    teamP3: "Our mission: help every new student integrate quickly and never stay alone facing a problem. We are not an official school structure — we are students helping other students.",
-    teamStat1: "Free", teamStat2: "Languages", teamStat3: "Sections",
-    teamQuote: "\"Never stay without knowing what to do.\"",
-    teamLink: "Learn more →",
-    finalTitle: "Ready to discover your guide?",
-    finalP: "Everything you need for your first day at ENSTP.",
-    finalBtn: "Start"
-  }
-};
-
-function setLang(lang) {
-  localStorage.setItem('lang', lang);
-  document.documentElement.lang = lang;
-  document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-  const d = LANG_DATA[lang];
-  document.getElementById('hero-title').innerHTML = d.heroTitle;
-  document.getElementById('hero-subtitle').textContent = d.heroSubtitle;
-  document.getElementById('hero-tagline').textContent = d.heroTagline;
-  document.getElementById('hero-btn').textContent = d.heroBtn;
-  document.getElementById('about-title').textContent = d.aboutTitle;
-  document.getElementById('about-p1').textContent = d.aboutP1;
-  document.getElementById('about-p2').textContent = d.aboutP2;
-  document.getElementById('stat1').textContent = d.stat1;
-  document.getElementById('stat2').textContent = d.stat2;
-  document.getElementById('stat3').textContent = d.stat3;
-  document.getElementById('gallery-title').textContent = d.galleryTitle;
-  document.getElementById('cap1').textContent = d.cap1;
-  document.getElementById('cap2').textContent = d.cap2;
-  document.getElementById('cap3').textContent = d.cap3;
-  document.getElementById('cap4').textContent = d.cap4;
-  document.getElementById('team-title').textContent = d.teamTitle;
-  document.getElementById('team-p1').textContent = d.teamP1;
-  document.getElementById('team-p2').textContent = d.teamP2;
-  document.getElementById('team-p3').textContent = d.teamP3;
-  document.getElementById('team-stat1').textContent = d.teamStat1;
-  document.getElementById('team-stat2').textContent = d.teamStat2;
-  document.getElementById('team-stat3').textContent = d.teamStat3;
-  document.getElementById('team-quote').textContent = d.teamQuote;
-  document.getElementById('team-link').textContent = d.teamLink;
-  document.getElementById('final-title').textContent = d.finalTitle;
-  document.getElementById('final-p').textContent = d.finalP;
-  document.getElementById('final-btn').textContent = d.finalBtn;
-  document.querySelectorAll('.lang-switch button').forEach(b => {
-    b.classList.toggle('on', b.dataset.lang === lang);
-  });
-}
-setLang(localStorage.getItem('lang') || 'fr');
-</script>
-</body>
-</html>
+    aboutP2: "توفّر المدرسة تكويناً متميزاً عبر طور تحضيري مدمج يتبعه طور مهندس، يشمل تخصصات مثل الطرق، المنشآت الفنية، الجيوتقنية، الهيدروليك والطبوغرافيا.",
+    stat1: "سنة التأسيس", stat2
