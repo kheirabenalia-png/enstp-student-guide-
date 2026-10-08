@@ -33,6 +33,8 @@ h2{margin:6px 0}
 .empty b{display:block;font-size:2.5rem;margin-bottom:10px}
 .opt{display:block;width:100%;text-align:left;margin:6px 0;padding:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;color:var(--ink);font-size:.95rem;cursor:pointer;font-family:inherit}
 .opt>div{margin-top:8px;color:var(--mut);font-size:.9rem;line-height:1.6}
+.suggestion{margin-top:16px;font-size:.9rem;color:var(--mut)}
+.suggestion a{color:var(--acc);margin:0 4px;font-weight:600}
 </style>
 </head>
 <body>
@@ -50,27 +52,151 @@ h2{margin:6px 0}
   <input id="q" placeholder="🔎 Chercher..." oninput="doSearch(this.value)">
 </div>
 <main id="app"></main>
+
 <script src="data.js"></script>
 <script>
+// ============================================
+// search.js — محرك البحث الذكي (مدمج)
+// ============================================
+const SYNONYMS = {
+  "manger":["restaurant","repas","snack","café","pizzeria","nourriture"],
+  "restaurant":["manger","repas","snack"],
+  "salle":["classe","amphi","amphithéâtre","cours","td","tp"],
+  "amphi":["amphithéâtre","salle","cours"],
+  "problème":["aide","souci","difficulté","service"],
+  "aide":["problème","service","secours"],
+  "absence":["absent","justificatif","manqué"],
+  "carte":["badge","étudiant","identité"],
+  "transport":["bus","taxi","métro","déplacement"],
+  "bus":["transport","arrêt","ligne"],
+  "taxi":["transport","voiture","station"],
+  "cité":["résidence","logement","chambre"],
+  "résidence":["cité","logement","chambre"],
+  "prof":["enseignant","professeur"],
+  "enseignant":["prof","professeur"],
+  "bibliothèque":["livre","adhésion","prêt"],
+  "notes":["résultats","examens","moyenne"],
+  "أكل":["مطعم","ماكلة","وجبة","طعام"],
+  "ماكلة":["أكل","مطعم","وجبة"],
+  "مطعم":["أكل","ماكلة","وجبة"],
+  "قاعة":["قسم","مدرج","صف"],
+  "مدرج":["قاعة","حصة"],
+  "مشكلة":["مساعدة","سؤال","خدمة"],
+  "مساعدة":["مشكلة","خدمة"],
+  "غياب":["غائب","تبرير","مبرر"],
+  "بطاقة":["هوية","شارة"],
+  "نقل":["حافلة","طاكسي","مترو"],
+  "حافلة":["نقل","باص","محطة"],
+  "طاكسي":["نقل","سيارة","تكسي"],
+  "إقامة":["حي","سكن","غرفة"],
+  "سكن":["إقامة","حي","غرفة"],
+  "أستاذ":["معلم","بروف"],
+  "أساتذة":["أستاذ","معلم"],
+  "مكتبة":["كتاب","انضمام","استعارة"],
+  "نقاط":["نتائج","امتحانات","معدل"],
+  "eat":["restaurant","food","meal"],
+  "room":["class","amphi","classroom"],
+  "problem":["help","issue","service"],
+  "dorm":["residence","housing","room"],
+  "teacher":["professor","instructor"],
+  "library":["book","membership"],
+  "grades":["results","exams","marks"]
+};
+
+function normalize(text) {
+  if (!text) return '';
+  return text.toString().toLowerCase()
+    .replace(/[éèêë]/g,'e').replace(/[àâä]/g,'a').replace(/[îï]/g,'i')
+    .replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/[ç]/g,'c')
+    .replace(/[إأآا]/g,'ا').replace(/[ىي]/g,'ي').replace(/[ةه]/g,'ه')
+    .replace(/[ًٌٍَُِّْ]/g,'').trim();
+}
+
+function expandWord(word) {
+  const norm = normalize(word);
+  const expanded = new Set([norm]);
+  Object.keys(SYNONYMS).forEach(key => {
+    if (normalize(key) === norm) {
+      SYNONYMS[key].forEach(syn => expanded.add(normalize(syn)));
+    }
+  });
+  return Array.from(expanded);
+}
+
+function smartSearch(query, sections, lang) {
+  const q = normalize(query);
+  if (!q) return [];
+  const words = q.split(/\s+/).filter(w => w.length > 1);
+  if (words.length === 0) return [];
+  const expandedWords = words.map(w => expandWord(w));
+  const results = [];
+
+  sections.forEach(section => {
+    if (section.items) {
+      section.items.forEach(item => {
+        let score = 0;
+        const titleText = normalize((item.title?.fr||'')+' '+(item.title?.ar||'')+' '+(item.title?.en||''));
+        const descText = normalize((item.desc?.fr||'')+' '+(item.desc?.ar||'')+' '+(item.desc?.en||''));
+        const secText = normalize((section.title?.fr||'')+' '+(section.title?.ar||'')+' '+(section.title?.en||''));
+        expandedWords.forEach(group => group.forEach(w => {
+          if (titleText.includes(w)) score += 10;
+          if (descText.includes(w)) score += 3;
+          if (secText.includes(w)) score += 1;
+        }));
+        if (score > 0) results.push({section, item, score});
+      });
+    }
+    if (section.tree) {
+      section.tree.forEach(node => {
+        let score = 0;
+        const qText = normalize((node.q?.fr||'')+' '+(node.q?.ar||'')+' '+(node.q?.en||''));
+        const aText = normalize((node.a?.service?.fr||'')+' '+(node.a?.service?.ar||'')+' '+(node.a?.service?.en||'')+' '+(node.a?.procedure?.fr||'')+' '+(node.a?.procedure?.ar||'')+' '+(node.a?.procedure?.en||''));
+        expandedWords.forEach(group => group.forEach(w => {
+          if (qText.includes(w)) score += 10;
+          if (aText.includes(w)) score += 3;
+        }));
+        if (score > 0) results.push({section, item:{title:node.q, desc:node.a.service, procedure:node.a.procedure}, score});
+      });
+    }
+  });
+
+  results.sort((a,b) => b.score - a.score);
+  return results;
+}
+
+// ============================================
+// المتغيرات العامة
+// ============================================
 let LANG = localStorage.getItem('lang') || (typeof CONFIG !== 'undefined' && CONFIG.defaultLang) || 'fr';
 let CURRENT_SECTION = null;
+
 const T = {
-  fr: { search: "🔎 Chercher : salle, bus, médecin…", back: "← Retour", noResult: "Aucun résultat", tryOther: "Essayez un autre mot", viewMap: "📍 Voir sur Maps" },
-  ar: { search: "🔎 ابحث: قاعة، حافلة، طبيب…", back: "→ رجوع", noResult: "لا توجد نتائج", tryOther: "جرّب كلمة أخرى", viewMap: "📍 عرض على الخريطة" },
-  en: { search: "🔎 Search: room, bus, doctor…", back: "← Back", noResult: "No results", tryOther: "Try another word", viewMap: "📍 View on Maps" }
+  fr: { search: "🔎 Chercher : salle, bus, médecin…", back: "← Retour", noResult: "Aucun résultat", tryOther: "Essayez un autre mot", viewMap: "📍 Voir sur Maps", suggest: "💡 Essayez :" },
+  ar: { search: "🔎 ابحث: قاعة، حافلة، طبيب…", back: "→ رجوع", noResult: "لا توجد نتائج", tryOther: "جرّب كلمة أخرى", viewMap: "📍 عرض على الخريطة", suggest: "💡 جرّب:" },
+  en: { search: "🔎 Search: room, bus, doctor…", back: "← Back", noResult: "No results", tryOther: "Try another word", viewMap: "📍 View on Maps", suggest: "💡 Try:" }
 };
+
+// ============================================
+// تغيير اللغة
+// ============================================
 function setLang(l) {
   LANG = l;
   localStorage.setItem('lang', l);
   document.documentElement.lang = l;
   document.documentElement.dir = (l === 'ar') ? 'rtl' : 'ltr';
-  document.getElementById('siteName').textContent = CONFIG.siteName[l];
-  document.getElementById('tagline').textContent = CONFIG.tagline[l];
+  if (typeof CONFIG !== 'undefined') {
+    document.getElementById('siteName').textContent = CONFIG.siteName[l];
+    document.getElementById('tagline').textContent = CONFIG.tagline[l];
+  }
   document.getElementById('q').placeholder = T[l].search;
   document.querySelectorAll('.langs button').forEach(b => b.classList.remove('on'));
   document.getElementById('btn-' + l).classList.add('on');
   if (CURRENT_SECTION) { renderSection(CURRENT_SECTION); } else { renderHome(); }
 }
+
+// ============================================
+// الصفحة الرئيسية (شبكة الأقسام)
+// ============================================
 function renderHome() {
   CURRENT_SECTION = null;
   const app = document.getElementById('app');
@@ -85,12 +211,17 @@ function renderHome() {
     grid.appendChild(a);
   });
 }
+
+// ============================================
+// فتح قسم
+// ============================================
 function openSection(id) {
   const s = SECTIONS.find(x => x.id === id);
   if (!s) return;
   CURRENT_SECTION = id;
   renderSection(id);
 }
+
 function renderSection(id) {
   const s = SECTIONS.find(x => x.id === id);
   if (!s) return;
@@ -99,11 +230,13 @@ function renderSection(id) {
   html += '<h2>' + s.icon + ' ' + s.title[LANG] + '</h2>';
   html += '<p>' + s.intro[LANG] + '</p>';
 
+  // شجرة المشاكل
   if (s.type === 'tree' && s.tree) {
     s.tree.forEach((node, i) => {
       html += '<button class="opt" onclick="toggleTree(' + i + ')">' + node.q[LANG] + '<div id="tree-' + i + '" hidden>➡️ <b>' + node.a.service[LANG] + '</b><br>' + node.a.procedure[LANG] + '</div></button>';
     });
   } else if (s.items) {
+    // البطاقات العادية
     s.items.forEach(item => {
       html += '<div class="card">';
       html += '<h3>' + item.title[LANG] + '</h3>';
@@ -118,42 +251,40 @@ function renderSection(id) {
   app.innerHTML = html;
   window.scrollTo(0, 0);
 }
+
 function toggleTree(i) {
   const el = document.getElementById('tree-' + i);
   if (el) el.hidden = !el.hidden;
 }
+
+// ============================================
+// البحث الذكي
+// ============================================
 function doSearch(q) {
-  q = q.trim().toLowerCase();
+  q = q.trim();
   if (!q) { renderHome(); return; }
-  const results = [];
-  SECTIONS.forEach(s => {
-    if (s.items) {
-      s.items.forEach(item => {
-        const text = (item.title.fr + ' ' + item.title.ar + ' ' + item.title.en + ' ' + (item.desc ? item.desc.fr + ' ' + item.desc.ar + ' ' + item.desc.en : '')).toLowerCase();
-        if (text.includes(q)) results.push({ section: s, item: item });
-      });
-    }
-    if (s.tree) {
-      s.tree.forEach(node => {
-        const text = (node.q.fr + ' ' + node.q.ar + ' ' + node.q.en + ' ' + node.a.service.fr + ' ' + node.a.service.ar + ' ' + node.a.service.en).toLowerCase();
-        if (text.includes(q)) results.push({ section: s, item: { title: node.q, desc: node.a.service } });
-      });
-    }
-  });
+  const results = smartSearch(q, SECTIONS, LANG);
   const app = document.getElementById('app');
+
   if (results.length === 0) {
     app.innerHTML = '<div class="empty"><b>🔍</b>' + T[LANG].noResult + '<br><small>' + T[LANG].tryOther + '</small></div>';
     return;
   }
+
   let html = '<h2>🔍 ' + results.length + '</h2>';
   results.forEach(r => {
     html += '<div class="card">';
     html += '<h3>' + r.section.icon + ' ' + r.item.title[LANG] + '</h3>';
     if (r.item.desc) html += '<p>' + r.item.desc[LANG] + '</p>';
+    if (r.item.procedure) html += '<p style="color:var(--acc);font-weight:600">➡️ ' + r.item.procedure[LANG] + '</p>';
     html += '</div>';
   });
   app.innerHTML = html;
 }
+
+// ============================================
+// البدء
+// ============================================
 setLang(LANG);
 </script>
 </body>
