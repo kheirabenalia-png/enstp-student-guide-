@@ -1,11 +1,14 @@
 // ============================================
-// lang.js — نظام اللغات الثلاث
+// lang.js — نظام اللغات الثلاث + QR
 // Guide de survie ENSTP
+// Version 2.0 — Octobre 2026
 // ============================================
-// ⚠️ هذا الملف مقسّم على 3 أجزاء (FR, AR, EN)
-//    لا تحفظه إلا بعد لصق الأجزاء الثلاثة معاً
 
 const LANG_DATA = {
+
+  // ============================================
+  // FRANÇAIS
+  // ============================================
   fr: {
     // ============ عام ============
     appName: "Guide de survie ENSTP",
@@ -20,8 +23,6 @@ const LANG_DATA = {
     viewVideo: "🎥 Voir la vidéo",
     comingSoon: "Bientôt disponible",
     toComplete: "À compléter",
-    qrTitle: "📱 QR Code",
-    qrScan: "Scannez ce QR code",
     close: "Fermer",
     loading: "Chargement…",
 
@@ -31,7 +32,7 @@ const LANG_DATA = {
     startBtn: "ابدأ",
     installBtn: "Installer l'app",
 
-    // ============ عناوين الأقسام الرئيسية ============
+    // ============ عناوين الأقسام ============
     sectionEcole: "Mon école",
     sectionProfs: "Mes enseignants",
     sectionAdmin: "Mon administration",
@@ -45,6 +46,7 @@ const LANG_DATA = {
     sectionPodcast: "Podcast étudiant",
     sectionCourses: "Formations",
     sectionAbout: "Qui sommes-nous",
+    sectionQR: "QR Codes",
 
     // ============ 1. مدرستي ============
     ecoleIntro: "Tous les lieux de l'école : salles, amphis, labos, services.",
@@ -267,6 +269,20 @@ const LANG_DATA = {
     aboutUpdate: "Dernière mise à jour",
     aboutUpdateDesc: "Octobre 2026 — Version 2.0",
 
+    // ============ 14. رموز QR ============
+    qrIntro: "Scannez ces QR codes pour accéder directement aux sections.",
+    qrPrint: "🖨️ Imprimer",
+    qrDownload: "📥 Télécharger",
+    qrShare: "📤 Partager",
+    qrInstruction: "Scannez avec l'appareil photo de votre téléphone",
+    qrPrintTitle: "QR Codes à imprimer",
+    qrPrintDesc: "Imprimez cette page et collez les QR codes aux endroits autorisés de l'école.",
+    qrLabel: "QR",
+    qrOpen: "Ouvrir",
+    qrCopyLink: "🔗 Copier le lien",
+    qrCopied: "✅ Lien copié !",
+    qrNotFound: "QR Code non disponible",
+
     // ============ الفوتر ============
     footerTitle: "Guide de survie ENSTP",
     footerSub: "Un projet des étudiants de 1ère année Ingénieur, Groupe 2 — Infrastructures de Base.",
@@ -274,6 +290,9 @@ const LANG_DATA = {
     footerAccess: "Accéder au guide"
   },
 
+  // ============================================
+  // العربية
+  // ============================================
   ar: {
     // ============ عام ============
     appName: "دليل البقاء ENSTP",
@@ -288,8 +307,6 @@ const LANG_DATA = {
     viewVideo: "🎥 مشاهدة الفيديو",
     comingSoon: "قريباً",
     toComplete: "يُكمل",
-    qrTitle: "📱 رمز QR",
-    qrScan: "امسح رمز QR",
     close: "إغلاق",
     loading: "جارٍ التحميل…",
 
@@ -299,7 +316,7 @@ const LANG_DATA = {
     startBtn: "ابدأ",
     installBtn: "ثبّت التطبيق",
 
-    // ============ عناوين الأقسام الرئيسية ============
+    // ============ عناوين الأقسام ============
     sectionEcole: "مدرستي",
     sectionProfs: "أساتذتي",
     sectionAdmin: "إدارتي",
@@ -313,6 +330,7 @@ const LANG_DATA = {
     sectionPodcast: "بودكاست الطالب",
     sectionCourses: "دورات",
     sectionAbout: "من نحن",
+    sectionQR: "رموز QR",
 
     // ============ 1. مدرستي ============
     ecoleIntro: "كل أماكن المدرسة: القاعات، المدرجات، المخابر، الخدمات.",
@@ -535,6 +553,20 @@ const LANG_DATA = {
     aboutUpdate: "آخر تحديث",
     aboutUpdateDesc: "أكتوبر 2026 — الإصدار 2.0",
 
+    // ============ 14. رموز QR ============
+    qrIntro: "امسح رموز QR هذه للوصول مباشرة إلى الأقسام.",
+    qrPrint: "🖨️ طباعة",
+    qrDownload: "📥 تحميل",
+    qrShare: "📤 مشاركة",
+    qrInstruction: "امسح بكاميرا هاتفك",
+    qrPrintTitle: "رموز QR للطباعة",
+    qrPrintDesc: "اطبع هذه الصفحة والصق رموز QR في الأماكن المسموح بها في المدرسة.",
+    qrLabel: "رمز",
+    qrOpen: "فتح",
+    qrCopyLink: "🔗 نسخ الرابط",
+    qrCopied: "✅ تم نسخ الرابط!",
+    qrNotFound: "رمز QR غير متوفر",
+
     // ============ الفوتر ============
     footerTitle: "دليل البقاء ENSTP",
     footerSub: "مشروع طلاب السنة الأولى مهندس، المجموعة 2 — المنشآت القاعدية.",
@@ -542,6 +574,9 @@ const LANG_DATA = {
     footerAccess: "الوصول إلى الدليل"
   },
 
+  // ============================================
+  // ENGLISH
+  // ============================================
   en: {
     // ============ General ============
     appName: "ENSTP Survival Guide",
@@ -556,8 +591,6 @@ const LANG_DATA = {
     viewVideo: "🎥 Watch video",
     comingSoon: "Coming soon",
     toComplete: "To complete",
-    qrTitle: "📱 QR Code",
-    qrScan: "Scan this QR code",
     close: "Close",
     loading: "Loading…",
 
@@ -581,6 +614,7 @@ const LANG_DATA = {
     sectionPodcast: "Student podcast",
     sectionCourses: "Courses",
     sectionAbout: "Who we are",
+    sectionQR: "QR Codes",
 
     // ============ 1. My school ============
     ecoleIntro: "All school places: rooms, amphis, labs, services.",
@@ -803,6 +837,20 @@ const LANG_DATA = {
     aboutUpdate: "Last update",
     aboutUpdateDesc: "October 2026 — Version 2.0",
 
+    // ============ 14. QR Codes ============
+    qrIntro: "Scan these QR codes to access sections directly.",
+    qrPrint: "🖨️ Print",
+    qrDownload: "📥 Download",
+    qrShare: "📤 Share",
+    qrInstruction: "Scan with your phone camera",
+    qrPrintTitle: "QR Codes to print",
+    qrPrintDesc: "Print this page and paste QR codes at authorized places in the school.",
+    qrLabel: "QR",
+    qrOpen: "Open",
+    qrCopyLink: "🔗 Copy link",
+    qrCopied: "✅ Link copied!",
+    qrNotFound: "QR Code not available",
+
     // ============ Footer ============
     footerTitle: "ENSTP Survival Guide",
     footerSub: "A project by 1st year Engineering students, Group 2 — Infrastructures de Base.",
@@ -812,39 +860,19 @@ const LANG_DATA = {
 };
 
 // ============================================
-// نهاية ملف lang.js
-// ============================================
-// ✅ الملف مكتمل الآن
-// ============================================
-
-// ============================================
 // دوال مساعدة للترجمة
 // ============================================
 
-/**
- * الحصول على نص مترجم
- * @param {string} key - المفتاح
- * @param {string} lang - اللغة (fr/ar/en)
- * @returns {string} النص المترجم
- */
 function t(key, lang) {
   const l = lang || localStorage.getItem('lang') || 'fr';
   const data = LANG_DATA[l] || LANG_DATA.fr;
   return data[key] || LANG_DATA.fr[key] || key;
 }
 
-/**
- * الحصول على اللغة الحالية
- * @returns {string} اللغة الحالية (fr/ar/en)
- */
 function getCurrentLang() {
   return localStorage.getItem('lang') || 'fr';
 }
 
-/**
- * تعيين اللغة الحالية
- * @param {string} lang - اللغة الجديدة
- */
 function setCurrentLang(lang) {
   if (['fr', 'ar', 'en'].includes(lang)) {
     localStorage.setItem('lang', lang);
@@ -855,9 +883,6 @@ function setCurrentLang(lang) {
   return false;
 }
 
-// ============================================
-// تصدير للاستخدام في الصفحات الأخرى
-// ============================================
 if (typeof window !== 'undefined') {
   window.LANG_DATA = LANG_DATA;
   window.t = t;
