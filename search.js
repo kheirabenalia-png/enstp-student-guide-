@@ -4,283 +4,218 @@
 // ============================================
 
 // ============================================
-// 1. المرادفات (كلمات لها نفس المعنى)
+// 1. المرادفات
 // ============================================
-const SYNONYMS = {
+const SEARCH_SYNONYMS = {
   // فرنسي
-  "manger": ["restaurant", "repas", "bouffe", "café", "snack", "pizzeria", "boulangerie", "nourriture"],
-  "restaurant": ["manger", "repas", "snack", "café", "pizzeria"],
-  "salle": ["classe", "amphi", "amphithéâtre", "cours", "td", "tp"],
-  "amphi": ["amphithéâtre", "salle", "cours"],
-  "problème": ["aide", "souci", "difficulté", "question", "service"],
-  "aide": ["problème", "service", "secours", "assistance"],
-  "absence": ["absent", "justificatif", "justification", "manqué"],
-  "carte": ["badge", "étudiant", "identité"],
-  "transport": ["bus", "taxi", "métro", "tram", "déplacement"],
-  "bus": ["transport", "arrêt", "ligne"],
-  "taxi": ["transport", "voiture", "station"],
-  "cité": ["résidence", "logement", "chambre", "internat"],
-  "résidence": ["cité", "logement", "chambre"],
-  "prof": ["enseignant", "professeur", "maître", "enseignants"],
-  "enseignant": ["prof", "professeur", "maître"],
-  "enseignants": ["prof", "professeur", "enseignant"],
-  "bibliothèque": ["livre", "adhésion", "inscription", "prêt"],
-  "notes": ["résultats", "examens", "notes", "moyenne"],
-  "examens": ["notes", "résultats", "contrôle"],
-  "tourisme": ["visite", "lieu", "sortie", "touristique", "alger"],
-  
+  "salle": ["classe","amphi","amphithéâtre","cours","td","tp","laboratoire","labo"],
+  "amphi": ["amphithéâtre","salle","grande salle"],
+  "laboratoire": ["labo","tp","salle de tp"],
+  "prof": ["enseignant","professeur","maître","intervenant"],
+  "enseignant": ["prof","professeur","maître"],
+  "probleme": ["aide","souci","difficulté","service"],
+  "aide": ["probleme","service","secours"],
+  "absence": ["absent","justificatif","manqué"],
+  "carte": ["badge","identité","carte etudiant"],
+  "transport": ["bus","taxi","métro","tram","déplacement"],
+  "bus": ["transport","arrêt","ligne"],
+  "taxi": ["transport","voiture","station"],
+  "cite": ["résidence","logement","chambre"],
+  "residence": ["cite","logement","chambre"],
+  "manger": ["restaurant","repas","café","snack","pizzeria","boulangerie"],
+  "restaurant": ["manger","repas","snack","café"],
+  "bibliotheque": ["livre","adhésion","inscription","prêt"],
+  "notes": ["résultats","examens","moyenne"],
+  "examens": ["notes","résultats","contrôle"],
+  "sport": ["football","basket","running","gym"],
+  "medecin": ["docteur","santé","hopital","infirmerie"],
+  "pharmacie": ["médicament","santé"],
+  "info": ["informatique","programmation"],
+
   // عربي
-  "أكل": ["مطعم", "ماكلة", "وجبة", "مأكولات", "طعام"],
-  "ماكلة": ["أكل", "مطعم", "وجبة", "طعام"],
-  "مطعم": ["أكل", "ماكلة", "وجبة", "طعام"],
-  "قاعة": ["قسم", "مدرج", "صف", "حصة"],
-  "مدرج": ["قاعة", "أمفي", "حصة"],
-  "مشكلة": ["مساعدة", "سؤال", "صعوبة", "خدمة"],
-  "مساعدة": ["مشكلة", "خدمة", "عون"],
-  "غياب": ["غائب", "تبرير", "مبرر", "تخلف"],
-  "بطاقة": ["بطاقة الطالب", "هوية", "شارة"],
-  "نقل": ["حافلة", "طاكسي", "مترو", "ترامواي", "تنقل"],
-  "حافلة": ["نقل", "باص", "محطة", "خط"],
-  "طاكسي": ["نقل", "سيارة", "محطة", "تكسي"],
-  "إقامة": ["حي", "سكن", "غرفة", "داخلية"],
-  "سكن": ["إقامة", "حي", "غرفة"],
-  "أستاذ": ["معلم", "بروف", "أساتذة"],
-  "أساتذة": ["أستاذ", "معلم", "بروف"],
-  "مكتبة": ["كتاب", "انضمام", "تسجيل", "استعارة"],
-  "نقاط": ["نتائج", "امتحانات", "معدل", "علامات"],
-  "امتحانات": ["نقاط", "نتائج", "اختبارات"],
-  "سياحة": ["زيارة", "أماكن", "خرجة", "العاصمة", "الجزائر"],
-  
+  "قاعة": ["قسم","مدرج","صف","حصة","سال"],
+  "مدرج": ["قاعة","أمفي","حصة"],
+  "مخبر": ["مختبر","تجربة","أعمال تطبيقية"],
+  "أستاذ": ["معلم","بروف","مدرس"],
+  "أساتذة": ["أستاذ","معلم","بروف"],
+  "مشكلة": ["مساعدة","سؤال","صعوبة","خدمة"],
+  "مساعدة": ["مشكلة","خدمة","عون"],
+  "غياب": ["غائب","تبرير","مبرر"],
+  "بطاقة": ["هوية","شارة"],
+  "نقل": ["حافلة","طاكسي","مترو","ترامواي","تنقل"],
+  "حافلة": ["نقل","باص","محطة"],
+  "طاكسي": ["نقل","سيارة","تكسي"],
+  "إقامة": ["حي","سكن","غرفة"],
+  "سكن": ["إقامة","حي","غرفة"],
+  "أكل": ["مطعم","ماكلة","وجبة","طعام"],
+  "ماكلة": ["أكل","مطعم","وجبة"],
+  "مطعم": ["أكل","ماكلة","وجبة"],
+  "مكتبة": ["كتاب","انضمام","استعارة"],
+  "نقاط": ["نتائج","امتحانات","معدل"],
+  "امتحانات": ["نقاط","نتائج","اختبارات"],
+  "رياضة": ["كرة","جري","تمرين"],
+  "طبيب": ["عيادة","صحة","مستشفى"],
+  "صيدلية": ["دواء","صحة"],
+  "إعلام": ["معلوماتية","برمجة"],
+
   // إنجليزي
-  "eat": ["restaurant", "food", "meal", "snack", "café"],
-  "food": ["eat", "restaurant", "meal"],
-  "room": ["class", "amphi", "classroom", "lecture"],
-  "problem": ["help", "issue", "question", "service"],
-  "help": ["problem", "service", "assistance"],
-  "absence": ["absent", "justification", "missed"],
-  "card": ["badge", "student", "id"],
-  "transport": ["bus", "taxi", "metro", "tram"],
-  "bus": ["transport", "stop", "line"],
-  "taxi": ["transport", "car", "station"],
-  "dorm": ["residence", "housing", "room"],
-  "teacher": ["professor", "instructor", "teachers"],
-  "teachers": ["teacher", "professor", "instructors"],
-  "library": ["book", "membership", "registration"],
-  "grades": ["results", "exams", "marks"],
-  "exams": ["grades", "results", "tests"],
-  "tourism": ["visit", "place", "outing", "algiers"]
+  "room": ["class","amphi","classroom","lecture"],
+  "teacher": ["professor","instructor"],
+  "problem": ["help","issue","service"],
+  "absence": ["absent","justification"],
+  "card": ["badge","student","id"],
+  "bus": ["transport","stop","line"],
+  "taxi": ["transport","car","station"],
+  "dorm": ["residence","housing","room"],
+  "eat": ["restaurant","food","meal"],
+  "food": ["eat","restaurant","meal"],
+  "library": ["book","membership"],
+  "grades": ["results","exams","marks"],
+  "sport": ["football","basket","running"],
+  "doctor": ["hospital","health"],
+  "pharmacy": ["medicine","health"]
 };
 
 // ============================================
-// 2. تصحيح الأخطاء الإملائية
+// 2. تطبيع النص
 // ============================================
-function levenshtein(a, b) {
-  if (a.length === 0) return b.length;
-  if (b.length === 0) return a.length;
-  const matrix = [];
-  for (let i = 0; i <= b.length; i++) matrix[i] = [i];
-  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
-  for (let i = 1; i <= b.length; i++) {
-    for (let j = 1; j <= a.length; j++) {
-      if (b.charAt(i - 1) === a.charAt(j - 1)) {
-        matrix[i][j] = matrix[i - 1][j - 1];
-      } else {
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j - 1] + 1,
-          matrix[i][j - 1] + 1,
-          matrix[i - 1][j] + 1
-        );
-      }
-    }
-  }
-  return matrix[b.length][a.length];
-}
-
-// ============================================
-// 3. تطبيع النص (توحيد الأحرف)
-// ============================================
-function normalize(text) {
+function searchNormalize(text) {
   if (!text) return '';
-  return text
-    .toString()
-    .toLowerCase()
-    .replace(/[éèêë]/g, 'e')
-    .replace(/[àâä]/g, 'a')
-    .replace(/[îï]/g, 'i')
-    .replace(/[ôö]/g, 'o')
-    .replace(/[ùûü]/g, 'u')
-    .replace(/[ç]/g, 'c')
-    // عربي: توحيد الألف
-    .replace(/[إأآا]/g, 'ا')
-    .replace(/[ىي]/g, 'ي')
-    .replace(/[ةه]/g, 'ه')
-    .replace(/[ًٌٍَُِّْ]/g, '') // حذف التشكيل
-    .trim();
+  return text.toString().toLowerCase()
+    .replace(/[éèêë]/g,'e').replace(/[àâä]/g,'a').replace(/[îï]/g,'i')
+    .replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/[ç]/g,'c')
+    .replace(/[إأآا]/g,'ا').replace(/[ىي]/g,'ي').replace(/[ةه]/g,'ه')
+    .replace(/[ًٌٍَُِّْ]/g,'').trim();
 }
 
 // ============================================
-// 4. توسيع الكلمة بالمرادفات
+// 3. توسيع الكلمة
 // ============================================
-function expandWord(word) {
-  const norm = normalize(word);
+function searchExpandWord(word) {
+  const norm = searchNormalize(word);
   const expanded = new Set([norm]);
-  
-  // ابحث في المرادفات
-  Object.keys(SYNONYMS).forEach(key => {
-    const normKey = normalize(key);
-    if (normKey === norm) {
-      SYNONYMS[key].forEach(syn => expanded.add(normalize(syn)));
+  Object.keys(SEARCH_SYNONYMS).forEach(key => {
+    if (searchNormalize(key) === norm) {
+      SEARCH_SYNONYMS[key].forEach(syn => expanded.add(searchNormalize(syn)));
     }
   });
-  
   return Array.from(expanded);
 }
 
 // ============================================
-// 5. البحث الرئيسي
+// 4. البحث الرئيسي
 // ============================================
-function smartSearch(query, sections, currentLang) {
-  const q = normalize(query);
+function smartSearch(query) {
+  const q = searchNormalize(query);
   if (!q) return [];
-  
-  // قسّم السؤال إلى كلمات
+
   const words = q.split(/\s+/).filter(w => w.length > 1);
   if (words.length === 0) return [];
-  
-  // وسّع كل كلمة بالمرادفات
-  const expandedWords = words.map(w => expandWord(w));
-  
+
+  const expandedWords = words.map(w => searchExpandWord(w));
   const results = [];
-  
-  sections.forEach(section => {
-    // ابحث في البطاقات العادية
+  const SECTIONS = window.SECTIONS || [];
+
+  SECTIONS.forEach(section => {
+    // الأقسام العادية (items)
     if (section.items) {
-      section.items.forEach(item => {
-        const score = scoreItem(item, expandedWords, section);
-        if (score > 0) {
-          results.push({
-            section: section,
-            item: item,
-            score: score,
-            type: 'item'
+      section.items.forEach((item, idx) => {
+        let score = 0;
+        const titleText = searchNormalize(
+          (item.titleKey ? (t(item.titleKey) || '') : '') + ' ' +
+          (item.title || '')
+        );
+        const descText = searchNormalize(
+          item.descKey ? (t(item.descKey) || '') : ''
+        );
+        const secText = searchNormalize(
+          section.titleKey ? (t(section.titleKey) || '') : ''
+        );
+
+        expandedWords.forEach(group => {
+          group.forEach(w => {
+            if (titleText.includes(w)) score += 10;
+            if (descText.includes(w)) score += 3;
+            if (secText.includes(w)) score += 1;
           });
+        });
+
+        if (score > 0) {
+          results.push({ section, item, itemIndex: idx, score });
         }
       });
     }
-    
-    // ابحث في شجرة المشاكل
-    if (section.tree) {
-      section.tree.forEach(node => {
-        const score = scoreTree(node, expandedWords, section);
-        if (score > 0) {
-          results.push({
-            section: section,
-            item: {
-              title: node.q,
-              desc: node.a.service,
-              procedure: node.a.procedure
-            },
-            score: score,
-            type: 'tree'
+
+    // الأقسام ذات الفئات (categories)
+    if (section.categories) {
+      section.categories.forEach(cat => {
+        // فئة الخريطة
+        if (cat.type === 'map' && cat.buildings) {
+          cat.buildings.forEach(b => {
+            const bText = searchNormalize(
+              (b.nameKey ? (t(b.nameKey) || '') : '') + ' ' + (b.name || '')
+            );
+            let score = 0;
+            expandedWords.forEach(group => group.forEach(w => {
+              if (bText.includes(w)) score += 10;
+            }));
+            if (score > 0) {
+              results.push({ 
+                section, 
+                item: { 
+                  titleKey: b.nameKey, 
+                  icon: b.icon, 
+                  title: b.name 
+                }, 
+                score 
+              });
+            }
+          });
+        }
+
+        // الفئات ذات items
+        if (cat.items) {
+          cat.items.forEach((item, idx) => {
+            let score = 0;
+            const titleText = searchNormalize(
+              (item.titleKey ? (t(item.titleKey) || '') : '') + ' ' + (item.title || '')
+            );
+            const descText = searchNormalize(
+              item.descKey ? (t(item.descKey) || '') : ''
+            );
+            const catText = searchNormalize(
+              cat.titleKey ? (t(cat.titleKey) || '') : ''
+            );
+
+            expandedWords.forEach(group => group.forEach(w => {
+              if (titleText.includes(w)) score += 10;
+              if (descText.includes(w)) score += 3;
+              if (catText.includes(w)) score += 1;
+            }));
+
+            if (score > 0) {
+              results.push({
+                section,
+                item,
+                category: cat,
+                itemIndex: idx,
+                score
+              });
+            }
           });
         }
       });
     }
   });
-  
-  // رتّب حسب الأهمية
+
   results.sort((a, b) => b.score - a.score);
-  
   return results;
 }
 
 // ============================================
-// 6. حساب أهمية النتيجة
-// ============================================
-function scoreItem(item, expandedWords, section) {
-  let score = 0;
-  
-  // اجمع كل النصوص
-  const titleText = normalize(
-    (item.title?.fr || '') + ' ' +
-    (item.title?.ar || '') + ' ' +
-    (item.title?.en || '')
-  );
-  const descText = normalize(
-    (item.desc?.fr || '') + ' ' +
-    (item.desc?.ar || '') + ' ' +
-    (item.desc?.en || '')
-  );
-  const sectionText = normalize(
-    (section.title?.fr || '') + ' ' +
-    (section.title?.ar || '') + ' ' +
-    (section.title?.en || '')
-  );
-  
-  expandedWords.forEach(wordGroup => {
-    wordGroup.forEach(word => {
-      // في العنوان = 10 نقاط
-      if (titleText.includes(word)) score += 10;
-      // في الوصف = 3 نقاط
-      if (descText.includes(word)) score += 3;
-      // في عنوان القسم = 1 نقطة
-      if (sectionText.includes(word)) score += 1;
-    });
-  });
-  
-  return score;
-}
-
-function scoreTree(node, expandedWords, section) {
-  let score = 0;
-  const qText = normalize(
-    (node.q?.fr || '') + ' ' +
-    (node.q?.ar || '') + ' ' +
-    (node.q?.en || '')
-  );
-  const aText = normalize(
-    (node.a?.service?.fr || '') + ' ' +
-    (node.a?.service?.ar || '') + ' ' +
-    (node.a?.service?.en || '') + ' ' +
-    (node.a?.procedure?.fr || '') + ' ' +
-    (node.a?.procedure?.ar || '') + ' ' +
-    (node.a?.procedure?.en || '')
-  );
-  
-  expandedWords.forEach(wordGroup => {
-    wordGroup.forEach(word => {
-      if (qText.includes(word)) score += 10;
-      if (aText.includes(word)) score += 3;
-    });
-  });
-  
-  return score;
-}
-
-// ============================================
-// 7. اقتراحات ذكية (عند عدم وجود نتائج)
-// ============================================
-function suggestWords(query) {
-  const q = normalize(query);
-  const suggestions = [];
-  
-  // إذا كان السؤال قريباً من كلمة معروفة
-  Object.keys(SYNONYMS).forEach(key => {
-    const dist = levenshtein(q, normalize(key));
-    if (dist <= 2 && dist > 0) {
-      suggestions.push({ word: key, distance: dist });
-    }
-  });
-  
-  suggestions.sort((a, b) => a.distance - b.distance);
-  return suggestions.slice(0, 3).map(s => s.word);
-}
-
-// ============================================
-// تصدير الدوال
+// تصدير
 // ============================================
 if (typeof window !== 'undefined') {
   window.smartSearch = smartSearch;
-  window.suggestWords = suggestWords;
-  window.normalize = normalize;
+  window.searchNormalize = searchNormalize;
 }
