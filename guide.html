@@ -5,442 +5,25 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Guide de survie ENSTP</title>
 
-<!-- Theme (avant le CSS) -->
 <script src="theme.js"></script>
 
-<!-- PWA -->
 <meta name="theme-color" content="#c2410c">
+<meta name="description" content="Guide de survie ENSTP — 3 langues, hors ligne">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="ENSTP Guide">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 
-<!-- Style -->
 <link rel="stylesheet" href="style.css">
-
-<style>
-/* ============ إضافات خاصة بـ guide.html ============ */
-.guide-header{
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
-  color:#fff;
-  padding:60px 20px 30px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-.guide-header::before{
-  content:"";position:absolute;inset:0;
-  background:radial-gradient(circle at 50% 0%,rgba(255,255,255,.15),transparent 60%);
-}
-.guide-header>*{position:relative;z-index:1}
-.guide-header h1{margin:0;font-size:clamp(1.4rem,4vw,2rem);font-weight:800}
-.guide-header p{margin:6px 0 0;opacity:.9;font-size:.95rem}
-.guide-home{
-  position:absolute;top:18px;right:18px;
-  color:#fff;text-decoration:none;font-size:.85rem;
-  background:rgba(255,255,255,.15);padding:6px 12px;border-radius:20px;
-  font-weight:600;
-}
-html[dir="rtl"] .guide-home{right:auto;left:18px}
-
-.search-bar{
-  padding:14px 16px;
-  background:var(--card);
-  border-bottom:1px solid var(--line);
-  position:sticky;top:0;z-index:50;
-}
-.search-bar input{
-  width:100%;padding:14px 18px;
-  border:2px solid var(--line);
-  border-radius:14px;
-  background:var(--bg);
-  color:var(--ink);
-  font-size:1rem;outline:none;
-  transition:all .2s;
-}
-.search-bar input:focus{
-  border-color:var(--acc);
-  box-shadow:0 0 0 4px var(--acc-soft);
-}
-
-.guide-main{
-  max-width:800px;
-  margin:0 auto;
-  padding:20px 16px 80px;
-}
-
-/* Back button */
-.back-btn{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:8px 16px;
-  background:var(--acc-soft);
-  color:var(--acc);
-  border-radius:20px;
-  font-weight:600;
-  font-size:.9rem;
-  margin-bottom:20px;
-  cursor:pointer;
-  transition:all .2s;
-}
-.back-btn:hover{transform:translateX(-4px)}
-html[dir="rtl"] .back-btn:hover{transform:translateX(4px)}
-
-/* Section title */
-.section-title{
-  font-size:1.6rem;
-  color:var(--acc);
-  margin:0 0 10px;
-  font-weight:800;
-}
-.section-intro{
-  color:var(--mut);
-  margin:0 0 24px;
-  font-size:1rem;
-  line-height:1.6;
-}
-
-/* ============ الخريطة ============ */
-.map-wrap{
-  position:relative;
-  width:100%;
-  aspect-ratio:1;
-  max-width:520px;
-  margin:16px auto;
-  background:linear-gradient(135deg,var(--acc-soft),var(--card));
-  border:2px solid var(--line);
-  border-radius:24px;
-  overflow:hidden;
-  box-shadow:var(--shadow-3);
-}
-.map-svg{
-  position:absolute;inset:0;
-  width:100%;height:100%;
-  opacity:.35;
-}
-.map-point{
-  position:absolute;
-  transform:translate(-50%,-50%);
-  width:42px;height:42px;
-  border-radius:50%;
-  background:#fff;
-  border:3px solid var(--acc);
-  font-size:18px;
-  cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 6px 16px rgba(0,0,0,.2),inset 0 -2px 4px rgba(0,0,0,.05);
-  transition:all .25s;
-  padding:0;
-  font-family:inherit;
-}
-.map-point:hover,.map-point:active{
-  transform:translate(-50%,-50%) scale(1.2);
-  z-index:10;
-  box-shadow:0 10px 25px rgba(0,0,0,.3);
-}
-
-/* ============ البطاقات ============ */
-.item-card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:var(--radius-m);
-  padding:18px;
-  margin:12px 0;
-  box-shadow:var(--shadow-1);
-  transition:var(--transition);
-}
-.item-card:hover{
-  transform:translateY(-3px);
-  box-shadow:var(--shadow-3);
-}
-.item-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-  margin-bottom:8px;
-}
-.item-head h3{
-  margin:0;
-  font-size:1.05rem;
-  color:var(--ink);
-  flex:1;
-  font-weight:700;
-}
-.qr-btn{
-  background:var(--acc-soft);
-  border:0;
-  color:var(--acc);
-  padding:8px 12px;
-  border-radius:10px;
-  cursor:pointer;
-  font-size:1rem;
-  flex-shrink:0;
-  transition:all .2s;
-}
-.qr-btn:hover{transform:scale(1.1)}
-.item-desc{
-  color:var(--mut);
-  margin:6px 0;
-  font-size:.95rem;
-  line-height:1.6;
-}
-.item-extra{
-  display:inline-block;
-  background:var(--acc-soft);
-  color:var(--acc);
-  padding:4px 10px;
-  border-radius:8px;
-  font-size:.82rem;
-  font-weight:600;
-  margin:6px 0;
-}
-.item-img{
-  width:100%;
-  border-radius:12px;
-  margin:10px 0;
-  display:block;
-  box-shadow:var(--shadow-2);
-}
-.item-video{
-  position:relative;
-  padding-bottom:56.25%;
-  height:0;
-  margin:10px 0;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:var(--shadow-2);
-}
-.item-video iframe{
-  position:absolute;
-  top:0;left:0;
-  width:100%;height:100%;
-  border:0;
-}
-.item-steps{
-  margin:12px 0;
-  padding:0;
-  list-style:none;
-  counter-reset:step;
-}
-.item-steps li{
-  position:relative;
-  padding:10px 0 10px 42px;
-  border-bottom:1px solid var(--line);
-  counter-increment:step;
-  font-size:.92rem;
-  color:var(--mut);
-  line-height:1.5;
-}
-.item-steps li:last-child{border-bottom:0}
-.item-steps li::before{
-  content:counter(step);
-  position:absolute;
-  left:0;top:10px;
-  width:28px;height:28px;
-  background:var(--acc);
-  color:#fff;
-  border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:.85rem;font-weight:700;
-}
-html[dir="rtl"] .item-steps li{padding:10px 42px 10px 0}
-html[dir="rtl"] .item-steps li::before{left:auto;right:0}
-
-.item-services{
-  margin:10px 0 0;
-  padding:0;
-  list-style:none;
-}
-.item-services li{
-  padding:6px 0 6px 24px;
-  position:relative;
-  font-size:.88rem;
-  color:var(--mut);
-}
-.item-services li::before{
-  content:"✓";
-  position:absolute;
-  left:0;
-  color:var(--acc);
-  font-weight:700;
-}
-html[dir="rtl"] .item-services li{padding:6px 24px 6px 0}
-html[dir="rtl"] .item-services li::before{left:auto;right:0}
-
-/* ============ الفئات ============ */
-.category-block{
-  margin:24px 0;
-  padding:16px;
-  background:var(--bg-2);
-  border-radius:var(--radius-m);
-  border:1px solid var(--line);
-}
-.category-head{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:14px;
-  padding-bottom:10px;
-  border-bottom:2px solid var(--acc-soft);
-}
-.category-head .cat-icon{font-size:1.6rem}
-.category-head h2{
-  margin:0;
-  font-size:1.15rem;
-  color:var(--acc);
-  font-weight:700;
-}
-
-/* ============ شريط "لا نتيجة" ============ */
-.empty{
-  text-align:center;
-  padding:60px 20px;
-  color:var(--mut);
-}
-.empty b{display:block;font-size:3rem;margin-bottom:12px}
-
-/* ============ QR Grid ============ */
-.qr-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-  gap:14px;
-  margin:20px 0;
-}
-.qr-item{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:14px 8px;
-  text-align:center;
-  box-shadow:var(--shadow-1);
-  transition:all .2s;
-}
-.qr-item:hover{transform:translateY(-4px);box-shadow:var(--shadow-3)}
-.qr-box{
-  background:#fff;
-  padding:8px;
-  display:inline-block;
-  border-radius:10px;
-  margin-bottom:8px;
-}
-.qr-box img,.qr-box canvas{display:block!important;max-width:100%}
-.qr-item .qr-num{font-size:.72rem;color:var(--mut);font-weight:600}
-.qr-item .qr-label{font-size:.78rem;font-weight:700;color:var(--acc);margin-top:4px;line-height:1.3}
-
-.qr-actions{
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  margin:20px 0;
-  flex-wrap:wrap;
-}
-.qr-action-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:10px 20px;
-  background:var(--acc);
-  color:#fff;
-  border-radius:24px;
-  font-weight:600;
-  font-size:.9rem;
-  border:0;
-  cursor:pointer;
-  font-family:inherit;
-  box-shadow:var(--shadow-2);
-  transition:all .2s;
-}
-.qr-action-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-3)}
-.qr-action-btn.secondary{
-  background:var(--card);
-  color:var(--acc);
-  border:2px solid var(--acc);
-}
-
-/* ============ Overlay QR ============ */
-.qr-overlay{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.85);
-  backdrop-filter:blur(6px);
-  display:flex;align-items:center;justify-content:center;
-  z-index:9999;
-  padding:20px;
-  animation:fadeIn .25s;
-}
-.qr-overlay .box{
-  background:#fff;
-  padding:24px;
-  border-radius:20px;
-  text-align:center;
-  max-width:340px;
-  width:100%;
-  box-shadow:0 30px 60px rgba(0,0,0,.5);
-}
-.qr-overlay h3{margin:0 0 8px;color:#c2410c;font-size:1.15rem}
-.qr-overlay p{margin:0 0 16px;color:#667085;font-size:.85rem;line-height:1.4}
-.qr-overlay .qr-holder{
-  background:#fff;padding:12px;
-  display:inline-block;border-radius:12px;
-  border:1px solid #e5e1d8;
-}
-.qr-overlay .qr-url{
-  margin:16px 0 0;
-  font-size:.72rem;
-  color:#94a3b8;
-  word-break:break-all;
-  line-height:1.4;
-}
-.qr-overlay .close-btn{
-  margin-top:16px;
-  padding:10px 24px;
-  background:#c2410c;
-  color:#fff;
-  border:0;
-  border-radius:20px;
-  font-weight:600;
-  cursor:pointer;
-  font-size:.9rem;
-  font-family:inherit;
-}
-.qr-overlay .copy-btn{
-  margin-top:8px;
-  padding:8px 20px;
-  background:#f3f4f6;
-  color:#374151;
-  border:0;
-  border-radius:20px;
-  font-weight:600;
-  cursor:pointer;
-  font-size:.85rem;
-  font-family:inherit;
-  margin-left:6px;
-}
-
-/* ============ طباعة ============ */
-@media print{
-  .top-controls,.search-bar,.back-btn,.qr-actions,.guide-home,
-  .install-banner,.qr-btn{display:none!important}
-  body{background:#fff!important;color:#000!important}
-  .guide-header{background:#c2410c!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .qr-item,.item-card{break-inside:avoid;page-break-inside:avoid;box-shadow:none;border:1px solid #ccc}
-  .qr-grid{grid-template-columns:repeat(3,1fr)!important}
-}
-
-@media(max-width:640px){
-  .guide-main{padding:16px 12px 60px}
-  .section-title{font-size:1.3rem}
-  .qr-grid{grid-template-columns:repeat(2,1fr)}
-}
-</style>
 </head>
 <body>
 
-<!-- Offline banner -->
-<div class="offline-banner">📴 Mode hors ligne</div>
+<div class="offline-banner" id="offline-banner">📴 Mode hors ligne</div>
 
-<!-- Controls -->
+<!-- ============================================ -->
+<!-- الشريط العلوي -->
+<!-- ============================================ -->
 <div class="top-controls">
   <div class="pill">
     <button onclick="setLang('fr')" data-lang="fr">🇫🇷 FR</button>
@@ -453,41 +36,50 @@ html[dir="rtl"] .item-services li::before{left:auto;right:0}
   </div>
 </div>
 
-<!-- Theme Panel -->
+<!-- ============================================ -->
+<!-- لوحة الألوان -->
+<!-- ============================================ -->
 <div class="theme-panel" id="theme-panel">
   <div class="theme-panel-header">
     <strong id="tp-title">Couleur</strong>
     <button class="tp-close" onclick="closeThemePanel()">×</button>
   </div>
   <div class="theme-swatches">
-    <button class="swatch orange" onclick="setTheme('orange')" data-theme-btn="orange"></button>
-    <button class="swatch red" onclick="setTheme('red')" data-theme-btn="red"></button>
-    <button class="swatch green" onclick="setTheme('green')" data-theme-btn="green"></button>
-    <button class="swatch blue" onclick="setTheme('blue')" data-theme-btn="blue"></button>
-    <button class="swatch purple" onclick="setTheme('purple')" data-theme-btn="purple"></button>
-    <button class="swatch gray" onclick="setTheme('gray')" data-theme-btn="gray"></button>
+    <button class="swatch orange" onclick="setTheme('orange')" data-theme-btn="orange" title="Orange"></button>
+    <button class="swatch red" onclick="setTheme('red')" data-theme-btn="red" title="Rouge"></button>
+    <button class="swatch green" onclick="setTheme('green')" data-theme-btn="green" title="Vert"></button>
+    <button class="swatch blue" onclick="setTheme('blue')" data-theme-btn="blue" title="Bleu"></button>
+    <button class="swatch purple" onclick="setTheme('purple')" data-theme-btn="purple" title="Violet"></button>
+    <button class="swatch gray" onclick="setTheme('gray')" data-theme-btn="gray" title="Gris"></button>
   </div>
 </div>
 
-<!-- Header -->
-<header class="guide-header">
-  <a href="index.html" class="guide-home" id="home-link">🏠 Accueil</a>
-  <h1 id="site-name">Guide de survie ENSTP</h1>
-  <p id="site-tagline">Ton premier jour, dans ta poche.</p>
+<!-- ============================================ -->
+<!-- الرأس -->
+<!-- ============================================ -->
+<header style="background:var(--acc);color:#fff;padding:18px 16px 14px;position:relative">
+  <a href="index.html" style="position:absolute;top:18px;right:16px;color:#fff;text-decoration:none;font-size:.85rem;opacity:.85;font-weight:600" id="home-link">🏠 Accueil</a>
+  <h1 id="siteName" style="margin:0;font-size:1.35rem">Guide de survie ENSTP</h1>
+  <p id="tagline" style="margin:4px 0 0;opacity:.9;font-size:.9rem">Ton premier jour, dans ta poche.</p>
 </header>
 
-<!-- Search -->
-<div class="search-bar">
-  <input id="q" placeholder="🔎 Chercher…" oninput="doSearch(this.value)" autocomplete="off">
+<!-- ============================================ -->
+<!-- مربع البحث -->
+<!-- ============================================ -->
+<div class="search-bar" style="padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line)">
+  <input id="q" placeholder="🔎 Chercher…" oninput="doSearch(this.value)" 
+         style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-size:1rem;outline:none">
 </div>
 
-<!-- Main -->
-<main class="guide-main" id="app"></main>
+<!-- ============================================ -->
+<!-- المحتوى الرئيسي -->
+<!-- ============================================ -->
+<main id="app" style="max-width:900px;margin:0 auto;padding:14px"></main>
 
-<!-- QR Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-<!-- Data files (ordre important) -->
+<!-- ============================================ -->
+<!-- تحميل ملفات الأقسام -->
+<!-- ============================================ -->
+<script src="lang.js"></script>
 <script src="data/config.js"></script>
 <script src="data/ecole.js"></script>
 <script src="data/profs.js"></script>
@@ -503,78 +95,78 @@ html[dir="rtl"] .item-services li::before{left:auto;right:0}
 <script src="data/about.js"></script>
 <script src="data/qr.js"></script>
 <script src="data/index.js"></script>
-
-<!-- Langues + Recherche -->
-<script src="lang.js"></script>
 <script src="search.js"></script>
 
-<!-- Application -->
 <script>
 // ============================================
-// المتغيرات
+// المتغيرات العامة
 // ============================================
 let LANG = localStorage.getItem('lang') || 'fr';
-let CURRENT = { section: null, category: null };
-
-const $ = id => document.getElementById(id);
+let CURRENT_SECTION = null;
+let CURRENT_CATEGORY = null;
 
 // ============================================
-// تغيير اللغة
+// تبديل اللغة
 // ============================================
 function setLang(lang) {
-  if (!['fr','ar','en'].includes(lang)) return;
   LANG = lang;
   localStorage.setItem('lang', lang);
   document.documentElement.lang = lang;
   document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-
-  // حدث العنوان
-  $('site-name').textContent = t('appName');
-  $('site-tagline').textContent = t('tagline');
-  $('q').placeholder = t('search');
-  $('home-link').textContent = t('home');
-
-  // الأزرار النشطة
+  
+  // تحديث الرأس
+  if (typeof CONFIG !== 'undefined') {
+    document.getElementById('siteName').textContent = CONFIG.siteName[lang];
+    document.getElementById('tagline').textContent = CONFIG.tagline[lang];
+  }
+  
+  // تحديث placeholder
+  const q = document.getElementById('q');
+  if (q && typeof LANG_DATA !== 'undefined') {
+    q.placeholder = LANG_DATA[lang].search;
+  }
+  
+  // تحديث الأزرار النشطة
   document.querySelectorAll('[data-lang]').forEach(b => {
     b.classList.toggle('on', b.dataset.lang === lang);
   });
-
-  // أعد العرض
-  render();
-}
-
-// ============================================
-// العرض الرئيسي
-// ============================================
-function render() {
-  if (CURRENT.section) {
-    renderSection(CURRENT.section);
-  } else if (CURRENT.category) {
-    renderCategory(CURRENT.section, CURRENT.category);
+  
+  // تحديث الواجهة
+  if (CURRENT_SECTION) {
+    if (CURRENT_CATEGORY) {
+      renderCategory(CURRENT_SECTION, CURRENT_CATEGORY);
+    } else {
+      renderSection(CURRENT_SECTION);
+    }
   } else {
     renderHome();
   }
 }
 
 // ============================================
-// الصفحة الرئيسية
+// الصفحة الرئيسية (شبكة الأقسام)
 // ============================================
 function renderHome() {
-  CURRENT = { section: null, category: null };
-  if (location.hash) history.replaceState(null, '', location.pathname);
-
-  const app = $('app');
+  CURRENT_SECTION = null;
+  CURRENT_CATEGORY = null;
+  
+  const app = document.getElementById('app');
+  
+  if (typeof window.SECTIONS === 'undefined' || !window.SECTIONS.length) {
+    app.innerHTML = '<div style="text-align:center;padding:40px;color:var(--mut)"><b style="font-size:3rem">⏳</b><br>Chargement…</div>';
+    return;
+  }
+  
   let html = '<div class="tile-grid">';
-
-  (window.SECTIONS || []).forEach(s => {
-    if (s.id === 'qr') return; // لا نعرض QR هنا — له زر خاص
-    html += `<a class="tile-3d" href="#${s.id}" onclick="event.preventDefault();goSection('${s.id}')">
-      <span class="tile-icon">${s.icon}</span>
-      <span class="tile-label">${t(s.titleKey) || s.id}</span>
-    </a>`;
+  window.SECTIONS.forEach(s => {
+    const title = window.t ? window.t(s.titleKey, LANG) : s.titleKey;
+    html += '<button class="tile-3d" onclick="openSection(\'' + s.id + '\')">';
+    html += '<span class="tile-icon">' + s.icon + '</span>';
+    html += '<span class="tile-label">' + title + '</span>';
+    html += '</button>';
   });
-
   html += '</div>';
+  
   app.innerHTML = html;
   window.scrollTo(0, 0);
 }
@@ -582,374 +174,451 @@ function renderHome() {
 // ============================================
 // فتح قسم
 // ============================================
-function goSection(id) {
-  const s = (window.SECTIONS || []).find(x => x.id === id);
+function openSection(id) {
+  CURRENT_SECTION = id;
+  CURRENT_CATEGORY = null;
+  const s = window.SECTIONS.find(x => x.id === id);
   if (!s) return;
-  CURRENT = { section: id, category: null };
-  location.hash = id;
-  renderSection(id);
+  
+  // إذا كان القسم يحتوي على تصنيفات
+  if (s.categories && s.categories.length > 0) {
+    renderCategoriesList(id);
+    return;
+  }
+  
+  // إذا كان القسم من نوع QR
+  if (s.type === 'qr') {
+    renderQR(s);
+    return;
+  }
+  
+  // إذا كان القسم فيه items مباشرة
+  if (s.items && s.items.length > 0) {
+    renderItems(s, s.items);
+    return;
+  }
+  
+  // إذا كان من نوع map
+  if (s.buildings) {
+    renderMap(s);
+    return;
+  }
 }
 
-function goCategory(sectionId, catId) {
-  CURRENT = { section: sectionId, category: catId };
-  location.hash = sectionId + '/' + catId;
-  renderCategory(sectionId, catId);
+// ============================================
+// عرض تصنيفات قسم
+// ============================================
+function renderCategoriesList(sectionId) {
+  const s = window.SECTIONS.find(x => x.id === sectionId);
+  if (!s || !s.categories) return;
+  
+  const app = document.getElementById('app');
+  const title = window.t(s.titleKey, LANG);
+  const intro = window.t(s.introKey, LANG);
+  
+  let html = '<button class="back" onclick="renderHome()">' + window.t('back', LANG) + '</button>';
+  html += '<h2>' + s.icon + ' ' + title + '</h2>';
+  html += '<p style="color:var(--mut);margin-bottom:16px">' + intro + '</p>';
+  html += '<div class="tile-grid">';
+  
+  s.categories.forEach(c => {
+    const ct = c.titleKey ? window.t(c.titleKey, LANG) : (c.title || '');
+    html += '<button class="tile-3d" onclick="renderCategory(\'' + s.id + '\',\'' + c.id + '\')">';
+    html += '<span class="tile-icon">' + (c.icon || '📁') + '</span>';
+    html += '<span class="tile-label">' + ct + '</span>';
+    html += '</button>';
+  });
+  
+  html += '</div>';
+  app.innerHTML = html;
+  window.scrollTo(0, 0);
 }
 
-function goHome() {
-  CURRENT = { section: null, category: null };
-  history.replaceState(null, '', location.pathname);
-  renderHome();
+// ============================================
+// عرض تصنيف محدد
+// ============================================
+function renderCategory(sectionId, categoryId) {
+  const s = window.SECTIONS.find(x => x.id === sectionId);
+  if (!s || !s.categories) return;
+  const c = s.categories.find(x => x.id === categoryId);
+  if (!c) return;
+  
+  CURRENT_SECTION = sectionId;
+  CURRENT_CATEGORY = categoryId;
+  
+  // إذا كان تصنيف خريطة
+  if (c.type === 'map' && c.buildings) {
+    renderMap(s, c);
+    return;
+  }
+  
+  // إذا كان فيه items
+  if (c.items) {
+    renderItems(s, c.items, c);
+    return;
+  }
+}
+
+// ============================================
+// عرض البطاقات
+// ============================================
+function renderItems(section, items, category) {
+  const app = document.getElementById('app');
+  
+  let html = '';
+  if (category) {
+    html += '<button class="back" onclick="renderCategoriesList(\'' + section.id + '\')">' + window.t('back', LANG) + '</button>';
+    const ct = category.titleKey ? window.t(category.titleKey, LANG) : (category.title || '');
+    html += '<h2>' + (category.icon || '') + ' ' + ct + '</h2>';
+  } else {
+    html += '<button class="back" onclick="renderHome()">' + window.t('back', LANG) + '</button>';
+    const title = window.t(section.titleKey, LANG);
+    const intro = window.t(section.introKey, LANG);
+    html += '<h2>' + section.icon + ' ' + title + '</h2>';
+    html += '<p style="color:var(--mut);margin-bottom:16px">' + intro + '</p>';
+  }
+  
+  items.forEach((item, idx) => {
+    const title = window.t(item.titleKey, LANG);
+    const desc = item.descKey ? window.t(item.descKey, LANG) : '';
+    
+    html += '<div class="card-3d" style="margin-bottom:14px">';
+    
+    // رأس البطاقة
+    html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">';
+    html += '<h3 style="margin:0;color:var(--acc);font-size:1.1rem">' + (item.icon || '') + ' ' + title + '</h3>';
+    html += '<button onclick="showQR(\'' + section.id + '\',' + idx + ')" style="background:var(--acc-soft);border:0;color:var(--acc);padding:6px 10px;border-radius:10px;cursor:pointer;font-size:1rem">📱</button>';
+    html += '</div>';
+    
+    // صورة
+    if (item.img) {
+      html += '<img src="' + item.img + '" style="width:100%;border-radius:10px;margin:10px 0" loading="lazy" alt="">';
+    }
+    
+    // فيديو
+    if (item.video) {
+      html += '<div style="position:relative;padding-bottom:56.25%;height:0;margin:10px 0;border-radius:10px;overflow:hidden">';
+      html += '<iframe src="https://www.youtube.com/embed/' + item.video + '" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allowfullscreen loading="lazy"></iframe>';
+      html += '</div>';
+    }
+    
+    // الوصف
+    if (desc) {
+      html += '<p style="color:var(--mut);margin:8px 0;font-size:.95rem;line-height:1.6">' + desc + '</p>';
+    }
+    
+    // المواعيد
+    if (item.hours) {
+      html += '<p style="margin:6px 0;font-size:.9rem"><b>🕐 ' + window.t('labelHours', LANG) + ':</b> ' + item.hours + '</p>';
+    }
+    
+    // الميزانية
+    if (item.budget) {
+      html += '<p style="margin:6px 0;font-size:.9rem"><b>💰 ' + window.t('labelBudget', LANG) + ':</b> ' + item.budget + '</p>';
+    }
+    
+    // معلومة إضافية
+    if (item.extra) {
+      html += '<p style="margin:6px 0;font-size:.9rem;color:var(--acc)"><b>' + item.extra + '</b></p>';
+    }
+    
+    // الخدمات المتوفرة
+    if (item.services && item.services.length) {
+      html += '<p style="margin:10px 0 6px;font-weight:600;color:var(--acc)">' + window.t('labelServices', LANG) + ':</p>';
+      html += '<ul style="padding-' + (LANG === 'ar' ? 'right' : 'left') + ':20px;color:var(--mut);font-size:.9rem">';
+      item.services.forEach(srv => {
+        html += '<li>' + srv[LANG] + '</li>';
+      });
+      html += '</ul>';
+    }
+    
+    // الخطوات
+    if (item.steps && item.steps.length) {
+      html += '<details style="margin-top:10px">';
+      html += '<summary style="cursor:pointer;color:var(--acc);font-weight:600;font-size:.9rem">📋 ' + window.t('labelSteps', LANG) + '</summary>';
+      html += '<ol style="padding-' + (LANG === 'ar' ? 'right' : 'left') + ':20px;margin-top:8px;color:var(--mut);font-size:.9rem;line-height:1.7">';
+      item.steps.forEach(step => {
+        html += '<li>' + step[LANG] + '</li>';
+      });
+      html += '</ol>';
+      html += '</details>';
+    }
+    
+    // رابط
+    if (item.link) {
+      html += '<a href="' + item.link + '" target="_blank" rel="noopener" class="btn" style="margin-top:10px">🔗 ' + item.link + '</a>';
+    }
+    
+    // خريطة
+    if (item.map) {
+      const mapUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(item.map);
+      html += '<a href="' + mapUrl + '" target="_blank" rel="noopener" class="btn" style="margin-top:10px">' + window.t('viewMap', LANG) + '</a>';
+    }
+    
+    html += '</div>';
+  });
+  
+  app.innerHTML = html;
+  window.scrollTo(0, 0);
 }
 
 // ============================================
 // عرض قسم
 // ============================================
 function renderSection(id) {
-  const s = (window.SECTIONS || []).find(x => x.id === id);
-  if (!s) return renderHome();
-
-  const app = $('app');
-  let html = `<button class="back-btn" onclick="goHome()">${t('back')}</button>`;
-  html += `<h1 class="section-title">${s.icon} ${t(s.titleKey) || s.id}</h1>`;
-  html += `<p class="section-intro">${t(s.introKey) || ''}</p>`;
-
-  // QR Section (خاص)
-  if (s.type === 'qr') {
-    html += renderQRSection();
+  const s = window.SECTIONS.find(x => x.id === id);
+  if (!s) return;
+  CURRENT_SECTION = id;
+  CURRENT_CATEGORY = null;
+  
+  if (s.categories && s.categories.length > 0) {
+    renderCategoriesList(id);
+  } else if (s.type === 'qr') {
+    renderQR(s);
+  } else if (s.items) {
+    renderItems(s, s.items);
+  } else if (s.buildings) {
+    renderMap(s);
   }
-  // Category type (services, ecole, transport, sport, green)
-  else if (s.categories) {
-    html += '<div class="tile-grid">';
-    s.categories.forEach(cat => {
-      html += `<a class="tile-3d" href="#" onclick="event.preventDefault();goCategory('${s.id}','${cat.id}')">
-        <span class="tile-icon">${cat.icon || '📄'}</span>
-        <span class="tile-label">${t(cat.titleKey) || cat.title || cat.id}</span>
-      </a>`;
-    });
-    html += '</div>';
-  }
-  // Items type (simple)
-  else if (s.items) {
-    s.items.forEach((item, idx) => {
-      html += renderItem(item, s.id, idx);
-    });
-  }
-
-  app.innerHTML = html;
-  window.scrollTo(0, 0);
-}
-
-// ============================================
-// عرض فئة
-// ============================================
-function renderCategory(sectionId, catId) {
-  const s = (window.SECTIONS || []).find(x => x.id === sectionId);
-  if (!s || !s.categories) return renderHome();
-  const cat = s.categories.find(c => c.id === catId);
-  if (!cat) return renderSection(sectionId);
-
-  const app = $('app');
-  let html = `<button class="back-btn" onclick="goSection('${sectionId}')">${t('back')}</button>`;
-  html += `<h1 class="section-title">${cat.icon || '📄'} ${t(cat.titleKey) || cat.title || cat.id}</h1>`;
-  if (cat.descKey) html += `<p class="section-intro">${t(cat.descKey)}</p>`;
-
-  // خريطة
-  if (cat.type === 'map' && cat.buildings) {
-    html += renderMap(cat.buildings);
-  }
-  // items
-  else if (cat.items) {
-    cat.items.forEach((item, idx) => {
-      html += renderItem(item, sectionId, idx, cat);
-    });
-  }
-
-  app.innerHTML = html;
-  window.scrollTo(0, 0);
-}
-
-// ============================================
-// عرض بطاقة
-// ============================================
-function renderItem(item, sectionId, idx, cat) {
-  let html = '<div class="item-card">';
-  html += '<div class="item-head">';
-  html += `<h3>${item.icon || '📄'} ${t(item.titleKey) || item.title || ''}</h3>`;
-  html += `<button class="qr-btn" onclick="showQR('${sectionId}','${idx}')" title="${t('qrTitle')}">📱</button>`;
-  html += '</div>';
-
-  // صورة
-  if (item.img) {
-    html += `<img src="${item.img}" alt="" loading="lazy" class="item-img">`;
-  }
-
-  // وصف
-  if (item.descKey) {
-    html += `<p class="item-desc">${t(item.descKey)}</p>`;
-  }
-  if (item.desc) {
-    html += `<p class="item-desc">${typeof item.desc === 'object' ? item.desc[LANG] : item.desc}</p>`;
-  }
-
-  // معلومة إضافية
-  if (item.extra) {
-    html += `<span class="item-extra">${item.extra}</span>`;
-  }
-
-  // فيديو
-  if (item.video) {
-    html += `<div class="item-video"><iframe src="https://www.youtube.com/embed/${item.video}" allowfullscreen loading="lazy"></iframe></div>`;
-  }
-
-  // خطوات
-  if (item.steps) {
-    html += `<div style="margin-top:14px"><strong style="color:var(--acc);font-size:.9rem">📋 ${t('labelSteps')}</strong><ol class="item-steps">`;
-    item.steps.forEach(st => {
-      html += `<li>${st[LANG] || st.fr}</li>`;
-    });
-    html += '</ol></div>';
-  }
-
-  // خدمات
-  if (item.services) {
-    html += `<div style="margin-top:14px"><strong style="color:var(--acc);font-size:.9rem">✨ ${t('labelServices')}</strong><ul class="item-services">`;
-    item.services.forEach(sv => {
-      html += `<li>${sv[LANG] || sv.fr}</li>`;
-    });
-    html += '</ul></div>';
-  }
-
-  // خريطة
-  if (item.map) {
-    const url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(item.map);
-    html += `<a class="btn" target="_blank" rel="noopener" href="${url}" style="margin-top:10px;display:inline-block">${t('viewMap')}</a>`;
-  }
-
-  html += '</div>';
-  return html;
 }
 
 // ============================================
 // عرض الخريطة
 // ============================================
-function renderMap(buildings) {
-  let html = '<div class="map-wrap">';
-  html += `<svg class="map-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-    <rect x="15" y="55" width="70" height="42" fill="none" stroke="currentColor" stroke-width=".3" rx="1"/>
-    <rect x="20" y="30" width="60" height="22" fill="none" stroke="currentColor" stroke-width=".3" rx="1"/>
-    <rect x="15" y="10" width="70" height="16" fill="none" stroke="currentColor" stroke-width=".3" rx="1"/>
-    <line x1="50" y1="10" x2="50" y2="97" stroke="currentColor" stroke-width=".2" stroke-dasharray="1,1"/>
-  </svg>`;
-
+function renderMap(section, category) {
+  const app = document.getElementById('app');
+  const buildings = (category ? category.buildings : section.buildings) || [];
+  
+  let html = '';
+  if (category) {
+    html += '<button class="back" onclick="renderCategoriesList(\'' + section.id + '\')">' + window.t('back', LANG) + '</button>';
+    const ct = category.titleKey ? window.t(category.titleKey, LANG) : (category.title || '');
+    html += '<h2>' + (category.icon || '🗺️') + ' ' + ct + '</h2>';
+  } else {
+    html += '<button class="back" onclick="renderHome()">' + window.t('back', LANG) + '</button>';
+    html += '<h2>' + section.icon + ' ' + window.t(section.titleKey, LANG) + '</h2>';
+  }
+  
+  html += '<p style="color:var(--mut);margin-bottom:16px">' + (category && category.descKey ? window.t(category.descKey, LANG) : window.t(section.introKey, LANG)) + '</p>';
+  
+  // الخريطة
+  html += '<div style="position:relative;width:100%;aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:12px 0">';
+  html += '<div style="position:relative;width:100%;height:100%;background:linear-gradient(135deg,var(--acc-soft),var(--card))">';
   buildings.forEach(b => {
-    html += `<button class="map-point" style="left:${b.x}%;top:${b.y}%" onclick="showPlace('${b.nameKey}','${b.name || ''}','${b.icon}')" title="${t(b.nameKey) || b.name}">${b.icon}</button>`;
+    const name = b.nameKey ? window.t(b.nameKey, LANG) : (b.name || '');
+    html += '<button onclick="showPlace(\'' + section.id + '\',\'' + b.id + '\',\'' + (category ? category.id : '') + '\')" style="position:absolute;left:' + b.x + '%;top:' + b.y + '%;transform:translate(-50%,-50%);background:var(--card);border:2px solid var(--acc);border-radius:50%;width:40px;height:40px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.15)" title="' + name + '">' + b.icon + '</button>';
   });
-
   html += '</div>';
-  return html;
+  html += '</div>';
+  
+  // قائمة الأماكن
+  html += '<h3 style="color:var(--acc);margin:20px 0 12px">📍 ' + window.t('mapPlaces', LANG) + '</h3>';
+  buildings.forEach(b => {
+    const name = b.nameKey ? window.t(b.nameKey, LANG) : (b.name || '');
+    html += '<button class="card-3d" style="width:100%;text-align:left;margin-bottom:10px;cursor:pointer;padding:14px;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px" onclick="showPlace(\'' + section.id + '\',\'' + b.id + '\',\'' + (category ? category.id : '') + '\')">';
+    html += '<span style="font-size:1.5rem">' + b.icon + '</span>';
+    html += '<span style="font-weight:600">' + name + '</span>';
+    html += '</button>';
+  });
+  
+  app.innerHTML = html;
+  window.scrollTo(0, 0);
 }
 
-function showPlace(nameKey, nameFallback, icon) {
-  const label = t(nameKey) || nameFallback || nameKey;
-  alert(icon + ' ' + label);
+function showPlace(sectionId, buildingId, categoryId) {
+  const s = window.SECTIONS.find(x => x.id === sectionId);
+  if (!s) return;
+  let buildings;
+  if (categoryId) {
+    const c = s.categories.find(x => x.id === categoryId);
+    buildings = c ? c.buildings : [];
+  } else {
+    buildings = s.buildings;
+  }
+  if (!buildings) return;
+  const b = buildings.find(x => x.id === buildingId);
+  if (!b) return;
+  const name = b.nameKey ? window.t(b.nameKey, LANG) : (b.name || '');
+  alert('📍 ' + name);
 }
 
 // ============================================
-// قسم QR
+// عرض QR
 // ============================================
-function renderQRSection() {
-  const sections = (window.SECTIONS || []).filter(s => s.id !== 'qr');
-  const base = location.origin + location.pathname;
-
-  let html = `<p class="section-intro">${t('qrIntro')}</p>`;
-  html += `<div class="qr-actions">
-    <button class="qr-action-btn" onclick="window.print()">${t('qrPrint')}</button>
-  </div>`;
-  html += '<div class="qr-grid" id="qr-grid"></div>';
-
-  // بعد عرض الصفحة، نولّد QR
+function renderQR(section) {
+  const app = document.getElementById('app');
+  
+  let html = '<button class="back" onclick="renderHome()">' + window.t('back', LANG) + '</button>';
+  html += '<h2>' + section.icon + ' ' + window.t(section.titleKey, LANG) + '</h2>';
+  html += '<p style="color:var(--mut);margin-bottom:16px">' + window.t('qrIntro', LANG) + '</p>';
+  
+  html += '<div class="qr-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px" id="qr-grid"></div>';
+  
+  app.innerHTML = html;
+  
+  // توليد QR لكل قسم
   setTimeout(() => {
-    const grid = $('qr-grid');
+    const grid = document.getElementById('qr-grid');
     if (!grid) return;
-    sections.forEach((s, i) => {
-      const num = String(i + 1).padStart(2, '0');
-      const url = base + '#' + s.id;
+    const base = location.origin + location.pathname;
+    
+    window.SECTIONS.filter(s => s.id !== 'qr').forEach((sec, i) => {
+      const title = window.t(sec.titleKey, LANG);
       const div = document.createElement('div');
-      div.className = 'qr-item';
-      div.innerHTML = `<div class="qr-box" id="qr-box-${s.id}"></div>
-        <div class="qr-num">QR ${num}</div>
-        <div class="qr-label">${s.icon} ${t(s.titleKey)}</div>`;
+      div.className = 'card-3d';
+      div.style.textAlign = 'center';
+      div.style.padding = '14px';
+      
+      const qrId = 'qrc-' + sec.id;
+      div.innerHTML = '<div style="background:#fff;padding:8px;display:inline-block;border-radius:8px;margin-bottom:8px" id="' + qrId + '"></div><div style="font-size:.85rem;font-weight:600">' + sec.icon + ' ' + title + '</div>';
       grid.appendChild(div);
-
+      
       if (typeof QRCode !== 'undefined') {
-        new QRCode($('qr-box-' + s.id), {
-          text: url,
-          width: 110,
-          height: 110,
-          colorDark: '#1d2433',
-          colorLight: '#ffffff'
+        new QRCode(document.getElementById(qrId), {
+          text: base + '#' + sec.id,
+          width: 120, height: 120,
+          colorDark: '#1d2433', colorLight: '#ffffff'
         });
       }
     });
   }, 100);
-
-  return html;
 }
 
-// ============================================
-// QR للبطاقة
-// ============================================
-function showQR(sectionId, idx) {
-  const s = (window.SECTIONS || []).find(x => x.id === sectionId);
+function showQR(sectionId, itemIndex) {
+  const s = window.SECTIONS.find(x => x.id === sectionId);
   if (!s) return;
-
-  // جمع العناصر بحسب النوع
-  let item = null;
-  if (CURRENT.category && s.categories) {
-    const cat = s.categories.find(c => c.id === CURRENT.category);
-    if (cat && cat.items) item = cat.items[idx];
-  } else if (s.items) {
-    item = s.items[idx];
+  
+  let item;
+  // البحث في items أو في categories
+  if (s.items) {
+    item = s.items[itemIndex];
+  } else if (s.categories) {
+    // البحث في جميع الـ categories
+    let found = false;
+    for (const cat of s.categories) {
+      if (cat.items && cat.items[itemIndex]) {
+        item = cat.items[itemIndex];
+        found = true;
+        break;
+      }
+    }
+    if (!found) return;
+  } else {
+    return;
   }
   if (!item) return;
-
-  const title = t(item.titleKey) || item.title || '';
+  
   const url = location.origin + location.pathname + '#' + sectionId;
-
-  // Overlay
+  const title = window.t(item.titleKey, LANG);
+  
   const overlay = document.createElement('div');
-  overlay.className = 'qr-overlay';
   overlay.id = 'qr-overlay';
-  overlay.innerHTML = `<div class="box">
-    <h3>📱 ${title}</h3>
-    <p>${t('qrScan')}</p>
-    <div class="qr-holder" id="qr-modal-box"></div>
-    <p class="qr-url">${url}</p>
-    <button class="close-btn" onclick="closeQR()">${t('close')}</button>
-    <button class="copy-btn" onclick="copyQR('${url}')">${t('qrCopyLink')}</button>
-  </div>`;
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(4px)';
+  
+  const box = document.createElement('div');
+  box.style.cssText = 'background:#fff;padding:24px;border-radius:20px;text-align:center;max-width:320px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5)';
+  box.innerHTML = '<h3 style="margin:0 0 8px;color:#c2410c;font-size:1.1rem">📱 ' + title + '</h3>' +
+                  '<p style="margin:0 0 16px;color:#667085;font-size:.85rem">' + window.t('qrScan', LANG) + '</p>' +
+                  '<div id="qr-popup-box" style="background:#fff;padding:12px;display:inline-block;border-radius:12px;border:1px solid #e5e1d8"></div>' +
+                  '<p style="margin:16px 0 0;font-size:.75rem;color:#94a3b8;word-break:break-all">' + url + '</p>' +
+                  '<button onclick="closeQR()" style="margin-top:16px;padding:10px 24px;background:#c2410c;color:#fff;border:0;border-radius:20px;font-weight:600;cursor:pointer">' + window.t('close', LANG) + '</button>';
+  
+  overlay.appendChild(box);
   overlay.onclick = (e) => { if (e.target === overlay) closeQR(); };
   document.body.appendChild(overlay);
-
+  
   setTimeout(() => {
-    const box = $('qr-modal-box');
-    if (box && typeof QRCode !== 'undefined') {
-      box.innerHTML = '';
-      new QRCode(box, { text: url, width: 200, height: 200, colorDark: '#1d2433', colorLight: '#ffffff' });
+    const qrBox = document.getElementById('qr-popup-box');
+    if (qrBox && typeof QRCode !== 'undefined') {
+      qrBox.innerHTML = '';
+      new QRCode(qrBox, { text: url, width: 200, height: 200, colorDark: '#1d2433', colorLight: '#ffffff' });
     }
   }, 50);
 }
 
 function closeQR() {
-  const o = $('qr-overlay');
-  if (o) o.remove();
-}
-
-function copyQR(url) {
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(url).then(() => {
-      alert(t('qrCopied'));
-    });
-  } else {
-    prompt('Copier :', url);
-  }
+  const overlay = document.getElementById('qr-overlay');
+  if (overlay) overlay.remove();
 }
 
 // ============================================
 // البحث
 // ============================================
-function doSearch(query) {
-  const q = (query || '').trim();
-  if (!q) return render();
-
-  const results = (typeof smartSearch === 'function') ? smartSearch(q) : [];
-  const app = $('app');
-
+function doSearch(q) {
+  q = q.trim();
+  if (!q) { renderHome(); return; }
+  
+  const results = (typeof smartSearch === 'function') 
+    ? smartSearch(q, window.SECTIONS) 
+    : [];
+  
+  const app = document.getElementById('app');
+  
   if (results.length === 0) {
-    app.innerHTML = `<div class="empty"><b>🔍</b>${t('noResult')}<br><small>${t('tryOther')}</small></div>`;
-    window.scrollTo(0, 0);
+    app.innerHTML = '<div style="text-align:center;padding:40px;color:var(--mut)"><b style="font-size:3rem">🔍</b><br>' + window.t('noResult', LANG) + '<br><small>' + window.t('tryOther', LANG) + '</small></div>';
     return;
   }
-
-  let html = `<button class="back-btn" onclick="goHome()">${t('back')}</button>`;
-  html += `<h1 class="section-title">🔍 ${results.length}</h1>`;
-
-  results.slice(0, 40).forEach(r => {
-    const s = r.section;
-    const item = r.item;
-    html += '<div class="item-card" onclick="goSection(\'' + s.id + '\')" style="cursor:pointer">';
-    html += `<div class="item-head"><h3>${s.icon} ${t(item.titleKey) || item.title || ''}</h3></div>`;
-    if (item.descKey) html += `<p class="item-desc">${t(item.descKey)}</p>`;
+  
+  let html = '<h2>🔍 ' + results.length + '</h2>';
+  results.forEach(r => {
+    const title = window.t(r.item.titleKey, LANG);
+    const desc = r.item.descKey ? window.t(r.item.descKey, LANG) : '';
+    
+    html += '<div class="card-3d" style="margin-bottom:12px">';
+    html += '<h3 style="color:var(--acc);margin:0 0 6px">' + (r.item.icon || r.section.icon) + ' ' + title + '</h3>';
+    if (desc) html += '<p style="color:var(--mut);font-size:.9rem">' + desc + '</p>';
     html += '</div>';
   });
-
+  
   app.innerHTML = html;
-  window.scrollTo(0, 0);
 }
 
 // ============================================
-// التنقل من hash
+// فتح قسم من الرابط (#)
 // ============================================
 function handleHash() {
   const h = location.hash.slice(1);
-  if (!h) return renderHome();
-  const parts = h.split('/');
-  if (parts.length === 2) {
-    goCategory(parts[0], parts[1]);
-  } else if (parts[0]) {
-    goSection(parts[0]);
+  if (h && window.SECTIONS.find(s => s.id === h)) {
+    openSection(h);
+  } else {
+    renderHome();
   }
 }
 window.addEventListener('hashchange', handleHash);
 
 // ============================================
-// PWA Service Worker
+// حالة الاتصال
+// ============================================
+function updateOnlineStatus() {
+  document.body.classList.toggle('offline', !navigator.onLine);
+}
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();
+
+// ============================================
+// Service Worker
 // ============================================
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js', { scope: './' })
-      .then(reg => console.log('✅ SW enregistré'))
-      .catch(err => console.log('❌ SW:', err));
+      .then(() => console.log('✅ SW'))
+      .catch((err) => console.log('❌ SW:', err));
   });
 }
-
-// ============================================
-// حالة الاتصال
-// ============================================
-window.addEventListener('online', () => document.body.classList.remove('offline'));
-window.addEventListener('offline', () => document.body.classList.add('offline'));
-if (!navigator.onLine) document.body.classList.add('offline');
-
-// ============================================
-// إغلاق لوحة الألوان
-// ============================================
-document.addEventListener('click', (e) => {
-  const panel = $('theme-panel');
-  const controls = document.querySelector('.top-controls');
-  if (panel && panel.classList.contains('show') &&
-      !panel.contains(e.target) && !controls?.contains(e.target)) {
-    closeThemePanel();
-  }
-});
 
 // ============================================
 // البدء
 // ============================================
 (function init() {
+  // طبّق الثيم
   if (typeof applyTheme === 'function') applyTheme();
-  // حدّث العنوان
-  setTimeout(() => {
-    $('site-name').textContent = t('appName');
-    $('site-tagline').textContent = t('tagline');
-    $('q').placeholder = t('search');
-    $('home-link').textContent = t('home');
-    $('tp-title').textContent = t('tpTitle') || 'Couleur';
-    document.querySelectorAll('[data-lang]').forEach(b => {
-      b.classList.toggle('on', b.dataset.lang === LANG);
-    });
-  }, 100);
-  handleHash();
+  
+  // طبّق اللغة
+  setLang(localStorage.getItem('lang') || 'fr');
+  
+  // افتح القسم من الرابط
+  setTimeout(handleHash, 100);
 })();
 </script>
 
