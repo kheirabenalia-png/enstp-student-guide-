@@ -69,10 +69,10 @@ img{max-width:100%;height:auto;display:block}
 /* Text Size Panel */
 .text-size-panel{
   position:fixed;top:70px;right:16px;z-index:999;
-  background:var(--card,#fff);color:var(--ink,#1d2433);
+  background:#fff;color:#1d2433;
   padding:16px;border-radius:16px;
   box-shadow:0 20px 50px rgba(0,0,0,.25);
-  border:1px solid var(--line,#e5e1d8);
+  border:1px solid #e5e1d8;
   display:none;min-width:240px;
 }
 .text-size-panel.show{display:block;animation:fadeSlide .25s ease-out}
@@ -361,7 +361,7 @@ footer a{color:var(--acc);text-decoration:none;font-weight:600}
   padding:0 .25rem;font-family:inherit;
 }
 
-@media(max-width:37.5rem){
+@media(max-width:600px){
   .hero{background-attachment:scroll;background-position:center 30%;padding:5rem 1rem 3.125rem}
   .stats{grid-template-columns:1fr;gap:.75rem}
   .btn-3d{padding:1rem 2.5rem;font-size:1.05rem}
@@ -473,7 +473,7 @@ footer a{color:var(--acc);text-decoration:none;font-weight:600}
       <div class="feature"><span class="icon">📴</span><h3 id="f2-title">Hors ligne</h3><p id="f2-desc">Fonctionne sans Internet.</p></div>
       <div class="feature"><span class="icon">🌍</span><h3 id="f3-title">3 langues</h3><p id="f3-desc">FR / AR / EN.</p></div>
       <div class="feature"><span class="icon">🔎</span><h3 id="f4-title">Recherche</h3><p id="f4-desc">Trouvez tout en secondes.</p></div>
-      <div class="feature"><span class="icon">🎨</span><h3 id="f5-title">Thèmes</h3><p id="f5-desc">6 couleurs, mode sombre.</p></div>
+      <div class="feature"><span class="icon">🎨</span><h3 id="f5-title">9 thèmes</h3><p id="f5-desc">9 couleurs, mode sombre.</p></div>
       <div class="feature"><span class="icon">🅰️</span><h3 id="f7-title">Taille du texte</h3><p id="f7-desc">Ajustez la lecture.</p></div>
     </div>
   </div>
@@ -513,7 +513,7 @@ footer a{color:var(--acc);text-decoration:none;font-weight:600}
     <div class="stats">
       <div class="stat"><b>100%</b><span id="team-stat1">Gratuit</span></div>
       <div class="stat"><b>3</b><span id="team-stat2">Langues</span></div>
-      <div class="stat"><b>13</b><span id="team-stat3">Rubriques</span></div>
+      <div class="stat"><b>14</b><span id="team-stat3">Rubriques</span></div>
     </div>
     <p class="quote" id="team-quote">« Ne jamais rester sans savoir quoi faire. »</p>
   </div>
@@ -562,7 +562,7 @@ const LANG_DATA_INDEX = {
     f2Title: "Hors ligne", f2Desc: "Fonctionne sans Internet.",
     f3Title: "3 langues", f3Desc: "FR / AR / EN.",
     f4Title: "Recherche", f4Desc: "Trouvez tout en secondes.",
-    f5Title: "Thèmes", f5Desc: "6 couleurs, mode sombre.",
+    f5Title: "9 thèmes", f5Desc: "9 couleurs, mode sombre.",
     f7Title: "Taille du texte", f7Desc: "Ajustez la lecture.",
     galleryTitle: "📸 Découvrir l'école",
     cap1: "L'ENSTP", cap2: "Étudiants", cap3: "Laboratoires", cap4: "TP",
@@ -593,7 +593,7 @@ const LANG_DATA_INDEX = {
     f2Title: "بدون إنترنت", f2Desc: "يعمل بدون إنترنت.",
     f3Title: "3 لغات", f3Desc: "فرنسي، عربي، إنجليزي.",
     f4Title: "بحث ذكي", f4Desc: "جد كل شيء بسرعة.",
-    f5Title: "ألوان", f5Desc: "6 ألوان، وضع ليلي.",
+    f5Title: "9 ألوان", f5Desc: "9 ألوان، وضع ليلي.",
     f7Title: "حجم النص", f7Desc: "اضبط القراءة.",
     galleryTitle: "📸 اكتشف المدرسة",
     cap1: "المدرسة", cap2: "طلاب", cap3: "مخابر", cap4: "تطبيقي",
@@ -624,7 +624,7 @@ const LANG_DATA_INDEX = {
     f2Title: "Offline", f2Desc: "Works without Internet.",
     f3Title: "3 languages", f3Desc: "FR / AR / EN.",
     f4Title: "Smart search", f4Desc: "Find anything fast.",
-    f5Title: "Themes", f5Desc: "6 colors, dark mode.",
+    f5Title: "9 themes", f5Desc: "9 colors, dark mode.",
     f7Title: "Text size", f7Desc: "Adjust reading.",
     galleryTitle: "📸 Discover the school",
     cap1: "ENSTP", cap2: "Students", cap3: "Labs", cap4: "Practical work",
@@ -687,7 +687,6 @@ function setLang(lang) {
   });
 }
 
-// PWA install
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
@@ -733,7 +732,6 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Init
 setLang(localStorage.getItem('lang') || 'fr');
 if (typeof applyTextSize === 'function') applyTextSize();
 </script>
