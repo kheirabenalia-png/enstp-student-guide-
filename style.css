@@ -518,4 +518,114 @@ footer a{color:var(--acc);font-weight:600}
 .metro-tab:hover{background:var(--acc-soft);color:var(--acc)}
 .metro-tab.active{
   background:var(--acc);color:#fff;
-  box-shadow:0 4px 12px rgba(
+  box-shadow:0 4px 12px rgba(194,65,12,.3);
+}
+.metro-map{
+  position:relative;width:100%;height:200px;
+  border-radius:20px;overflow:hidden;
+  box-shadow:0 8px 24px rgba(0,0,0,.1);
+  border:1px solid var(--line);
+  margin-bottom:8px;
+}
+.metro-station{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  width:var(--station-size,1rem);
+  height:var(--station-size,1rem);
+  border-radius:50%;
+  background:#fff;
+  border:var(--station-border,2px) solid var(--station-color,#c2410c);
+  cursor:pointer;
+  transition:all .25s;
+  padding:0;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+  z-index:2;
+}
+.metro-station:hover{
+  transform:translate(-50%,-50%) scale(1.5);
+  z-index:10;
+  box-shadow:0 4px 16px rgba(0,0,0,.3);
+}
+.metro-station.key{
+  background:var(--station-color);
+  box-shadow:0 0 0 4px rgba(255,255,255,.8),0 4px 16px rgba(0,0,0,.3);
+}
+.metro-station.key::after{
+  content:"⭐";
+  position:absolute;
+  top:-18px;left:50%;
+  transform:translateX(-50%);
+  font-size:.7rem;
+}
+.metro-stations-list{
+  display:flex;flex-direction:column;gap:8px;
+  margin-top:12px;
+}
+.metro-station-card{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;
+  background:var(--card);border:1px solid var(--line);
+  border-radius:14px;cursor:pointer;
+  font-family:inherit;text-align:left;
+  transition:all .25s;color:var(--ink);
+  width:100%;
+}
+.metro-station-card:hover{
+  transform:translateX(4px);
+  border-color:var(--station-color,#c2410c);
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+}
+html[dir="rtl"] .metro-station-card:hover{
+  transform:translateX(-4px);
+}
+.metro-station-card.key{
+  background:linear-gradient(135deg,var(--card),var(--acc-soft));
+  border-color:var(--station-color,#c2410c);
+}
+.msc-num{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--station-color,#c2410c);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.9rem;flex-shrink:0;
+}
+.msc-info{flex:1;min-width:0}
+.msc-name{
+  font-weight:700;font-size:.95rem;color:var(--ink);
+  margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.msc-zone{font-size:.8rem;color:var(--mut)}
+.msc-badge{font-size:1.2rem;flex-shrink:0}
+
+[data-text-size-btn].active{
+  border-color:var(--acc)!important;
+  background:var(--acc-soft)!important;
+  color:var(--acc);
+  font-weight:600;
+}
+
+/* ==== Media Queries ==== */
+@media(max-width:600px){
+  .hero{background-attachment:scroll;background-position:center 30%;padding:5rem 1rem 3.125rem}
+  .stats{grid-template-columns:1fr;gap:.75rem}
+  .btn-3d{padding:1rem 2.5rem;font-size:1.05rem}
+  .btn-install{padding:.8125rem 1.5rem;font-size:.92rem}
+  .top-controls{top:.625rem;right:.625rem;gap:.3125rem}
+  html[dir="rtl"] .top-controls{right:auto;left:.625rem}
+  .pill button{padding:.3125rem .5625rem;font-size:.7rem}
+  .install-banner{left:.75rem;right:.75rem;bottom:.75rem}
+  .theme-panel,.text-size-panel{top:3.75rem;right:.625rem;left:.625rem;min-width:0}
+  html[dir="rtl"] .theme-panel,html[dir="rtl"] .text-size-panel{right:.625rem;left:.625rem}
+  .tile-grid{grid-template-columns:repeat(2,1fr);gap:.625rem}
+  .tile-3d{padding:1.25rem .625rem}
+  .tile-3d .tile-icon{font-size:1.8rem}
+  .tile-3d .tile-label{font-size:.82rem}
+  .metro-map{height:140px}
+  .metro-station-card{padding:12px}
+  .msc-num{width:30px;height:30px;font-size:.8rem}
+  .msc-name{font-size:.88rem}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+}
+
+@media(min-width:900px){
+  .tile-grid{grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:1rem}
+}
