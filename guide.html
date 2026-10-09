@@ -118,6 +118,7 @@
 <script src="data/services.js"></script>
 <script src="data/shopping.js"></script>
 <script src="data/transport.js"></script>
+<script src="data/metro.js"></script>
 <script src="data/cite.js"></script>
 <script src="data/sport.js"></script>
 <script src="data/green.js"></script>
@@ -160,7 +161,6 @@ function setLang(lang) {
     q.placeholder = LANG_DATA[lang].search || '🔎 Chercher…';
   }
   
-  // تحديث عناوين حجم النص
   if (typeof LANG_DATA !== 'undefined' && LANG_DATA[lang]) {
     const d = LANG_DATA[lang];
     const tsMap = {
@@ -225,13 +225,13 @@ function openSection(id) {
   const s = window.SECTIONS.find(x => x.id === id);
   if (!s) return;
   
-  // ✅ دعم الأقسام المخصصة (custom)
   if (s.type === 'custom' && typeof s.render === 'function') {
     document.getElementById('app').innerHTML = s.render();
     window.scrollTo(0, 0);
     return;
   }
   
+  if (s.type === 'metro-map') { renderMetroMap(s); return; }
   if (s.type === 'qr') { renderQR(s); return; }
   if (s.categories && s.categories.length > 0) { renderCategoriesList(id); return; }
   if (s.items && s.items.length > 0) { renderItems(s, s.items); return; }
@@ -294,6 +294,9 @@ function renderItems(section, items, category) {
     html += '<button class="back" onclick="renderCategoriesList(\'' + section.id + '\')">' + window.t('back', LANG) + '</button>';
     const ct = category.titleKey ? window.t(category.titleKey, LANG) : (category.title || '');
     html += '<h2>' + (category.icon || '') + ' ' + ct + '</h2>';
+    if (category.intro) {
+      html += '<p style="color:var(--mut);margin-bottom:16px">' + category.intro + '</p>';
+    }
   } else {
     html += '<button class="back" onclick="renderHome()">' + window.t('back', LANG) + '</button>';
     const title = window.t(section.titleKey, LANG);
@@ -303,8 +306,11 @@ function renderItems(section, items, category) {
   }
   
   items.forEach((item, idx) => {
-    const title = window.t(item.titleKey, LANG);
-    const desc = item.descKey ? window.t(item.descKey, LANG) : '';
+    // إذا كان العنوان كائناً (متعدد اللغات)
+    const title = (typeof item.title === 'object') ? (item.title[LANG] || item.title.fr) : window.t(item.titleKey, LANG);
+    const desc = item.desc 
+      ? ((typeof item.desc === 'object') ? (item.desc[LANG] || item.desc.fr) : item.desc)
+      : (item.descKey ? window.t(item.descKey, LANG) : '');
     
     html += '<div class="card-3d" style="margin-bottom:14px">';
     html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">';
@@ -356,7 +362,7 @@ function renderItems(section, items, category) {
     }
     
     if (item.link) {
-      html += '<a href="' + item.link + '" target="_blank" rel="noopener" class="btn" style="margin-top:10px;display:inline-block">🔗 ' + item.link + '</a>';
+      html += '<a href="' + item.link + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:10px 18px;background:var(--acc);color:#fff;border-radius:20px;text-decoration:none;font-size:.9rem;font-weight:600">📥 ' + (window.t('download') || 'Télécharger') + '</a>';
     }
     
     if (item.map) {
@@ -386,7 +392,8 @@ function renderSection(id) {
     return;
   }
   
-  if (s.categories && s.categories.length > 0) renderCategoriesList(id);
+  if (s.type === 'metro-map') renderMetroMap(s);
+  else if (s.categories && s.categories.length > 0) renderCategoriesList(id);
   else if (s.type === 'qr') renderQR(s);
   else if (s.items) renderItems(s, s.items);
   else if (s.buildings) renderMap(s);
@@ -453,6 +460,126 @@ function showPlace(sectionId, buildingId, categoryId) {
 }
 
 // ============================================
+// 🚇 عرض خريطة المترو والترامواي
+// ============================================
+function renderMetroMap(section) {
+  const app = document.getElementById('app');
+  
+  let html = '<button class="back" onclick="renderHome()">' + window.t('back', LANG) + '</button>';
+  html += '<h2>' + section.icon + ' ' + window.t(section.titleKey, LANG) + '</h2>';
+  html += '<p style="color:var(--mut);margin-bottom:20px">' + window.t(section.introKey, LANG) + '</p>';
+  
+  html += '<div class="metro-tabs">';
+  html += '<button class="metro-tab active" onclick="showMetroType(\'metro\')" data-tab="metro">🚇 <span>' + (window.t('trMetro') || 'Métro') + '</span></button>';
+  html += '<button class="metro-tab" onclick="showMetroType(\'tram\')" data-tab="tram">🚊 <span>' + (window.t('trTram') || 'Tramway') + '</span></button>';
+  html += '</div>';
+  
+  html += '<div id="metro-content"></div>';
+  
+  app.innerHTML = html;
+  
+  setTimeout(() => showMetroType('metro'), 100);
+}
+
+function showMetroType(type) {
+  document.querySelectorAll('.metro-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === type);
+  });
+  
+  const content = document.getElementById('metro-content');
+  if (!content) return;
+  
+  const stations = type === 'metro' ? window.METRO_STATIONS : window.TRAM_STATIONS;
+  if (!stations) return;
+  
+  const color = type === 'metro' ? '#2563eb' : '#dc2626';
+  const bg = type === 'metro' ? 'linear-gradient(135deg,#dbeafe,#eff6ff)' : 'linear-gradient(135deg,#fee2e2,#fef2f2)';
+  const icon = type === 'metro' ? '🚇' : '🚊';
+  const title = type === 'metro' ? (window.t('trMetro') || 'Métro') : (window.t('trTram') || 'Tramway');
+  
+  let html = '';
+  
+  // الخريطة
+  html += '<div class="metro-map" style="background:' + bg + '">';
+  html += '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;z-index:1">';
+  html += '<line x1="' + stations[0].x + '" y1="50" x2="' + stations[stations.length - 1].x + '" y2="50" stroke="' + color + '" stroke-width="2" stroke-linecap="round" opacity="0.8"/>';
+  html += '</svg>';
+  
+  stations.forEach((s, i) => {
+    const isKey = s.key;
+    const size = isKey ? '1.5rem' : '1rem';
+    const border = isKey ? '3px' : '2px';
+    html += '<button class="metro-station' + (isKey ? ' key' : '') + '" style="left:' + s.x + '%;top:50%;--station-color:' + color + ';--station-size:' + size + ';--station-border:' + border + '" onclick="showStation(\'' + type + '\',' + i + ')" title="' + s[LANG] + '"></button>';
+  });
+  
+  html += '</div>';
+  
+  // العنوان
+  html += '<h3 style="color:' + color + ';margin:20px 0 12px;font-size:1.15rem;display:flex;align-items:center;gap:8px">';
+  html += '<span style="font-size:1.4rem">' + icon + '</span>';
+  html += '<span>' + title + ' — ' + stations.length + ' stations</span>';
+  html += '</h3>';
+  
+  // قائمة المحطات
+  html += '<div class="metro-stations-list">';
+  stations.forEach((s, i) => {
+    const isKey = s.key;
+    html += '<button class="metro-station-card' + (isKey ? ' key' : '') + '" style="--station-color:' + color + '" onclick="showStation(\'' + type + '\',' + i + ')">';
+    html += '<div class="msc-num">' + (i + 1) + '</div>';
+    html += '<div class="msc-info">';
+    html += '<div class="msc-name">' + s[LANG] + '</div>';
+    html += '<div class="msc-zone">📍 ' + s.zone + '</div>';
+    html += '</div>';
+    if (isKey) html += '<div class="msc-badge">⭐</div>';
+    html += '</button>';
+  });
+  html += '</div>';
+  
+  content.innerHTML = html;
+}
+
+function showStation(type, index) {
+  const stations = type === 'metro' ? window.METRO_STATIONS : window.TRAM_STATIONS;
+  const s = stations[index];
+  if (!s) return;
+  
+  const color = type === 'metro' ? '#2563eb' : '#dc2626';
+  const icon = type === 'metro' ? '🚇' : '🚊';
+  const typeName = type === 'metro' ? (window.t('trMetro') || 'Métro') : (window.t('trTram') || 'Tramway');
+  
+  const overlay = document.createElement('div');
+  overlay.id = 'station-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(6px)';
+  
+  const box = document.createElement('div');
+  box.style.cssText = 'background:#fff;padding:28px;border-radius:24px;text-align:center;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5)';
+  box.innerHTML = 
+    '<div style="font-size:3rem;margin-bottom:12px">' + icon + '</div>' +
+    '<div style="display:inline-block;background:' + color + ';color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;margin-bottom:12px">' + typeName + '</div>' +
+    '<h3 style="margin:0 0 8px;color:#1d2433;font-size:1.3rem;font-weight:800">' + s[LANG] + '</h3>' +
+    '<p style="margin:0 0 6px;color:#667085;font-size:.9rem">📍 ' + s.zone + '</p>' +
+    '<p style="margin:12px 0;color:#94a3b8;font-size:.8rem">Station n° ' + (index + 1) + ' / ' + stations.length + '</p>' +
+    '<div style="display:flex;gap:8px;margin-top:16px">' +
+      '<button onclick="closeStation()" style="flex:1;padding:12px;background:' + color + ';color:#fff;border:0;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem">' + (window.t('close') || 'Fermer') + '</button>' +
+      '<button onclick="openStationMaps(\'' + encodeURIComponent(s.fr + ' ' + typeName + ' Alger') + '\')" style="flex:1;padding:12px;background:#f1f5f9;color:#1d2433;border:0;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem">📍 Maps</button>' +
+    '</div>';
+  
+  overlay.appendChild(box);
+  overlay.onclick = (e) => { if (e.target === overlay) closeStation(); };
+  document.body.appendChild(overlay);
+}
+
+function closeStation() {
+  const o = document.getElementById('station-overlay');
+  if (o) o.remove();
+}
+
+function openStationMaps(query) {
+  window.open('https://www.google.com/maps/search/?api=1&query=' + query, '_blank');
+  closeStation();
+}
+
+// ============================================
 // عرض QR
 // ============================================
 function renderQR(section) {
@@ -504,7 +631,7 @@ function showQR(sectionId, itemIndex, categoryId) {
   if (!item) return;
   
   const url = location.origin + location.pathname + '#' + sectionId;
-  const title = window.t(item.titleKey, LANG);
+  const title = (typeof item.title === 'object') ? (item.title[LANG] || item.title.fr) : window.t(item.titleKey, LANG);
   
   const overlay = document.createElement('div');
   overlay.id = 'qr-overlay';
@@ -553,8 +680,10 @@ function doSearch(q) {
   
   let html = '<h2>🔍 ' + results.length + '</h2>';
   results.forEach(r => {
-    const title = window.t(r.item.titleKey, LANG);
-    const desc = r.item.descKey ? window.t(r.item.descKey, LANG) : '';
+    const title = (typeof r.item.title === 'object') ? (r.item.title[LANG] || r.item.title.fr) : window.t(r.item.titleKey, LANG);
+    const desc = r.item.desc 
+      ? ((typeof r.item.desc === 'object') ? (r.item.desc[LANG] || r.item.desc.fr) : r.item.desc)
+      : (r.item.descKey ? window.t(r.item.descKey, LANG) : '');
     
     html += '<div class="card-3d" style="margin-bottom:12px">';
     html += '<h3 style="color:var(--acc);margin:0 0 6px">' + (r.item.icon || r.section.icon) + ' ' + title + '</h3>';
