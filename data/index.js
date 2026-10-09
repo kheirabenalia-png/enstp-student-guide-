@@ -15,7 +15,6 @@
     "shopping",
     "transport",
     "cite",
-    "natation",
     "sport",
     "green",
     "podcast",
