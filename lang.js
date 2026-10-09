@@ -40,7 +40,6 @@ const LANG_DATA = {
     sectionShopping: "Achats & restauration",
     sectionTransport: "Transport",
     sectionCite: "Cité universitaire",
-    sectionNatation: "Natation à Alger",
     sectionSport: "Sport",
     sectionGreen: "Projet vert",
     sectionPodcast: "Podcast étudiant",
@@ -206,15 +205,6 @@ const LANG_DATA = {
     citeRestoDesc: "Repas à tarif étudiant, 3 fois par jour.",
     citeEtude: "Salles d'étude",
     citeEtudeDesc: "Disponibles dans chaque résidence.",
-
-    // ============ 8. السباحة ============
-    natationIntro: "Où nager à Alger.",
-    natPiscine: "Piscines",
-    natPiscineDesc: "Piscines publiques et privées à Alger.",
-    natPlage: "Plages",
-    natPlageDesc: "Plages publiques et surveillées.",
-    natClub: "Clubs de natation",
-    natClubDesc: "Clubs étudiants et associations.",
 
     // ============ 9. الرياضة ============
     sportIntro: "Sport universitaire et hors campus.",
@@ -491,15 +481,7 @@ const LANG_DATA = {
     citeEtude: "قاعات الدراسة",
     citeEtudeDesc: "متوفرة في كل إقامة.",
 
-    // ============ 8. السباحة ============
-    natationIntro: "أين تسبح في الجزائر العاصمة.",
-    natPiscine: "مسابح",
-    natPiscineDesc: "مسابح عمومية وخاصة في الجزائر.",
-    natPlage: "شواطئ",
-    natPlageDesc: "شواطئ عمومية ومراقبة.",
-    natClub: "أندية السباحة",
-    natClubDesc: "أندية للطلاب وجمعيات.",
-
+    
     // ============ 9. الرياضة ============
     sportIntro: "الرياضة الجامعية وخارج الحرم.",
     sportUniv: "الرياضة الجامعية",
@@ -775,14 +757,7 @@ const LANG_DATA = {
     citeEtude: "Study rooms",
     citeEtudeDesc: "Available in each residence.",
 
-    // ============ 8. Swimming ============
-    natationIntro: "Where to swim in Algiers.",
-    natPiscine: "Swimming pools",
-    natPiscineDesc: "Public and private pools in Algiers.",
-    natPlage: "Beaches",
-    natPlageDesc: "Public and supervised beaches.",
-    natClub: "Swimming clubs",
-    natClubDesc: "Student clubs and associations.",
+    
 
     // ============ 9. Sport ============
     sportIntro: "University sport and off-campus.",
