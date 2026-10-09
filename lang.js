@@ -212,6 +212,11 @@ const LANG_DATA = {
     trGareTrain: "Gare ferroviaire",
     trGareTrainDesc: "Lignes SNTF vers l'est et l'ouest.",
 
+    trMetroMap: "Plan Métro & Tram",
+trMetroMapIntro: "Découvrez toutes les stations du métro et du tramway d'Alger.",
+trCatVTC: "Applications VTC",
+download: "Télécharger",
+
     // ============ 7. الإقامة ============
     citeIntro: "Vie à la cité universitaire.",
     citeGaridi: "Résidence Garidi",
@@ -516,6 +521,11 @@ const LANG_DATA = {
     trGareTrain: "محطة القطار",
     trGareTrainDesc: "خطوط SNTF نحو الشرق والغرب.",
 
+    trMetroMap: "خريطة المترو والترامواي",
+trMetroMapIntro: "اكتشف كل محطات مترو وترامواي الجزائر.",
+trCatVTC: "تطبيقات النقل",
+download: "تحميل",
+
     // ============ 7. الإقامة ============
     citeIntro: "الحياة في الإقامة الجامعية.",
     citeGaridi: "إقامة قاريدي",
@@ -819,6 +829,11 @@ const LANG_DATA = {
     trAeroportDesc: "International and domestic flights.",
     trGareTrain: "Train station",
     trGareTrainDesc: "SNTF lines to the east and west.",
+
+    trMetroMap: "Metro & Tram Map",
+trMetroMapIntro: "Discover all Algiers metro and tram stations.",
+trCatVTC: "VTC Apps",
+download: "Download",
 
     // ============ 7. Student residence ============
     citeIntro: "Life at the university residence.",
