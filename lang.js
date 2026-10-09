@@ -1,7 +1,7 @@
 // ============================================
 // lang.js — نظام اللغات الثلاث
 // Guide de survie ENSTP
-// Version 2.0 — Octobre 2026
+// Version 2.1 — Octobre 2026
 // ============================================
 
 const LANG_DATA = {
@@ -26,6 +26,14 @@ const LANG_DATA = {
     close: "Fermer",
     loading: "Chargement…",
 
+    // ============ الحقول الإضافية ============
+    labelHours: "Horaires",
+    labelBudget: "Budget",
+    labelExtra: "Info",
+    labelSteps: "Étapes",
+    labelContact: "Contact",
+    labelServices: "Services disponibles",
+
     // ============ الصفحة الرئيسية ============
     welcomeTitle: "Bienvenue",
     welcomeSubtitle: "Tout ce dont tu as besoin pour ton premier jour à l'ENSTP.",
@@ -46,13 +54,6 @@ const LANG_DATA = {
     sectionCourses: "Formations",
     sectionAbout: "Qui sommes-nous",
     sectionQR: "QR Codes",
-
-    // ============ حقول إضافية ============
-    labelHours: "Horaires",
-    labelBudget: "Budget",
-    labelExtra: "Info",
-    labelSteps: "Étapes",
-    labelContact: "Contact",
 
     // ============ 1. مدرستي ============
     ecoleIntro: "Tous les lieux de l'école : salles, amphis, labos, services.",
@@ -224,7 +225,7 @@ const LANG_DATA = {
     citeEtude: "Salles d'étude",
     citeEtudeDesc: "Disponibles dans chaque résidence.",
 
-    // ============ 9. الرياضة ============
+    // ============ 8. الرياضة ============
     sportIntro: "Sport universitaire et hors campus.",
     sportUniv: "Sport universitaire",
     sportUnivDesc: "Activités proposées par l'ONSU.",
@@ -237,14 +238,14 @@ const LANG_DATA = {
     sportBasket: "Basket / Volley",
     sportBasketDesc: "Sports collectifs.",
 
-    // ============ 10. الأخضر ============
+    // ============ 9. الأخضر ============
     greenIntro: "Projet vert et recyclage.",
     greenRecy: "Recyclage du papier",
     greenRecyDesc: "Collecte de papier usagé pour le recycler.",
     greenEcologie: "Écologie",
     greenEcologieDesc: "Actions écologiques et sensibilisation.",
 
-    // ============ 11. بودكاست ============
+    // ============ 10. بودكاست ============
     podcastIntro: "Podcast étudiant ENSTP.",
     podcastEp1: "Épisode 1",
     podcastEp1Desc: "Bienvenue à l'ENSTP — guide du nouvel étudiant.",
@@ -253,7 +254,7 @@ const LANG_DATA = {
     podcastEp3: "Épisode 3",
     podcastEp3Desc: "Conseils pour réussir sa première année.",
 
-    // ============ 12. دورات ============
+    // ============ 11. دورات ============
     coursesIntro: "Formations et cours pour t'aider.",
     courseMath: "Mathématiques",
     courseMathDesc: "Cours de soutien en analyse et algèbre.",
@@ -262,7 +263,7 @@ const LANG_DATA = {
     courseInfo: "Informatique",
     courseInfoDesc: "Initiation à la programmation.",
 
-    // ============ 13. من نحن ============
+    // ============ 12. من نحن ============
     aboutIntro: "Un projet étudiant, 100% gratuit.",
     aboutMission: "Notre mission",
     aboutMissionDesc: "Aider chaque nouvel étudiant à s'intégrer rapidement et à ne jamais rester seul face à un problème.",
@@ -275,9 +276,9 @@ const LANG_DATA = {
     aboutWarning: "Avertissement",
     aboutWarningDesc: "Les informations sont fournies à titre indicatif. Vérifie toujours auprès de l'administration.",
     aboutUpdate: "Dernière mise à jour",
-    aboutUpdateDesc: "Octobre 2026 — Version 2.0",
+    aboutUpdateDesc: "Octobre 2026 — Version 2.1",
 
-    // ============ 14. رموز QR ============
+    // ============ 13. رموز QR ============
     qrIntro: "Scannez ces QR codes pour accéder directement aux sections.",
     qrPrint: "🖨️ Imprimer",
     qrDownload: "📥 Télécharger",
@@ -318,6 +319,14 @@ const LANG_DATA = {
     close: "إغلاق",
     loading: "جارٍ التحميل…",
 
+    // ============ الحقول الإضافية ============
+    labelHours: "المواعيد",
+    labelBudget: "الميزانية",
+    labelExtra: "معلومة",
+    labelSteps: "الخطوات",
+    labelContact: "الاتصال",
+    labelServices: "الخدمات المتوفرة",
+
     // ============ الصفحة الرئيسية ============
     welcomeTitle: "مرحباً",
     welcomeSubtitle: "كل ما تحتاجه ليومك الأول في المدرسة.",
@@ -338,13 +347,6 @@ const LANG_DATA = {
     sectionCourses: "دورات",
     sectionAbout: "من نحن",
     sectionQR: "رموز QR",
-
-    // ============ حقول إضافية ============
-    labelHours: "المواعيد",
-    labelBudget: "الميزانية",
-    labelExtra: "معلومة",
-    labelSteps: "الخطوات",
-    labelContact: "الاتصال",
 
     // ============ 1. مدرستي ============
     ecoleIntro: "كل أماكن المدرسة: القاعات، المدرجات، المخابر، الخدمات.",
@@ -516,7 +518,7 @@ const LANG_DATA = {
     citeEtude: "قاعات الدراسة",
     citeEtudeDesc: "متوفرة في كل إقامة.",
 
-    // ============ 9. الرياضة ============
+    // ============ 8. الرياضة ============
     sportIntro: "الرياضة الجامعية وخارج الحرم.",
     sportUniv: "الرياضة الجامعية",
     sportUnivDesc: "أنشطة يوفّرها الديوان الوطني للخدمات الجامعية.",
@@ -529,14 +531,14 @@ const LANG_DATA = {
     sportBasket: "كرة السلة / الطائرة",
     sportBasketDesc: "رياضات جماعية.",
 
-    // ============ 10. الأخضر ============
+    // ============ 9. الأخضر ============
     greenIntro: "المشروع الأخضر وإعادة التدوير.",
     greenRecy: "إعادة تدوير الورق",
     greenRecyDesc: "جمع الورق المستعمل لإعادة تدويره.",
     greenEcologie: "الإيكولوجيا",
     greenEcologieDesc: "مبادرات بيئية وتوعية.",
 
-    // ============ 11. بودكاست ============
+    // ============ 10. بودكاست ============
     podcastIntro: "بودكاست الطالب ENSTP.",
     podcastEp1: "الحلقة 1",
     podcastEp1Desc: "مرحباً بك في المدرسة — دليل الطالب الجديد.",
@@ -545,7 +547,7 @@ const LANG_DATA = {
     podcastEp3: "الحلقة 3",
     podcastEp3Desc: "نصائح للنجاح في سنتك الأولى.",
 
-    // ============ 12. دورات ============
+    // ============ 11. دورات ============
     coursesIntro: "دورات وتكوينات لمساعدتك.",
     courseMath: "الرياضيات",
     courseMathDesc: "دورات دعم في التحليل والجبر.",
@@ -554,7 +556,7 @@ const LANG_DATA = {
     courseInfo: "الإعلام الآلي",
     courseInfoDesc: "مقدمة في البرمجة.",
 
-    // ============ 13. من نحن ============
+    // ============ 12. من نحن ============
     aboutIntro: "مشروع طلابي، 100% مجاني.",
     aboutMission: "مهمتنا",
     aboutMissionDesc: "مساعدة كل طالب جديد على الاندماج بسرعة وعدم البقاء وحيداً أمام أي مشكلة.",
@@ -567,9 +569,9 @@ const LANG_DATA = {
     aboutWarning: "تنبيه",
     aboutWarningDesc: "المعلومات إرشادية. تحقق دائماً من الإدارة.",
     aboutUpdate: "آخر تحديث",
-    aboutUpdateDesc: "أكتوبر 2026 — الإصدار 2.0",
+    aboutUpdateDesc: "أكتوبر 2026 — الإصدار 2.1",
 
-    // ============ 14. رموز QR ============
+    // ============ 13. رموز QR ============
     qrIntro: "امسح رموز QR هذه للوصول مباشرة إلى الأقسام.",
     qrPrint: "🖨️ طباعة",
     qrDownload: "📥 تحميل",
@@ -610,6 +612,14 @@ const LANG_DATA = {
     close: "Close",
     loading: "Loading…",
 
+    // ============ Extra fields ============
+    labelHours: "Hours",
+    labelBudget: "Budget",
+    labelExtra: "Info",
+    labelSteps: "Steps",
+    labelContact: "Contact",
+    labelServices: "Available services",
+
     // ============ Home ============
     welcomeTitle: "Welcome",
     welcomeSubtitle: "Everything you need for your first day at ENSTP.",
@@ -630,13 +640,6 @@ const LANG_DATA = {
     sectionCourses: "Courses",
     sectionAbout: "Who we are",
     sectionQR: "QR Codes",
-
-    // ============ Extra fields ============
-    labelHours: "Hours",
-    labelBudget: "Budget",
-    labelExtra: "Info",
-    labelSteps: "Steps",
-    labelContact: "Contact",
 
     // ============ 1. My school ============
     ecoleIntro: "All school places: rooms, amphis, labs, services.",
@@ -808,7 +811,7 @@ const LANG_DATA = {
     citeEtude: "Study rooms",
     citeEtudeDesc: "Available in each residence.",
 
-    // ============ 9. Sport ============
+    // ============ 8. Sport ============
     sportIntro: "University sport and off-campus.",
     sportUniv: "University sport",
     sportUnivDesc: "Activities offered by ONSU.",
@@ -821,14 +824,14 @@ const LANG_DATA = {
     sportBasket: "Basket / Volley",
     sportBasketDesc: "Team sports.",
 
-    // ============ 10. Green ============
+    // ============ 9. Green ============
     greenIntro: "Green project and recycling.",
     greenRecy: "Paper recycling",
     greenRecyDesc: "Collecting used paper to recycle.",
     greenEcologie: "Ecology",
     greenEcologieDesc: "Environmental actions and awareness.",
 
-    // ============ 11. Podcast ============
+    // ============ 10. Podcast ============
     podcastIntro: "ENSTP student podcast.",
     podcastEp1: "Episode 1",
     podcastEp1Desc: "Welcome to ENSTP — new student guide.",
@@ -837,7 +840,7 @@ const LANG_DATA = {
     podcastEp3: "Episode 3",
     podcastEp3Desc: "Tips to succeed in your first year.",
 
-    // ============ 12. Courses ============
+    // ============ 11. Courses ============
     coursesIntro: "Courses and training to help you.",
     courseMath: "Mathematics",
     courseMathDesc: "Support courses in analysis and algebra.",
@@ -846,7 +849,7 @@ const LANG_DATA = {
     courseInfo: "Computer Science",
     courseInfoDesc: "Introduction to programming.",
 
-    // ============ 13. About ============
+    // ============ 12. About ============
     aboutIntro: "A student project, 100% free.",
     aboutMission: "Our mission",
     aboutMissionDesc: "Help every new student integrate quickly and never stay alone facing a problem.",
@@ -859,9 +862,9 @@ const LANG_DATA = {
     aboutWarning: "Warning",
     aboutWarningDesc: "Information is indicative. Always verify with administration.",
     aboutUpdate: "Last update",
-    aboutUpdateDesc: "October 2026 — Version 2.0",
+    aboutUpdateDesc: "October 2026 — Version 2.1",
 
-    // ============ 14. QR Codes ============
+    // ============ 13. QR Codes ============
     qrIntro: "Scan these QR codes to access sections directly.",
     qrPrint: "🖨️ Print",
     qrDownload: "📥 Download",
