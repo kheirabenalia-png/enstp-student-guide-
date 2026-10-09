@@ -1,5 +1,5 @@
 // ============================================
-// lang.js — نظام اللغات الثلاث + QR
+// lang.js — نظام اللغات الثلاث
 // Guide de survie ENSTP
 // Version 2.0 — Octobre 2026
 // ============================================
@@ -47,8 +47,16 @@ const LANG_DATA = {
     sectionAbout: "Qui sommes-nous",
     sectionQR: "QR Codes",
 
+    // ============ حقول إضافية ============
+    labelHours: "Horaires",
+    labelBudget: "Budget",
+    labelExtra: "Info",
+    labelSteps: "Étapes",
+    labelContact: "Contact",
+
     // ============ 1. مدرستي ============
     ecoleIntro: "Tous les lieux de l'école : salles, amphis, labos, services.",
+    ecoleEntree: "Entrée principale",
     ecolePlan: "Plan de l'école",
     ecolePlanDesc: "Clique sur un point pour voir son nom.",
     ecoleSalle: "Où est ma salle ?",
@@ -124,6 +132,11 @@ const LANG_DATA = {
 
     // ============ 4. الخدمات ============
     servicesIntro: "Toutes les démarches administratives et étudiants.",
+    servicesAdmin: "Administratif",
+    servicesCarte: "Carte étudiant",
+    servicesBiblio: "Bibliothèque & Club",
+    servicesDigital: "Plateformes numériques",
+    servicesSocial: "Sécurité sociale",
     srvStage: "Convention de stage",
     srvStageDesc: "Démarches pour obtenir une convention de stage auprès de l'administration.",
     srvSecu: "Sécurité sociale",
@@ -168,6 +181,11 @@ const LANG_DATA = {
 
     // ============ 6. النقل ============
     transportIntro: "Bus, taxis, métro, train, tramway.",
+    trCatBus: "Bus",
+    trCatTaxi: "Taxis",
+    trCatMetro: "Métro & Tram",
+    trCatTrain: "Train",
+    trCatInter: "Inter-wilayas",
     trBusUniv: "Bus universitaire",
     trBusUnivDesc: "Bus de l'école desservant les cités universitaires.",
     trBusPublic: "Bus public",
@@ -314,7 +332,6 @@ const LANG_DATA = {
     sectionShopping: "التسوق والأكل",
     sectionTransport: "النقل",
     sectionCite: "الإقامة الجامعية",
-    sectionNatation: "السباحة في الجزائر",
     sectionSport: "الرياضة",
     sectionGreen: "المشروع الأخضر",
     sectionPodcast: "بودكاست الطالب",
@@ -322,8 +339,16 @@ const LANG_DATA = {
     sectionAbout: "من نحن",
     sectionQR: "رموز QR",
 
+    // ============ حقول إضافية ============
+    labelHours: "المواعيد",
+    labelBudget: "الميزانية",
+    labelExtra: "معلومة",
+    labelSteps: "الخطوات",
+    labelContact: "الاتصال",
+
     // ============ 1. مدرستي ============
     ecoleIntro: "كل أماكن المدرسة: القاعات، المدرجات، المخابر، الخدمات.",
+    ecoleEntree: "المدخل الرئيسي",
     ecolePlan: "خريطة المدرسة",
     ecolePlanDesc: "اضغط على نقطة لرؤية اسم المكان.",
     ecoleSalle: "أين قاعتي؟",
@@ -399,6 +424,11 @@ const LANG_DATA = {
 
     // ============ 4. الخدمات ============
     servicesIntro: "كل الإجراءات الإدارية والطلابية.",
+    servicesAdmin: "إداري",
+    servicesCarte: "بطاقة الطالب",
+    servicesBiblio: "المكتبة والنادي",
+    servicesDigital: "المنصات الرقمية",
+    servicesSocial: "الضمان الاجتماعي",
     srvStage: "اتفاقية التربص",
     srvStageDesc: "إجراءات الحصول على اتفاقية تربص من الإدارة.",
     srvSecu: "الضمان الاجتماعي",
@@ -443,6 +473,11 @@ const LANG_DATA = {
 
     // ============ 6. النقل ============
     transportIntro: "حافلات، تكاسي، مترو، قطار، ترامواي.",
+    trCatBus: "الحافلات",
+    trCatTaxi: "التكاسي",
+    trCatMetro: "المترو والترامواي",
+    trCatTrain: "القطار",
+    trCatInter: "بين الولايات",
     trBusUniv: "النقل الجامعي",
     trBusUnivDesc: "حافلات المدرسة التي تخدم الإقامات الجامعية.",
     trBusPublic: "النقل العمومي",
@@ -481,7 +516,6 @@ const LANG_DATA = {
     citeEtude: "قاعات الدراسة",
     citeEtudeDesc: "متوفرة في كل إقامة.",
 
-    
     // ============ 9. الرياضة ============
     sportIntro: "الرياضة الجامعية وخارج الحرم.",
     sportUniv: "الرياضة الجامعية",
@@ -590,7 +624,6 @@ const LANG_DATA = {
     sectionShopping: "Shopping & food",
     sectionTransport: "Transport",
     sectionCite: "Student residence",
-    sectionNatation: "Swimming in Algiers",
     sectionSport: "Sport",
     sectionGreen: "Green project",
     sectionPodcast: "Student podcast",
@@ -598,8 +631,16 @@ const LANG_DATA = {
     sectionAbout: "Who we are",
     sectionQR: "QR Codes",
 
+    // ============ Extra fields ============
+    labelHours: "Hours",
+    labelBudget: "Budget",
+    labelExtra: "Info",
+    labelSteps: "Steps",
+    labelContact: "Contact",
+
     // ============ 1. My school ============
     ecoleIntro: "All school places: rooms, amphis, labs, services.",
+    ecoleEntree: "Main entrance",
     ecolePlan: "School map",
     ecolePlanDesc: "Click a point to see its name.",
     ecoleSalle: "Where is my room?",
@@ -675,6 +716,11 @@ const LANG_DATA = {
 
     // ============ 4. Services ============
     servicesIntro: "All administrative and student procedures.",
+    servicesAdmin: "Administrative",
+    servicesCarte: "Student card",
+    servicesBiblio: "Library & Club",
+    servicesDigital: "Digital platforms",
+    servicesSocial: "Social security",
     srvStage: "Internship agreement",
     srvStageDesc: "Procedures to get an internship agreement from administration.",
     srvSecu: "Social security",
@@ -719,6 +765,11 @@ const LANG_DATA = {
 
     // ============ 6. Transport ============
     transportIntro: "Bus, taxis, metro, train, tram.",
+    trCatBus: "Bus",
+    trCatTaxi: "Taxis",
+    trCatMetro: "Metro & Tram",
+    trCatTrain: "Train",
+    trCatInter: "Inter-wilayas",
     trBusUniv: "University bus",
     trBusUnivDesc: "School bus serving university residences.",
     trBusPublic: "Public bus",
@@ -756,8 +807,6 @@ const LANG_DATA = {
     citeRestoDesc: "Student-rate meals, 3 times a day.",
     citeEtude: "Study rooms",
     citeEtudeDesc: "Available in each residence.",
-
-    
 
     // ============ 9. Sport ============
     sportIntro: "University sport and off-campus.",
@@ -835,7 +884,7 @@ const LANG_DATA = {
 };
 
 // ============================================
-// دوال مساعدة للترجمة
+// دوال مساعدة
 // ============================================
 
 function t(key, lang) {
