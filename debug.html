@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Debug ENSTP</title>
+<style>
+body{font-family:monospace;padding:16px;background:#f5f5f5;color:#333;line-height:1.8;font-size:14px}
+h1{color:#c2410c;font-size:1.3rem;margin-bottom:16px}
+h2{color:#c2410c;font-size:1.1rem;margin:20px 0 8px}
+.box{background:#fff;padding:16px;border-radius:10px;margin-bottom:16px;border:1px solid #ddd}
+.ok{color:#10b981;font-weight:bold}
+.miss{color:#ef4444;font-weight:bold}
+ul{padding-left:20px}
+li{margin:4px 0}
+</style>
+</head>
+<body>
+<h1>🔍 Debug Guide ENSTP</h1>
+<div id="output" class="box">Chargement…</div>
+
+<script src="lang.js"></script>
+<script src="data/config.js"></script>
+<script src="data/ecole.js"></script>
+<script src="data/profs.js"></script>
+<script src="data/admin.js"></script>
+<script src="data/services.js"></script>
+<script src="data/shopping.js"></script>
+<script src="data/transport.js"></script>
+<script src="data/cite.js"></script>
+<script src="data/sport.js"></script>
+<script src="data/green.js"></script>
+<script src="data/podcast.js"></script>
+<script src="data/courses.js"></script>
+<script src="data/about.js"></script>
+<script src="data/qr.js"></script>
+<script src="data/index.js"></script>
+
+<script>
+window.addEventListener('load', async function() {
+  var out = document.getElementById('output');
+  var html = '';
+  
+  // 1. الأقسام المحمّلة
+  html += '<h2>1. Sections chargées</h2>';
+  if (typeof window.SECTIONS === 'undefined' || !window.SECTIONS || !window.SECTIONS.length) {
+    html += '<p class="miss">❌ Aucune section chargée</p>';
+  } else {
+    html += '<p class="ok">✅ ' + window.SECTIONS.length + ' section(s):</p>';
+    html += '<ul>';
+    window.SECTIONS.forEach(function(s){
+      html += '<li>' + s.icon + ' <b>' + s.id + '</b> (' + (s.titleKey || s.title || '?') + ')</li>';
+    });
+    html += '</ul>';
+  }
+  
+  // 2. اختبار الملفات
+  html += '<h2>2. Test des fichiers data/</h2>';
+  var files = ['config','index','ecole','profs','admin','services','shopping','transport','cite','sport','green','podcast','courses','about','qr'];
+  
+  for (var i = 0; i < files.length; i++) {
+    var f = files[i];
+    try {
+      var r = await fetch('data/' + f + '.js', {cache: 'no-store'});
+      if (r.ok) {
+        html += '<p class="ok">✅ data/' + f + '.js</p>';
+      } else {
+        html += '<p class="miss">❌ data/' + f + '.js — HTTP ' + r.status + '</p>';
+      }
+    } catch(e) {
+      html += '<p class="miss">❌ data/' + f + '.js — Erreur: ' + e.message + '</p>';
+    }
+  }
+  
+  // 3. اختبار الملفات الأساسية
+  html += '<h2>3. Fichiers principaux</h2>';
+  var mainFiles = ['style.css','theme.js','lang.js','search.js','index.html','guide.html'];
+  for (var j = 0; j < mainFiles.length; j++) {
+    var mf = mainFiles[j];
+    try {
+      var r2 = await fetch(mf, {cache: 'no-store'});
+      if (r2.ok) {
+        html += '<p class="ok">✅ ' + mf + '</p>';
+      } else {
+        html += '<p class="miss">❌ ' + mf + ' — HTTP ' + r2.status + '</p>';
+      }
+    } catch(e) {
+      html += '<p class="miss">❌ ' + mf + '</p>';
+    }
+  }
+  
+  out.innerHTML = html;
+});
+</script>
+</body>
+</html>
