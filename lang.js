@@ -1,7 +1,7 @@
 // ============================================
 // lang.js — نظام اللغات الثلاث
 // Guide de survie ENSTP
-// Version 2.1 — Octobre 2026
+// Version 2.5 — avec Forum
 // ============================================
 
 const LANG_DATA = {
@@ -25,8 +25,10 @@ const LANG_DATA = {
     toComplete: "À compléter",
     close: "Fermer",
     loading: "Chargement…",
+    download: "Télécharger",
+    open: "Ouvrir",
 
-    // ============ الحقول الإضافية ============
+    // ============ حقول إضافية ============
     labelHours: "Horaires",
     labelBudget: "Budget",
     labelExtra: "Info",
@@ -42,18 +44,32 @@ const LANG_DATA = {
 
     // ============ عناوين الأقسام ============
     sectionEcole: "Mon école",
-    sectionProfs: "Mes enseignants",
     sectionAdmin: "Mon administration",
+    sectionProfs: "Mes enseignants",
+    sectionForum: "Forum des étudiants",
     sectionServices: "Services",
-    sectionShopping: "Achats & restauration",
-    sectionTransport: "Transport",
     sectionCite: "Cité universitaire",
+    sectionTransport: "Transport",
+    sectionShopping: "Achats & restauration",
     sectionSport: "Sport",
     sectionGreen: "Projet vert",
     sectionPodcast: "Podcast étudiant",
     sectionCourses: "Formations",
     sectionAbout: "Qui sommes-nous",
     sectionQR: "QR Codes",
+
+    // ============ قسم ملتقى الطلبة ============
+    forumIntro: "Rencontrez les étudiants de l'ENSTP à travers toute l'Algérie.",
+    forumDesc: "Rejoignez la communauté ENSTP : discutez avec les étudiants de votre wilaya et de toute l'Algérie.",
+    forumFeatures: "Ce que vous pouvez faire",
+    forumFeature1: "🌍 Discuter dans la salle générale",
+    forumFeature2: "📍 Rejoindre la salle de votre wilaya (69 wilayas)",
+    forumFeature3: "👥 Voir tous les étudiants inscrits",
+    forumEnter: "Entrer dans le forum",
+    forumRegister: "Créer un compte",
+    forumLogin: "Se connecter",
+    forumNote: "Important",
+    forumNoteText: "Inscription uniquement avec un email @enstp.edu.dz. Vos informations restent privées et ne sont partagées qu'avec les autres étudiants de l'ENSTP.",
 
     // ============ 1. مدرستي ============
     ecoleIntro: "Tous les lieux de l'école : salles, amphis, labos, services.",
@@ -184,6 +200,7 @@ const LANG_DATA = {
     transportIntro: "Bus, taxis, métro, train, tramway.",
     trCatBus: "Bus",
     trCatTaxi: "Taxis",
+    trCatVTC: "Applications VTC",
     trCatMetro: "Métro & Tram",
     trCatTrain: "Train",
     trCatInter: "Inter-wilayas",
@@ -212,12 +229,11 @@ const LANG_DATA = {
     trGareTrain: "Gare ferroviaire",
     trGareTrainDesc: "Lignes SNTF vers l'est et l'ouest.",
 
+    // ============ 7. خريطة المترو ============
     trMetroMap: "Plan Métro & Tram",
-trMetroMapIntro: "Découvrez toutes les stations du métro et du tramway d'Alger.",
-trCatVTC: "Applications VTC",
-download: "Télécharger",
+    trMetroMapIntro: "Découvrez toutes les stations du métro et du tramway d'Alger.",
 
-    // ============ 7. الإقامة ============
+    // ============ 8. الإقامة ============
     citeIntro: "Vie à la cité universitaire.",
     citeGaridi: "Résidence Garidi",
     citeGaridiDesc: "La plus proche de l'ENSTP. Idéale sans voiture.",
@@ -230,7 +246,7 @@ download: "Télécharger",
     citeEtude: "Salles d'étude",
     citeEtudeDesc: "Disponibles dans chaque résidence.",
 
-    // ============ 8. الرياضة ============
+    // ============ 9. الرياضة ============
     sportIntro: "Sport universitaire et hors campus.",
     sportUniv: "Sport universitaire",
     sportUnivDesc: "Activités proposées par l'ONSU.",
@@ -243,13 +259,13 @@ download: "Télécharger",
     sportBasket: "Basket / Volley",
     sportBasketDesc: "Sports collectifs.",
 
-    // ============ 9. الأخضر ============
+    // ============ 10. الأخضر ============
     greenIntro: "Projet vert et recyclage.",
     greenRecy: "Recyclage du papier",
     greenRecyDesc: "Collecte de papier usagé pour le recycler.",
     greenEcologie: "Écologie",
     greenEcologieDesc: "Actions écologiques et sensibilisation.",
-        greenIntroPara: "L'opération de recyclage du papier est un pilier fondamental de l'économie verte et un pas décisif vers la protection de notre planète. En transformant les déchets papier en nouvelles ressources, nous contribuons tous à des bénéfices durables, notamment :",
+    greenIntroPara: "L'opération de recyclage du papier est un pilier fondamental de l'économie verte et un pas décisif vers la protection de notre planète. En transformant les déchets papier en nouvelles ressources, nous contribuons tous à des bénéfices durables, notamment :",
     greenBenefitsTitle: "Les bénéfices du recyclage",
     greenBenefit1Title: "Protection du patrimoine forestier",
     greenBenefit1: "Recycler 1 tonne de papier sauve environ 17 arbres de l'abattage et préserve la biodiversité.",
@@ -261,7 +277,7 @@ download: "Télécharger",
     greenBenefit4: "Ce secteur crée de nouveaux emplois et réduit les coûts de production et d'importation.",
     greenConclusion: "Adopter la culture du recyclage du papier n'est pas une option, c'est un véritable investissement dans l'avenir de nos générations et de notre environnement.",
 
-    // ============ 10. بودكاست ============
+    // ============ 11. بودكاست ============
     podcastIntro: "Podcast étudiant ENSTP.",
     podcastEp1: "Épisode 1",
     podcastEp1Desc: "Bienvenue à l'ENSTP — guide du nouvel étudiant.",
@@ -270,7 +286,7 @@ download: "Télécharger",
     podcastEp3: "Épisode 3",
     podcastEp3Desc: "Conseils pour réussir sa première année.",
 
-    // ============ 11. دورات ============
+    // ============ 12. دورات ============
     coursesIntro: "Formations et cours pour t'aider.",
     courseMath: "Mathématiques",
     courseMathDesc: "Cours de soutien en analyse et algèbre.",
@@ -279,7 +295,7 @@ download: "Télécharger",
     courseInfo: "Informatique",
     courseInfoDesc: "Initiation à la programmation.",
 
-    // ============ 12. من نحن ============
+    // ============ 13. من نحن ============
     aboutIntro: "Un projet étudiant, 100% gratuit.",
     aboutMission: "Notre mission",
     aboutMissionDesc: "Aider chaque nouvel étudiant à s'intégrer rapidement et à ne jamais rester seul face à un problème.",
@@ -292,9 +308,9 @@ download: "Télécharger",
     aboutWarning: "Avertissement",
     aboutWarningDesc: "Les informations sont fournies à titre indicatif. Vérifie toujours auprès de l'administration.",
     aboutUpdate: "Dernière mise à jour",
-    aboutUpdateDesc: "Octobre 2026 — Version 2.1",
+    aboutUpdateDesc: "Octobre 2026 — Version 2.5",
 
-    // ============ 13. رموز QR ============
+    // ============ 14. رموز QR ============
     qrIntro: "Scannez ces QR codes pour accéder directement aux sections.",
     qrPrint: "🖨️ Imprimer",
     qrDownload: "📥 Télécharger",
@@ -307,6 +323,10 @@ download: "Télécharger",
     qrCopyLink: "🔗 Copier le lien",
     qrCopied: "✅ Lien copié !",
     qrNotFound: "QR Code non disponible",
+
+    // ============ Text Size ============
+    tspTitle: "Taille du texte",
+    tsSmall: "Petit", tsNormal: "Normal", tsLarge: "Grand", tsXLarge: "Très grand",
 
     // ============ الفوتر ============
     footerTitle: "Guide de survie ENSTP",
@@ -334,8 +354,9 @@ download: "Télécharger",
     toComplete: "يُكمل",
     close: "إغلاق",
     loading: "جارٍ التحميل…",
+    download: "تحميل",
+    open: "فتح",
 
-    // ============ الحقول الإضافية ============
     labelHours: "المواعيد",
     labelBudget: "الميزانية",
     labelExtra: "معلومة",
@@ -343,20 +364,19 @@ download: "Télécharger",
     labelContact: "الاتصال",
     labelServices: "الخدمات المتوفرة",
 
-    // ============ الصفحة الرئيسية ============
     welcomeTitle: "مرحباً",
     welcomeSubtitle: "كل ما تحتاجه ليومك الأول في المدرسة.",
     startBtn: "ابدأ",
     installBtn: "ثبّت التطبيق",
 
-    // ============ عناوين الأقسام ============
     sectionEcole: "مدرستي",
-    sectionProfs: "أساتذتي",
     sectionAdmin: "إدارتي",
+    sectionProfs: "أساتذتي",
+    sectionForum: "ملتقى الطلبة",
     sectionServices: "الخدمات",
-    sectionShopping: "التسوق والأكل",
-    sectionTransport: "النقل",
     sectionCite: "الإقامة الجامعية",
+    sectionTransport: "النقل",
+    sectionShopping: "التسوق والأكل",
     sectionSport: "الرياضة",
     sectionGreen: "المشروع الأخضر",
     sectionPodcast: "بودكاست الطالب",
@@ -364,7 +384,18 @@ download: "Télécharger",
     sectionAbout: "من نحن",
     sectionQR: "رموز QR",
 
-    // ============ 1. مدرستي ============
+    forumIntro: "التقِ بطلبة المدرسة من كل ولايات الجزائر.",
+    forumDesc: "انضم إلى مجتمع ENSTP: تحدث مع الطلبة من ولايتك ومن كل الجزائر.",
+    forumFeatures: "ما يمكنك فعله",
+    forumFeature1: "🌍 الدردشة في الغرفة العامة",
+    forumFeature2: "📍 الانضمام إلى غرفة ولايتك (69 ولاية)",
+    forumFeature3: "👥 رؤية كل الطلبة المسجلين",
+    forumEnter: "ادخل الملتقى",
+    forumRegister: "أنشئ حساباً",
+    forumLogin: "سجّل الدخول",
+    forumNote: "مهم",
+    forumNoteText: "التسجيل بالبريد الجامعي @enstp.edu.dz فقط. معلوماتك تبقى خاصة وتُشارك فقط مع طلبة ENSTP.",
+
     ecoleIntro: "كل أماكن المدرسة: القاعات، المدرجات، المخابر، الخدمات.",
     ecoleEntree: "المدخل الرئيسي",
     ecolePlan: "خريطة المدرسة",
@@ -404,7 +435,6 @@ download: "Télécharger",
     ecoleCite: "مركز الإقامة الجامعية",
     ecoleCiteDesc: "إدارة الإقامات الجامعية (قاريدي، سعيد حمدين، رويسو).",
 
-    // ============ 2. أساتذتي ============
     profsIntro: "ابحث عن أستاذ حسب المادة أو الاسم.",
     profPhysique: "الفيزياء",
     profPhysiqueDesc: "الميكانيك، الديناميكا الحرارية، الكهرباء.",
@@ -427,7 +457,6 @@ download: "Télécharger",
     profInfo: "الإعلام الآلي",
     profInfoDesc: "البرمجة والأدوات المعلوماتية.",
 
-    // ============ 3. إدارتي ============
     adminIntro: "المكاتب الإدارية وجهات الاتصال.",
     adminDirection: "الإدارة",
     adminDirectionDesc: "الإدارة العامة للمدرسة.",
@@ -440,7 +469,6 @@ download: "Télécharger",
     adminFinances: "المالية",
     adminFinancesDesc: "المنح، المدفوعات، الرسوم.",
 
-    // ============ 4. الخدمات ============
     servicesIntro: "كل الإجراءات الإدارية والطلابية.",
     servicesAdmin: "إداري",
     servicesCarte: "بطاقة الطالب",
@@ -470,7 +498,6 @@ download: "Télécharger",
     srvProgress: "رؤية نقاطي في Progress",
     srvProgressDesc: "منصة المدرسة الإلكترونية للاطلاع على نقاطك.",
 
-    // ============ 5. التسوق والأكل ============
     shoppingIntro: "الأكل، الشراء، العلاج حول المدرسة.",
     shopResto: "مطاعم",
     shopRestoDesc: "مطاعم ووجبات سريعة حول المدرسة.",
@@ -489,10 +516,10 @@ download: "Télécharger",
     shopTchof: "مركز تشوف",
     shopTchofDesc: "فضاء تجاري وترفيهي.",
 
-    // ============ 6. النقل ============
     transportIntro: "حافلات، تكاسي، مترو، قطار، ترامواي.",
     trCatBus: "الحافلات",
     trCatTaxi: "التكاسي",
+    trCatVTC: "تطبيقات النقل",
     trCatMetro: "المترو والترامواي",
     trCatTrain: "القطار",
     trCatInter: "بين الولايات",
@@ -522,11 +549,8 @@ download: "Télécharger",
     trGareTrainDesc: "خطوط SNTF نحو الشرق والغرب.",
 
     trMetroMap: "خريطة المترو والترامواي",
-trMetroMapIntro: "اكتشف كل محطات مترو وترامواي الجزائر.",
-trCatVTC: "تطبيقات النقل",
-download: "تحميل",
+    trMetroMapIntro: "اكتشف كل محطات مترو وترامواي الجزائر.",
 
-    // ============ 7. الإقامة ============
     citeIntro: "الحياة في الإقامة الجامعية.",
     citeGaridi: "إقامة قاريدي",
     citeGaridiDesc: "الأقرب للمدرسة. مثالية لمن لا يملك سيارة.",
@@ -539,7 +563,6 @@ download: "تحميل",
     citeEtude: "قاعات الدراسة",
     citeEtudeDesc: "متوفرة في كل إقامة.",
 
-    // ============ 8. الرياضة ============
     sportIntro: "الرياضة الجامعية وخارج الحرم.",
     sportUniv: "الرياضة الجامعية",
     sportUnivDesc: "أنشطة يوفّرها الديوان الوطني للخدمات الجامعية.",
@@ -552,13 +575,12 @@ download: "تحميل",
     sportBasket: "كرة السلة / الطائرة",
     sportBasketDesc: "رياضات جماعية.",
 
-    // ============ 9. الأخضر ============
     greenIntro: "المشروع الأخضر وإعادة التدوير.",
     greenRecy: "إعادة تدوير الورق",
     greenRecyDesc: "جمع الورق المستعمل لإعادة تدويره.",
     greenEcologie: "الإيكولوجيا",
     greenEcologieDesc: "مبادرات بيئية وتوعية.",
-        greenIntroPara: "تعتبر عملية إعادة تدوير الورق ركيزة أساسية للاقتصاد الأخضر وخطوة حاسمة نحو حماية كوكبنا. من خلال تحويل المخلفات الورقية إلى موارد جديدة، نساهم جميعاً في تحقيق فوائد مستدامة أبرزها:",
+    greenIntroPara: "تعتبر عملية إعادة تدوير الورق ركيزة أساسية للاقتصاد الأخضر وخطوة حاسمة نحو حماية كوكبنا. من خلال تحويل المخلفات الورقية إلى موارد جديدة، نساهم جميعاً في تحقيق فوائد مستدامة أبرزها:",
     greenBenefitsTitle: "فوائد إعادة التدوير",
     greenBenefit1Title: "حماية الثروة الغابية",
     greenBenefit1: "تدوير طن واحد من الورق ينقذ نحو 17 شجرة من القطع ويحافظ على التنوع البيئي.",
@@ -570,7 +592,6 @@ download: "تحميل",
     greenBenefit4: "يخلق هذا القطاع فرص عمل جديدة ويقلل من تكاليف الإنتاج والاستيراد.",
     greenConclusion: "إن اعتماد ثقافة إعادة تدوير الورق ليس مجرد خيار، بل هو استثمار حقيقي في مستقبل أجيالنا وبيئتنا.",
 
-    // ============ 10. بودكاست ============
     podcastIntro: "بودكاست الطالب ENSTP.",
     podcastEp1: "الحلقة 1",
     podcastEp1Desc: "مرحباً بك في المدرسة — دليل الطالب الجديد.",
@@ -579,7 +600,6 @@ download: "تحميل",
     podcastEp3: "الحلقة 3",
     podcastEp3Desc: "نصائح للنجاح في سنتك الأولى.",
 
-    // ============ 11. دورات ============
     coursesIntro: "دورات وتكوينات لمساعدتك.",
     courseMath: "الرياضيات",
     courseMathDesc: "دورات دعم في التحليل والجبر.",
@@ -588,7 +608,6 @@ download: "تحميل",
     courseInfo: "الإعلام الآلي",
     courseInfoDesc: "مقدمة في البرمجة.",
 
-    // ============ 12. من نحن ============
     aboutIntro: "مشروع طلابي، 100% مجاني.",
     aboutMission: "مهمتنا",
     aboutMissionDesc: "مساعدة كل طالب جديد على الاندماج بسرعة وعدم البقاء وحيداً أمام أي مشكلة.",
@@ -601,9 +620,8 @@ download: "تحميل",
     aboutWarning: "تنبيه",
     aboutWarningDesc: "المعلومات إرشادية. تحقق دائماً من الإدارة.",
     aboutUpdate: "آخر تحديث",
-    aboutUpdateDesc: "أكتوبر 2026 — الإصدار 2.1",
+    aboutUpdateDesc: "أكتوبر 2026 — الإصدار 2.5",
 
-    // ============ 13. رموز QR ============
     qrIntro: "امسح رموز QR هذه للوصول مباشرة إلى الأقسام.",
     qrPrint: "🖨️ طباعة",
     qrDownload: "📥 تحميل",
@@ -617,7 +635,9 @@ download: "تحميل",
     qrCopied: "✅ تم نسخ الرابط!",
     qrNotFound: "رمز QR غير متوفر",
 
-    // ============ الفوتر ============
+    tspTitle: "حجم النص",
+    tsSmall: "صغير", tsNormal: "عادي", tsLarge: "كبير", tsXLarge: "كبير جداً",
+
     footerTitle: "دليل البقاء ENSTP",
     footerSub: "مشروع طلاب السنة الأولى مهندس، المجموعة 2 — المنشآت القاعدية.",
     footerFree: "مجاني 100% · 3 لغات · بدون إنترنت",
@@ -628,7 +648,6 @@ download: "تحميل",
   // ENGLISH
   // ============================================
   en: {
-    // ============ General ============
     appName: "ENSTP Survival Guide",
     tagline: "Your first day, in your pocket.",
     back: "← Back",
@@ -643,8 +662,9 @@ download: "تحميل",
     toComplete: "To complete",
     close: "Close",
     loading: "Loading…",
+    download: "Download",
+    open: "Open",
 
-    // ============ Extra fields ============
     labelHours: "Hours",
     labelBudget: "Budget",
     labelExtra: "Info",
@@ -652,20 +672,19 @@ download: "تحميل",
     labelContact: "Contact",
     labelServices: "Available services",
 
-    // ============ Home ============
     welcomeTitle: "Welcome",
     welcomeSubtitle: "Everything you need for your first day at ENSTP.",
     startBtn: "Start",
     installBtn: "Install app",
 
-    // ============ Section titles ============
     sectionEcole: "My school",
-    sectionProfs: "My teachers",
     sectionAdmin: "My administration",
+    sectionProfs: "My teachers",
+    sectionForum: "Student forum",
     sectionServices: "Services",
-    sectionShopping: "Shopping & food",
-    sectionTransport: "Transport",
     sectionCite: "Student residence",
+    sectionTransport: "Transport",
+    sectionShopping: "Shopping & food",
     sectionSport: "Sport",
     sectionGreen: "Green project",
     sectionPodcast: "Student podcast",
@@ -673,7 +692,18 @@ download: "تحميل",
     sectionAbout: "Who we are",
     sectionQR: "QR Codes",
 
-    // ============ 1. My school ============
+    forumIntro: "Meet ENSTP students from all over Algeria.",
+    forumDesc: "Join the ENSTP community: chat with students from your wilaya and all of Algeria.",
+    forumFeatures: "What you can do",
+    forumFeature1: "🌍 Chat in the general room",
+    forumFeature2: "📍 Join your wilaya's room (69 wilayas)",
+    forumFeature3: "👥 See all registered students",
+    forumEnter: "Enter the forum",
+    forumRegister: "Create an account",
+    forumLogin: "Log in",
+    forumNote: "Important",
+    forumNoteText: "Registration only with @enstp.edu.dz email. Your information stays private and is only shared with other ENSTP students.",
+
     ecoleIntro: "All school places: rooms, amphis, labs, services.",
     ecoleEntree: "Main entrance",
     ecolePlan: "School map",
@@ -713,7 +743,6 @@ download: "تحميل",
     ecoleCite: "Student residence center",
     ecoleCiteDesc: "Management of university residences (Garidi, Saïd Hamdine, Rouiba).",
 
-    // ============ 2. Teachers ============
     profsIntro: "Search for a teacher by subject or name.",
     profPhysique: "Physics",
     profPhysiqueDesc: "Mechanics, thermodynamics, electricity.",
@@ -736,7 +765,6 @@ download: "تحميل",
     profInfo: "Computer Science",
     profInfoDesc: "Programming and IT tools.",
 
-    // ============ 3. Administration ============
     adminIntro: "Administrative offices and contacts.",
     adminDirection: "Direction",
     adminDirectionDesc: "General management of the school.",
@@ -749,7 +777,6 @@ download: "تحميل",
     adminFinances: "Finance",
     adminFinancesDesc: "Scholarships, payments, fees.",
 
-    // ============ 4. Services ============
     servicesIntro: "All administrative and student procedures.",
     servicesAdmin: "Administrative",
     servicesCarte: "Student card",
@@ -779,7 +806,6 @@ download: "تحميل",
     srvProgress: "See my grades on Progress",
     srvProgressDesc: "School's online platform to view your grades.",
 
-    // ============ 5. Shopping & food ============
     shoppingIntro: "Eat, shop, heal around the school.",
     shopResto: "Restaurants",
     shopRestoDesc: "Restaurants and fast-foods around the school.",
@@ -798,10 +824,10 @@ download: "تحميل",
     shopTchof: "Tchof Center",
     shopTchofDesc: "Shopping and leisure space.",
 
-    // ============ 6. Transport ============
     transportIntro: "Bus, taxis, metro, train, tram.",
     trCatBus: "Bus",
     trCatTaxi: "Taxis",
+    trCatVTC: "VTC Apps",
     trCatMetro: "Metro & Tram",
     trCatTrain: "Train",
     trCatInter: "Inter-wilayas",
@@ -831,11 +857,8 @@ download: "تحميل",
     trGareTrainDesc: "SNTF lines to the east and west.",
 
     trMetroMap: "Metro & Tram Map",
-trMetroMapIntro: "Discover all Algiers metro and tram stations.",
-trCatVTC: "VTC Apps",
-download: "Download",
+    trMetroMapIntro: "Discover all Algiers metro and tram stations.",
 
-    // ============ 7. Student residence ============
     citeIntro: "Life at the university residence.",
     citeGaridi: "Garidi Residence",
     citeGaridiDesc: "Closest to ENSTP. Ideal without a car.",
@@ -848,7 +871,6 @@ download: "Download",
     citeEtude: "Study rooms",
     citeEtudeDesc: "Available in each residence.",
 
-    // ============ 8. Sport ============
     sportIntro: "University sport and off-campus.",
     sportUniv: "University sport",
     sportUnivDesc: "Activities offered by ONSU.",
@@ -861,13 +883,12 @@ download: "Download",
     sportBasket: "Basket / Volley",
     sportBasketDesc: "Team sports.",
 
-    // ============ 9. Green ============
     greenIntro: "Green project and recycling.",
     greenRecy: "Paper recycling",
     greenRecyDesc: "Collecting used paper to recycle.",
     greenEcologie: "Ecology",
     greenEcologieDesc: "Environmental actions and awareness.",
-        greenIntroPara: "Paper recycling is a fundamental pillar of the green economy and a decisive step towards protecting our planet. By transforming paper waste into new resources, we all contribute to sustainable benefits, including:",
+    greenIntroPara: "Paper recycling is a fundamental pillar of the green economy and a decisive step towards protecting our planet. By transforming paper waste into new resources, we all contribute to sustainable benefits, including:",
     greenBenefitsTitle: "Benefits of recycling",
     greenBenefit1Title: "Protecting forest heritage",
     greenBenefit1: "Recycling 1 ton of paper saves about 17 trees from being cut and preserves biodiversity.",
@@ -879,7 +900,6 @@ download: "Download",
     greenBenefit4: "This sector creates new jobs and reduces production and import costs.",
     greenConclusion: "Adopting a paper recycling culture is not just an option, it's a real investment in the future of our generations and our environment.",
 
-    // ============ 10. Podcast ============
     podcastIntro: "ENSTP student podcast.",
     podcastEp1: "Episode 1",
     podcastEp1Desc: "Welcome to ENSTP — new student guide.",
@@ -888,7 +908,6 @@ download: "Download",
     podcastEp3: "Episode 3",
     podcastEp3Desc: "Tips to succeed in your first year.",
 
-    // ============ 11. Courses ============
     coursesIntro: "Courses and training to help you.",
     courseMath: "Mathematics",
     courseMathDesc: "Support courses in analysis and algebra.",
@@ -897,7 +916,6 @@ download: "Download",
     courseInfo: "Computer Science",
     courseInfoDesc: "Introduction to programming.",
 
-    // ============ 12. About ============
     aboutIntro: "A student project, 100% free.",
     aboutMission: "Our mission",
     aboutMissionDesc: "Help every new student integrate quickly and never stay alone facing a problem.",
@@ -910,9 +928,8 @@ download: "Download",
     aboutWarning: "Warning",
     aboutWarningDesc: "Information is indicative. Always verify with administration.",
     aboutUpdate: "Last update",
-    aboutUpdateDesc: "October 2026 — Version 2.1",
+    aboutUpdateDesc: "October 2026 — Version 2.5",
 
-    // ============ 13. QR Codes ============
     qrIntro: "Scan these QR codes to access sections directly.",
     qrPrint: "🖨️ Print",
     qrDownload: "📥 Download",
@@ -926,7 +943,9 @@ download: "Download",
     qrCopied: "✅ Link copied!",
     qrNotFound: "QR Code not available",
 
-    // ============ Footer ============
+    tspTitle: "Text size",
+    tsSmall: "Small", tsNormal: "Normal", tsLarge: "Large", tsXLarge: "X-Large",
+
     footerTitle: "ENSTP Survival Guide",
     footerSub: "A project by 1st year Engineering students, Group 2 — Infrastructures de Base.",
     footerFree: "100% free · 3 languages · Offline",
@@ -964,5 +983,3 @@ if (typeof window !== 'undefined') {
   window.getCurrentLang = getCurrentLang;
   window.setCurrentLang = setCurrentLang;
 }
- 
-    
