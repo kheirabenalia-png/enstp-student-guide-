@@ -27,21 +27,31 @@ async function registerUser(email, password, name, wilaya, year, groupe) {
     throw new Error('Mot de passe : minimum 6 caractères');
   }
   
-  // 3. أنشئ الحساب
+  // 3. تحقق من الاسم
+  if (!name || name.trim().length < 2) {
+    throw new Error('Nom complet requis');
+  }
+  
+  // 4. تحقق من الولاية
+  if (!wilaya) {
+    throw new Error('Wilaya requise');
+  }
+  
+  // 5. أنشئ الحساب
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const user = userCredential.user;
   
-  // 4. حدّث الاسم
+  // 6. حدّث الاسم في Auth
   await updateProfile(user, { displayName: name });
   
-  // 5. احفظ البيانات في Firestore
+  // 7. احفظ في Firestore
   await setDoc(doc(db, 'users', user.uid), {
     uid: user.uid,
-    email: email,
-    name: name,
+    email: email.toLowerCase().trim(),
+    name: name.trim(),
     wilaya: wilaya,
-    year: year,
-    groupe: groupe,
+    year: year || '',
+    groupe: groupe || '',
     role: 'student',
     createdAt: serverTimestamp()
   });
@@ -71,12 +81,13 @@ async function logoutUser() {
 // الحصول على بيانات المستخدم
 // ============================================
 async function getUserData(uid) {
+  if (!uid) return null;
   const snap = await getDoc(doc(db, 'users', uid));
   return snap.exists() ? snap.data() : null;
 }
 
 // ============================================
-// الحصول على المستخدم الحالي
+// المستخدم الحالي
 // ============================================
 function getCurrentUser() {
   return auth.currentUser;
@@ -89,8 +100,11 @@ function onAuthChange(callback) {
   return onAuthStateChanged(auth, callback);
 }
 
-// تصدير
 export { 
-  registerUser, loginUser, logoutUser,
-  getUserData, getCurrentUser, onAuthChange
+  registerUser, 
+  loginUser, 
+  logoutUser,
+  getUserData, 
+  getCurrentUser, 
+  onAuthChange
 };
