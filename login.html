@@ -117,14 +117,12 @@ h1{text-align:center;color:var(--ink);font-size:1.5rem;margin-bottom:8px}
 <script type="module">
 import { loginUser, onAuthChange } from './auth.js';
 
-// إذا كان مسجلاً، اذهب للفورم
 onAuthChange(user => {
   if (user) {
     window.location.href = 'forum.html';
   }
 });
 
-// معالج الدخول
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   
