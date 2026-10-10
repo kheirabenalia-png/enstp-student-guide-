@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hors ligne — ENSTP Guide</title>
+<style>
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #c2410c, #9a3412);
+  color: #fff;
+  font: 1rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  padding: 20px;
+  margin: 0;
+  text-align: center;
+}
+.container {
+  max-width: 500px;
+  animation: fadeInUp .8s ease-out;
+}
+.icon {
+  font-size: 6rem;
+  margin-bottom: 20px;
+  display: block;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+h1 {
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+p {
+  font-size: 1.05rem;
+  opacity: .9;
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+.btn {
+  display: inline-block;
+  padding: 14px 32px;
+  background: #fff;
+  color: #c2410c;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,.3);
+  transition: all .3s;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0,0,0,.4);
+}
+.note {
+  margin-top: 30px;
+  font-size: .9rem;
+  opacity: .8;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <span class="icon">📴</span>
+  <h1>Vous êtes hors ligne</h1>
+  <p>Vérifiez votre connexion Internet. Les sections déjà visitées restent accessibles.</p>
+  <button class="btn" onclick="window.location.reload()">🔄 Réessayer</button>
+  <button class="btn" onclick="window.location.href='guide.html'" style="margin-top:10px;background:transparent;color:#fff;border:2px solid #fff;box-shadow:none">📖 Aller au guide</button>
+  <p class="note">💡 Le guide a été mis en cache. Revenez plus tard si les pages ne s'ouvrent pas.</p>
+</div>
+
+</body>
+</html>
