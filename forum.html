@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Forum — ENSTP</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body {
+  min-height: 100vh;
+  background: var(--bg, #f6f4ef);
+  padding-bottom: 40px;
+}
+.forum-header {
+  background: linear-gradient(135deg, #c2410c, #9a3412);
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,.15);
+}
+.forum-header h1 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+.forum-header .user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .85rem;
+}
+.forum-header .user-info img,
+.forum-header .user-info .avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: #fff;
+  color: #c2410c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+}
+.forum-header button {
+  background: rgba(255,255,255,.2);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.3);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: .8rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+.forum-header button:hover { background: rgba(255,255,255,.3); }
+
+.forum-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.welcome-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.06);
+  border: 1px solid #e5e1d8;
+}
+.welcome-card h2 {
+  margin: 0 0 8px;
+  color: #c2410c;
+  font-size: 1.3rem;
+}
+.welcome-card p {
+  margin: 0;
+  color: #667085;
+  line-height: 1.6;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.stat-box {
+  background: #fff;
+  padding: 16px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid #e5e1d8;
+  box-shadow: 0 2px 10px rgba(0,0,0,.04);
+}
+.stat-box b {
+  display: block;
+  font-size: 1.8rem;
+  color: #c2410c;
+  font-weight: 900;
+}
+.stat-box span {
+  font-size: .8rem;
+  color: #667085;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.search-bar input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #e5e1d8;
+  border-radius: 14px;
+  font-size: 1rem;
+  background: #fff;
+  outline: none;
+  font-family: inherit;
+}
+.search-bar input:focus {
+  border-color: #c2410c;
+  box-shadow: 0 0 0 3px rgba(194,65,12,.1);
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  background: #fff;
+  padding: 6px;
+  border-radius: 16px;
+  border: 1px solid #e5e1d8;
+}
+.tab-btn {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: transparent;
+  border: 0;
+  color: #667085;
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .25s;
+}
+.tab-btn:hover { background: #fde8dc; color: #c2410c; }
+.tab-btn.active {
+  background: #c2410c;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(194,65,12,.3);
+}
+
+.section-title {
+  color: #c2410c;
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 20px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.users-list, .rooms-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.user-card {
+  background: #fff;
+  border: 1px solid #e5e1d8;
+  border-radius: 16px;
+  padding: 16px;
+  transition: all .25s;
+  cursor: pointer;
+}
+.user-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,.08);
+  border-color: #c2410c;
+}
+.user-card .u-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.user-card .u-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c2410c, #9a3412);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.user-card .u-info {
+  min-width: 0;
+}
+.user-card .u-name {
+  font-weight: 700;
+  color: #1d2433;
+  font-size: .95rem;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-card .u-wilaya {
+  font-size: .8rem;
+  color: #667085;
+}
+.user-card .u-details {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.u-badge {
+  background: #fde8dc;
+  color: #c2410c;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: .7rem;
+  font-weight: 600;
+}
+
+.room-card {
+  background: #fff;
+  border: 2px solid #e5e1d8;
+  border-radius: 16px;
+  padding: 16px;
+  transition: all .25s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+.room-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,.08);
+  border-color: #c2410c;
+}
+.room-card.mine {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+}
+.room-card .room-flag {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c2410c, #9a3412);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.room-card.mine .room-flag {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+.room-card .room-info { flex: 1; min-width: 0; }
+.room-card .room-name {
+  font-weight: 700;
+  color: #1d2433;
+  font-size: 1rem;
+  margin-bottom: 3px;
+}
+.room-card .room-count {
+  font-size: .8rem;
+  color: #667085;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #667085;
+}
+.loading .spinner {
+  display: inline-block;
+  width: 30px; height: 30px;
+  border: 3px solid #fde8dc;
+  border-top-color: #c2410c;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  margin-bottom: 10px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #94a3b8;
+  font-size: .9rem;
+}
+.empty b { font-size: 2.5rem; display: block; margin-bottom: 8px; }
+
+@media (max-width: 600px) {
+  .stats-row { grid-template-columns: 1fr; gap: 8px; }
+  .users-list, .rooms-list { grid-template-columns: 1fr; }
+  .forum-header { padding: 14px; flex-direction: column; gap: 10px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="forum-header">
+  <h1>🎓 ENSTP Forum</h1>
+  <div class="user-info">
+    <div class="avatar" id="userAvatar">?</div>
+    <span id="userName">Chargement...</span>
+    <button onclick="handleLogout()">🚪 Déconnexion</button>
+  </div>
+</div>
+
+<div class="forum-container">
+
+  <!-- Welcome Card -->
+  <div class="welcome-card">
+    <h2>👋 Bienvenue, <span id="welcomeName">...</span> !</h2>
+    <p>Rejoins la discussion avec les étudiants de ta wilaya. Découvre les autres étudiants de l'ENSTP à travers l'Algérie.</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-box">
+      <b id="statUsers">-</b>
+      <span>👥 Étudiants inscrits</span>
+    </div>
+    <div class="stat-box">
+      <b id="statWilayas">69</b>
+      <span>📍 Wilayas</span>
+    </div>
+    <div class="stat-box">
+      <b id="statMessages">-</b>
+      <span>💬 Messages</span>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="🔍 Rechercher un étudiant ou une wilaya..." oninput="filterContent()">
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('rooms')" id="tabRooms">🏠 Salles par wilaya</button>
+    <button class="tab-btn" onclick="switchTab('users')" id="tabUsers">👥 Étudiants</button>
+  </div>
+
+  <!-- Content -->
+  <div id="content">
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Chargement...</p>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+import { 
+  auth, db, WILAYAS,
+  onAuthStateChanged,
+  signOut,
+  collection, query, where, getDocs, getDoc, doc, orderBy, limit, onSnapshot
+} from './firebase-config.js';
+
+let currentUser = null;
+let currentUserData = null;
+let allUsers = [];
+let allRooms = [];
+let currentTab = 'rooms';
+
+// ============================================
+// التحقق من المستخدم
+// ============================================
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = 'login.html';
+    return;
+  }
+  
+  currentUser = user;
+  
+  // اقرأ بيانات المستخدم
+  try {
+    const userSnap = await getDoc(doc(db, 'users', user.uid));
+    if (userSnap.exists()) {
+      currentUserData = userSnap.data();
+    } else {
+      currentUserData = {
+        name: user.displayName || 'Étudiant',
+        email: user.email,
+        wilaya: 'غير محدد',
+        role: 'student'
+      };
+    }
+  } catch(e) {
+    console.error('Erreur lecture user:', e);
+    currentUserData = {
+      name: user.displayName || 'Étudiant',
+      email: user.email,
+      wilaya: 'غير محدد',
+      role: 'student'
+    };
+  }
+  
+  // حدّث الواجهة
+  const initials = (currentUserData.name || '?').charAt(0).toUpperCase();
+  document.getElementById('userAvatar').textContent = initials;
+  document.getElementById('userName').textContent = currentUserData.name || 'Étudiant';
+  document.getElementById('welcomeName').textContent = currentUserData.name || 'Étudiant';
+  
+  // ابدأ تحميل البيانات
+  await loadAllData();
+});
+
+// ============================================
+// تحميل البيانات
+// ============================================
+async function loadAllData() {
+  await Promise.all([
+    loadUsers(),
+    loadRooms()
+  ]);
+  renderContent();
+  loadStats();
+}
+
+async function loadUsers() {
+  try {
+    const snap = await getDocs(collection(db, 'users'));
+    allUsers = [];
+    snap.forEach(d => {
+      const data = d.data();
+      if (data.uid !== currentUser.uid) {
+        allUsers.push(data);
+      }
+    });
+    console.log('Users loaded:', allUsers.length);
+  } catch(e) {
+    console.error('Erreur users:', e);
+    allUsers = [];
+  }
+}
+
+async function loadRooms() {
+  try {
+    // لكل ولاية، نحسب عدد الطلبة
+    allRooms = WILAYAS.map(w => {
+      const count = allUsers.filter(u => u.wilaya === w).length;
+      return { wilaya: w, count: count };
+    });
+    
+    // أضف الطالب نفسه
+    if (currentUserData && currentUserData.wilaya) {
+      const myWilaya = allRooms.find(r => r.wilaya === currentUserData.wilaya);
+      if (myWilaya) myWilaya.count++;
+    }
+    
+    // رتب: ولايتي أولاً، ثم الأكثر سكاناً
+    allRooms.sort((a, b) => {
+      if (a.wilaya === currentUserData.wilaya) return -1;
+      if (b.wilaya === currentUserData.wilaya) return 1;
+      return b.count - a.count;
+    });
+    
+    console.log('Rooms loaded:', allRooms.length);
+  } catch(e) {
+    console.error('Erreur rooms:', e);
+    allRooms = [];
+  }
+}
+
+async function loadStats() {
+  try {
+    const usersSnap = await getDocs(collection(db, 'users'));
+    document.getElementById('statUsers').textContent = usersSnap.size || '0';
+    
+    // عدد الرسائل الكلي (تقديري)
+    document.getElementById('statMessages').textContent = '...';
+  } catch(e) {
+    document.getElementById('statUsers').textContent = allUsers.length;
+  }
+}
+
+// ============================================
+// عرض المحتوى
+// ============================================
+function renderContent() {
+  const content = document.getElementById('content');
+  
+  if (currentTab === 'rooms') {
+    renderRooms(content);
+  } else {
+    renderUsers(content);
+  }
+}
+
+function renderRooms(content) {
+  const search = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+  let rooms = allRooms;
+  
+  if (search) {
+    rooms = rooms.filter(r => r.wilaya.toLowerCase().includes(search));
+  }
+  
+  if (rooms.length === 0) {
+    content.innerHTML = '<div class="empty"><b>🔍</b>Aucune wilaya trouvée</div>';
+    return;
+  }
+  
+  let html = '<h3 class="section-title">🏠 Salles de discussion par wilaya</h3>';
+  html += '<div class="rooms-list">';
+  
+  rooms.forEach(r => {
+    const isMine = r.wilaya === currentUserData.wilaya;
+    html += '<div class="room-card' + (isMine ? ' mine' : '') + '" onclick="openRoom(\'' + r.wilaya.replace(/'/g, "\\'") + '\')">';
+    html += '<div class="room-flag">🏠</div>';
+    html += '<div class="room-info">';
+    html += '<div class="room-name">' + r.wilaya + (isMine ? ' <span style="color:#10b981">⭐ Ma wilaya</span>' : '') + '</div>';
+    html += '<div class="room-count">👥 ' + r.count + ' étudiant' + (r.count > 1 ? 's' : '') + '</div>';
+    html += '</div>';
+    html += '</div>';
+  });
+  
+  html += '</div>';
+  content.innerHTML = html;
+}
+
+function renderUsers(content) {
+  const search = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+  let users = allUsers;
+  
+  if (search) {
+    users = users.filter(u => 
+      (u.name || '').toLowerCase().includes(search) ||
+      (u.wilaya || '').toLowerCase().includes(search)
+    );
+  }
+  
+  if (users.length === 0) {
+    content.innerHTML = '<div class="empty"><b>👥</b>Aucun étudiant trouvé</div>';
+    return;
+  }
+  
+  let html = '<h3 class="section-title">👥 Étudiants inscrits (' + users.length + ')</h3>';
+  html += '<div class="users-list">';
+  
+  users.forEach(u => {
+    const initials = (u.name || '?').charAt(0).toUpperCase();
+    html += '<div class="user-card">';
+    html += '<div class="u-head">';
+    html += '<div class="u-avatar">' + initials + '</div>';
+    html += '<div class="u-info">';
+    html += '<div class="u-name">' + (u.name || 'Étudiant') + '</div>';
+    html += '<div class="u-wilaya">📍 ' + (u.wilaya || 'غير محدد') + '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '<div class="u-details">';
+    if (u.year) html += '<span class="u-badge">🎓 ' + u.year + '</span>';
+    if (u.groupe) html += '<span class="u-badge">' + u.groupe + '</span>';
+    html += '</div>';
+    html += '</div>';
+  });
+  
+  html += '</div>';
+  content.innerHTML = html;
+}
+
+// ============================================
+// التبويبات
+// ============================================
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tabRooms').classList.toggle('active', tab === 'rooms');
+  document.getElementById('tabUsers').classList.toggle('active', tab === 'users');
+  renderContent();
+}
+
+function filterContent() {
+  renderContent();
+}
+
+// ============================================
+// فتح غرفة
+// ============================================
+function openRoom(wilaya) {
+  window.location.href = 'chat.html?wilaya=' + encodeURIComponent(wilaya);
+}
+
+// ============================================
+// الخروج
+// ============================================
+async function handleLogout() {
+  if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
+    await signOut(auth);
+    window.location.href = 'login.html';
+  }
+}
+
+// اجعل الدوال متاحة عالمياً
+window.switchTab = switchTab;
+window.filterContent = filterContent;
+window.openRoom = openRoom;
+window.handleLogout = handleLogout;
+</script>
+
+</body>
+</html>
