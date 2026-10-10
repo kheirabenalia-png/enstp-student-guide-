@@ -1,10 +1,9 @@
 // ============================================
 // firebase-config.js — إعداد Firebase
 // ENSTP Forum
+// Version 10.12.0 (modular SDK)
 // ============================================
-// ⚠️ استخدم Firebase v9 (modular SDK)
 
-// استيراد الدوال من Firebase CDN
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { 
   getAuth, 
@@ -62,7 +61,7 @@ function isEnstpEmail(email) {
 }
 
 // ============================================
-// قائمة الولايات (69)
+// الولايات (69)
 // ============================================
 const WILAYAS = [
   "أدرار", "الشلف", "الأغواط", "أم البواقي", "باتنة", "بجاية", "بسكرة", "بشار",
@@ -80,10 +79,14 @@ const WILAYAS = [
   "برج باجي مختار (منتدبة)", "تندوف (منتدبة)"
 ];
 
+// ============================================
 // تصدير
+// ============================================
 export { 
   app, auth, db, 
-  firebaseConfig, ALLOWED_DOMAIN, WILAYAS,
+  firebaseConfig, 
+  ALLOWED_DOMAIN, 
+  WILAYAS,
   isEnstpEmail,
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword,
