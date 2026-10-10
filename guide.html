@@ -20,7 +20,7 @@
 
 <style>
 /* ============================================
-   Loading Spinner
+   Loading Screen
    ============================================ */
 .loading-screen{
   position:fixed;inset:0;
@@ -30,16 +30,13 @@
   z-index:9999;
   transition:opacity .4s ease, visibility .4s ease;
 }
-.loading-screen.hide{
-  opacity:0;visibility:hidden;
-}
+.loading-screen.hide{opacity:0;visibility:hidden}
 .loading-screen .logo-spin{
   width:80px;height:80px;
   border-radius:50%;
   background:linear-gradient(135deg,var(--acc),var(--acc2));
   display:flex;align-items:center;justify-content:center;
-  font-size:2.5rem;
-  color:#fff;
+  font-size:2.5rem;color:#fff;
   margin-bottom:20px;
   animation:pulse 1.5s ease-in-out infinite;
   box-shadow:0 10px 30px rgba(194,65,12,.4);
@@ -52,25 +49,9 @@
   animation:spin .8s linear infinite;
   margin-bottom:12px;
 }
-.loading-screen p{
-  color:var(--mut);
-  font-size:.9rem;
-  font-weight:600;
-}
+.loading-screen p{color:var(--mut);font-size:.9rem;font-weight:600}
 
-/* ============================================
-   Page Transition
-   ============================================ */
-#app{
-  animation:fadeIn .5s ease-out;
-}
-#app.section-change{
-  animation:fadeInUp .4s ease-out;
-}
-
-/* ============================================
-   Progress Bar (top)
-   ============================================ */
+/* Progress Bar */
 .progress-bar{
   position:fixed;top:0;left:0;
   height:3px;
@@ -80,35 +61,25 @@
   transition:width .3s ease;
   box-shadow:0 0 10px var(--acc);
 }
-.progress-bar.active{
-  animation:progressLoad 1s ease-out forwards;
-}
+.progress-bar.active{animation:progressLoad 1s ease-out forwards}
 @keyframes progressLoad{
   0%{width:0%}
   50%{width:70%}
   100%{width:100%;opacity:0}
 }
 
-/* ============================================
-   Card Entrance Animations
-   ============================================ */
-.card-3d{
-  animation:fadeInUp .5s cubic-bezier(.2,.8,.2,1) both;
-}
+#app{animation:fadeIn .5s ease-out}
+#app.section-change{animation:fadeInUp .4s ease-out}
+
+/* Card Entrance */
 .items-list .card-3d:nth-child(1){animation-delay:.05s}
 .items-list .card-3d:nth-child(2){animation-delay:.1s}
 .items-list .card-3d:nth-child(3){animation-delay:.15s}
 .items-list .card-3d:nth-child(4){animation-delay:.2s}
 .items-list .card-3d:nth-child(5){animation-delay:.25s}
 .items-list .card-3d:nth-child(6){animation-delay:.3s}
-.items-list .card-3d:nth-child(7){animation-delay:.35s}
-.items-list .card-3d:nth-child(8){animation-delay:.4s}
-.items-list .card-3d:nth-child(9){animation-delay:.45s}
-.items-list .card-3d:nth-child(10){animation-delay:.5s}
 
-/* ============================================
-   Scroll Animations
-   ============================================ */
+/* Scroll Animations */
 .scroll-anim{
   opacity:0;
   transform:translateY(30px);
@@ -119,9 +90,7 @@
   transform:translateY(0);
 }
 
-/* ============================================
-   Modal
-   ============================================ */
+/* Modal */
 .modal-overlay{
   position:fixed;inset:0;
   background:rgba(0,0,0,.8);
@@ -143,57 +112,44 @@
   animation:bounceIn .4s cubic-bezier(.2,.8,.2,1);
 }
 
-/* ============================================
-   Floating Button (Back to Top)
-   ============================================ */
+/* Back to Top */
 .back-to-top{
   position:fixed;
   bottom:20px;left:20px;
   width:48px;height:48px;
   border-radius:50%;
   background:linear-gradient(135deg,var(--acc),var(--acc2));
-  color:#fff;
-  border:0;
+  color:#fff;border:0;
   font-size:1.3rem;
   cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:flex;align-items:center;justify-content:center;
   box-shadow:0 8px 20px rgba(194,65,12,.4);
   transition:all .3s;
-  opacity:0;
-  visibility:hidden;
+  opacity:0;visibility:hidden;
   z-index:998;
   font-family:inherit;
 }
 .back-to-top.show{
-  opacity:1;
-  visibility:visible;
+  opacity:1;visibility:visible;
   animation:slideInBottom .4s ease-out;
 }
 .back-to-top:hover{
   transform:translateY(-5px) scale(1.1);
-  box-shadow:0 12px 30px rgba(194,65,12,.6);
 }
 html[dir="rtl"] .back-to-top{left:auto;right:20px}
 
-/* ============================================
-   Feedback Button Floating
-   ============================================ */
+/* Feedback Float */
 .feedback-float{
   position:fixed;
   bottom:20px;right:20px;
   padding:14px 22px;
   border-radius:50px;
   background:linear-gradient(135deg,#c2410c,#9a3412);
-  color:#fff;
-  border:0;
+  color:#fff;border:0;
   font-size:.95rem;
   font-weight:700;
   cursor:pointer;
-  display:flex;
-  align-items:center;
-  gap:8px;
+  display:flex;align-items:center;gap:8px;
   box-shadow:0 8px 24px rgba(194,65,12,.4);
   transition:all .3s;
   z-index:998;
@@ -202,7 +158,6 @@ html[dir="rtl"] .back-to-top{left:auto;right:20px}
 }
 .feedback-float:hover{
   transform:translateY(-4px) scale(1.05);
-  box-shadow:0 12px 32px rgba(194,65,12,.6);
 }
 .feedback-float .fb-icon{
   font-size:1.2rem;
@@ -210,43 +165,272 @@ html[dir="rtl"] .back-to-top{left:auto;right:20px}
 }
 html[dir="rtl"] .feedback-float{right:auto;left:20px}
 
+/* ============================================
+   AI Search Button
+   ============================================ */
+.ai-btn{
+  padding:12px 18px;
+  background:linear-gradient(135deg,#8b5cf6,#7c3aed);
+  color:#fff;border:0;
+  border-radius:12px;
+  font-size:1rem;
+  font-weight:700;
+  cursor:pointer;
+  font-family:inherit;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  transition:all .3s;
+  box-shadow:0 4px 12px rgba(139,92,246,.3);
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.ai-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(139,92,246,.5);
+}
+.ai-btn:active{transform:translateY(0)}
+.ai-btn .ai-icon{
+  font-size:1.2rem;
+  animation:float 2s ease-in-out infinite;
+}
+
+/* AI Modal */
+#aiSearchModal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  z-index:10000;
+  padding:20px;
+  backdrop-filter:blur(8px);
+  animation:fadeIn .3s ease-out;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:60px;
+  overflow-y:auto;
+}
+#aiSearchModal.show{display:flex}
+
+.ai-modal-content{
+  background:var(--card);
+  color:var(--ink);
+  padding:28px;
+  border-radius:24px;
+  max-width:600px;
+  width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  animation:bounceIn .4s cubic-bezier(.2,.8,.2,1);
+}
+
+.ai-modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+.ai-modal-header h3{
+  margin:0;
+  color:#8b5cf6;
+  font-size:1.3rem;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.ai-modal-header .ai-close{
+  background:none;
+  border:0;
+  font-size:1.5rem;
+  color:var(--mut);
+  cursor:pointer;
+  padding:0;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  font-family:inherit;
+  transition:all .2s;
+}
+.ai-modal-header .ai-close:hover{
+  background:var(--acc-soft);
+  color:var(--acc);
+  transform:rotate(90deg);
+}
+
+.ai-modal-desc{
+  color:var(--mut);
+  font-size:.9rem;
+  margin-bottom:16px;
+  line-height:1.6;
+}
+
+#aiQuestion{
+  width:100%;
+  padding:14px;
+  border:2px solid var(--line);
+  border-radius:12px;
+  background:var(--bg);
+  color:var(--ink);
+  font-size:1rem;
+  font-family:inherit;
+  outline:none;
+  resize:vertical;
+  transition:all .3s;
+  line-height:1.5;
+  min-height:80px;
+}
+#aiQuestion:focus{
+  border-color:#8b5cf6;
+  box-shadow:0 0 0 3px rgba(139,92,246,.1);
+}
+
+.ai-submit-btn{
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  background:linear-gradient(135deg,#8b5cf6,#7c3aed);
+  color:#fff;
+  border:0;
+  border-radius:12px;
+  font-size:1rem;
+  font-weight:700;
+  cursor:pointer;
+  font-family:inherit;
+  transition:all .3s;
+  box-shadow:0 8px 20px rgba(139,92,246,.4);
+}
+.ai-submit-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 30px rgba(139,92,246,.6);
+}
+.ai-submit-btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+  transform:none;
+}
+
+#aiAnswer{
+  display:none;
+  margin-top:20px;
+  padding:16px;
+  background:linear-gradient(135deg,rgba(139,92,246,.05),rgba(124,58,237,.05));
+  border-radius:12px;
+  border-left:4px solid #8b5cf6;
+  animation:fadeInUp .4s ease-out;
+}
+#aiAnswer.show{display:block}
+
+.ai-quota{
+  margin-top:16px;
+  padding:10px;
+  background:var(--bg);
+  border-radius:8px;
+  font-size:.75rem;
+  color:var(--mut);
+  text-align:center;
+}
+
+/* Spinner */
+.spinner-small{
+  display:inline-block;
+  width:16px;height:16px;
+  border:2px solid rgba(255,255,255,.3);
+  border-top-color:#fff;
+  border-radius:50%;
+  animation:spin .6s linear infinite;
+  margin-right:8px;
+  vertical-align:middle;
+}
+
+/* Toast */
+#custom-toast{
+  position:fixed;
+  bottom:100px;
+  left:50%;
+  transform:translateX(-50%) translateY(100px);
+  background:var(--acc);
+  color:#fff;
+  padding:12px 24px;
+  border-radius:30px;
+  font-weight:600;
+  font-size:.95rem;
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+  z-index:10001;
+  opacity:0;
+  transition:all .3s ease-out;
+  pointer-events:none;
+  max-width:90%;
+  text-align:center;
+}
+#custom-toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* Install Banner */
+#installBanner{
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  right:20px;
+  max-width:440px;
+  margin:0 auto;
+  background:var(--card);
+  color:var(--ink);
+  padding:14px 18px;
+  border-radius:16px;
+  box-shadow:0 20px 50px rgba(0,0,0,.3);
+  border:1px solid var(--line);
+  display:none;
+  align-items:center;
+  gap:12px;
+  z-index:1000;
+}
+#installBanner.show{
+  display:flex;
+  animation:slideInBottom .4s ease-out;
+}
+#installBanner .ib-icon{font-size:1.8rem;flex-shrink:0;animation:float 2s ease-in-out infinite}
+#installBanner .ib-text{flex:1;font-size:.88rem;line-height:1.4}
+#installBanner .ib-text strong{display:block;color:var(--acc);font-size:.95rem;margin-bottom:2px}
+#installBanner .ib-btn{
+  background:var(--acc);color:#fff;
+  padding:10px 18px;border-radius:10px;
+  font-weight:600;cursor:pointer;
+  font-family:inherit;font-size:.88rem;
+  border:0;flex-shrink:0;
+}
+#installBanner .ib-close{
+  background:none;border:0;color:var(--mut);
+  font-size:1.3rem;cursor:pointer;
+  padding:0 4px;font-family:inherit;
+}
+
 @media(max-width:600px){
-  .feedback-float{
-    padding:12px 18px;
-    font-size:.85rem;
-    bottom:80px;
-  }
-  .back-to-top{
-    bottom:80px;
-    width:44px;height:44px;
-  }
+  .feedback-float{padding:12px 18px;font-size:.85rem;bottom:80px}
+  .back-to-top{bottom:80px;width:44px;height:44px}
+  #aiSearchModal{padding-top:20px}
+  .ai-modal-content{padding:20px}
+  .ai-btn{padding:12px 14px}
+  .ai-btn .ai-text{display:none}
 }
 </style>
 </head>
 <body>
 
-<!-- ============================================ -->
 <!-- Progress Bar -->
-<!-- ============================================ -->
 <div class="progress-bar" id="progressBar"></div>
 
-<!-- ============================================ -->
 <!-- Loading Screen -->
-<!-- ============================================ -->
 <div class="loading-screen" id="loadingScreen">
   <div class="logo-spin">🎓</div>
   <div class="spin-ring"></div>
   <p>Chargement du guide...</p>
 </div>
 
-<!-- ============================================ -->
-<!-- شريط بدون إنترنت -->
-<!-- ============================================ -->
+<!-- Offline Banner -->
 <div class="offline-banner" id="offline-banner">📴 Mode hors ligne</div>
 
-<!-- ============================================ -->
-<!-- الشريط العلوي -->
-<!-- ============================================ -->
+<!-- Top Controls -->
 <div class="top-controls">
   <div class="pill">
     <button onclick="setLang('fr')" data-lang="fr">🇫🇷 FR</button>
@@ -260,7 +444,7 @@ html[dir="rtl"] .feedback-float{right:auto;left:20px}
   </div>
 </div>
 
-<!-- لوحة الألوان -->
+<!-- Theme Panel -->
 <div class="theme-panel" id="theme-panel">
   <div class="theme-panel-header">
     <strong id="tp-title">Couleur</strong>
@@ -279,7 +463,7 @@ html[dir="rtl"] .feedback-float{right:auto;left:20px}
   </div>
 </div>
 
-<!-- لوحة حجم النص -->
+<!-- Text Size Panel -->
 <div class="text-size-panel" id="text-size-panel">
   <div class="tsp-header">
     <strong id="tsp-title">Taille du texte</strong>
@@ -305,26 +489,81 @@ html[dir="rtl"] .feedback-float{right:auto;left:20px}
   </div>
 </div>
 
-<!-- الرأس -->
+<!-- Header -->
 <header style="background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;padding:18px 16px 14px;position:relative;animation:fadeInDown .5s ease-out">
-  <a href="index.html" id="home-link" style="position:absolute;top:18px;right:16px;color:#fff;text-decoration:none;font-size:.85rem;opacity:.9;font-weight:600;transition:all .3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠 <span id="home-text">Accueil</span></a>
+  <a href="index.html" id="home-link" style="position:absolute;top:18px;right:16px;color:#fff;text-decoration:none;font-size:.85rem;opacity:.9;font-weight:600">🏠 <span id="home-text">Accueil</span></a>
   <h1 id="siteName" style="margin:0;font-size:1.35rem;font-weight:800">Guide de survie ENSTP</h1>
   <p id="tagline" style="margin:4px 0 0;opacity:.9;font-size:.9rem">Ton premier jour, dans ta poche.</p>
 </header>
 
-<!-- مربع البحث -->
+<!-- ============================================ -->
+<!-- 🆕 Search Bar + AI Button -->
+<!-- ============================================ -->
 <div style="padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line);animation:fadeInDown .5s ease-out .1s both">
-  <input id="q" placeholder="🔎 Chercher…" oninput="doSearch(this.value)"
-         style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-size:1rem;outline:none;font-family:inherit;transition:all .3s"
-         onfocus="this.style.borderColor='var(--acc)';this.style.boxShadow='0 0 0 3px rgba(194,65,12,.1)'"
-         onblur="this.style.borderColor='var(--line)';this.style.boxShadow='none'">
+  <div style="display:flex;gap:8px;align-items:center;max-width:900px;margin:0 auto">
+    
+    <!-- Search Input -->
+    <input id="q" placeholder="🔎 Chercher…" oninput="doSearch(this.value)"
+           style="flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-size:1rem;outline:none;font-family:inherit;transition:all .3s;min-width:0"
+           onfocus="this.style.borderColor='var(--acc)';this.style.boxShadow='0 0 0 3px rgba(194,65,12,.1)'"
+           onblur="this.style.borderColor='var(--line)';this.style.boxShadow='none'">
+    
+    <!-- AI Button -->
+    <button class="ai-btn" onclick="openAISearch()" id="aiBtn" title="Assistant IA">
+      <span class="ai-icon">✨</span>
+      <span class="ai-text">IA</span>
+    </button>
+    
+  </div>
 </div>
 
-<!-- المحتوى الرئيسي -->
+<!-- Main Content -->
 <main id="app" style="max-width:900px;margin:0 auto;padding:14px"></main>
 
-<!-- Feedback Floating Button -->
-<a href="feedback.html" class="feedback-float" id="feedbackFloat">
+<!-- ============================================ -->
+<!-- 🆕 AI Search Modal -->
+<!-- ============================================ -->
+<div id="aiSearchModal">
+  <div class="ai-modal-content">
+    
+    <!-- Header -->
+    <div class="ai-modal-header">
+      <h3>
+        <span style="font-size:1.5rem">✨</span>
+        <span id="aiTitle">Assistant IA</span>
+      </h3>
+      <button class="ai-close" onclick="closeAISearch()">×</button>
+    </div>
+    
+    <!-- Description -->
+    <p class="ai-modal-desc" id="aiDesc">
+      Posez une question en langage naturel. L'IA vous répondra en utilisant les informations du guide.
+    </p>
+    
+    <!-- Question Input -->
+    <textarea id="aiQuestion" 
+              placeholder="Ex: Où puis-je manger pas cher près de l'école ?" 
+              rows="3" 
+              maxlength="300"></textarea>
+    
+    <!-- Submit Button -->
+    <button class="ai-submit-btn" onclick="submitAIQuestion()" id="aiSubmitBtn">
+      🚀 Demander à l'IA
+    </button>
+    
+    <!-- Answer Area -->
+    <div id="aiAnswer"></div>
+    
+    <!-- Quota Info -->
+    <div class="ai-quota" id="aiQuota">
+      ⚡ Limite : 1500 questions/jour
+    </div>
+    
+  </div>
+</div>
+
+<!-- Feedback Button -->
+<a href="feedback.html" class="feedback-float">
   <span class="fb-icon">💬</span>
   <span>Votre avis</span>
 </a>
@@ -387,17 +626,18 @@ try {
 <script src="data/index.js"></script>
 
 <script src="search.js"></script>
+<script src="ai-search.js"></script>
 
 <script>
 // ============================================
-// المتغيرات العامة
+// المتغيرات
 // ============================================
 let LANG = localStorage.getItem('lang') || 'fr';
 let CURRENT_SECTION = null;
 let CURRENT_CATEGORY = null;
 
 // ============================================
-// Loading Screen
+// Loading
 // ============================================
 function hideLoading() {
   const el = document.getElementById('loadingScreen');
@@ -409,9 +649,6 @@ function hideLoading() {
   }
 }
 
-// ============================================
-// Progress Bar
-// ============================================
 function showProgress() {
   const bar = document.getElementById('progressBar');
   if (!bar) return;
@@ -423,7 +660,7 @@ function showProgress() {
 }
 
 // ============================================
-// تبديل اللغة
+// Langue
 // ============================================
 function setLang(lang) {
   LANG = lang;
@@ -443,6 +680,39 @@ function setLang(lang) {
   const q = document.getElementById('q');
   if (q && typeof LANG_DATA !== 'undefined' && LANG_DATA[lang]) {
     q.placeholder = LANG_DATA[lang].search || '🔎 Chercher…';
+  }
+  
+  // تحديث placeholder AI
+  const aiQ = document.getElementById('aiQuestion');
+  if (aiQ) {
+    const placeholders = {
+      fr: "Ex: Où puis-je manger pas cher près de l'école ?",
+      ar: "مثال: أين آكل رخيص قرب المدرسة؟",
+      en: "Ex: Where can I eat cheap near school?"
+    };
+    aiQ.placeholder = placeholders[lang] || placeholders.fr;
+  }
+  
+  const aiT = document.getElementById('aiTitle');
+  if (aiT) {
+    const titles = { fr: "Assistant IA", ar: "المساعد الذكي", en: "AI Assistant" };
+    aiT.textContent = titles[lang] || titles.fr;
+  }
+  
+  const aiD = document.getElementById('aiDesc');
+  if (aiD) {
+    const descs = {
+      fr: "Posez une question en langage naturel. L'IA vous répondra en utilisant les informations du guide.",
+      ar: "اطرح سؤالاً بلغة طبيعية. سيجيبك الذكاء الاصطناعي باستخدام معلومات الدليل.",
+      en: "Ask a question in natural language. The AI will answer using the guide's information."
+    };
+    aiD.textContent = descs[lang] || descs.fr;
+  }
+  
+  const aiBtn = document.getElementById('aiSubmitBtn');
+  if (aiBtn) {
+    const btns = { fr: "🚀 Demander à l'IA", ar: "🚀 اسأل الذكاء الاصطناعي", en: "🚀 Ask AI" };
+    aiBtn.innerHTML = btns[lang] || btns.fr;
   }
   
   if (typeof LANG_DATA !== 'undefined' && LANG_DATA[lang]) {
@@ -473,7 +743,7 @@ function setLang(lang) {
 }
 
 // ============================================
-// الصفحة الرئيسية
+// Home
 // ============================================
 function renderHome() {
   CURRENT_SECTION = null;
@@ -489,7 +759,7 @@ function renderHome() {
   }
   
   let html = '<div class="tile-grid">';
-  window.SECTIONS.forEach((s, i) => {
+  window.SECTIONS.forEach((s) => {
     const title = (window.t ? window.t(s.titleKey, LANG) : s.titleKey);
     html += '<button class="tile-3d ripple" onclick="openSection(\'' + s.id + '\')">';
     html += '<span class="tile-icon">' + s.icon + '</span>';
@@ -504,7 +774,7 @@ function renderHome() {
 }
 
 // ============================================
-// فتح قسم
+// Open Section
 // ============================================
 function openSection(id) {
   showProgress();
@@ -517,7 +787,6 @@ function openSection(id) {
   app.classList.add('section-change');
   setTimeout(() => app.classList.remove('section-change'), 500);
   
-  // أقسام مخصصة
   if (s.type === 'custom' && typeof s.render === 'function') {
     document.getElementById('app').innerHTML = s.render();
     window.scrollTo(0, 0);
@@ -525,24 +794,15 @@ function openSection(id) {
     return;
   }
   
-  // خريطة المترو
   if (s.type === 'metro-map') { renderMetroMap(s); return; }
-  
-  // QR
   if (s.type === 'qr') { renderQR(s); return; }
-  
-  // تصنيفات
   if (s.categories && s.categories.length > 0) { renderCategoriesList(id); return; }
-  
-  // items
   if (s.items && s.items.length > 0) { renderItems(s, s.items); return; }
-  
-  // خريطة SVG
   if (s.buildings) { renderMap(s); return; }
 }
 
 // ============================================
-// تصنيفات
+// Categories
 // ============================================
 function renderCategoriesList(sectionId) {
   const s = window.SECTIONS.find(x => x.id === sectionId);
@@ -589,7 +849,7 @@ function renderCategory(sectionId, categoryId) {
 }
 
 // ============================================
-// البطاقات
+// Render Items
 // ============================================
 function renderItems(section, items, category) {
   const app = document.getElementById('app');
@@ -648,7 +908,7 @@ function renderItems(section, items, category) {
     }
     
     if (item.link) {
-      html += '<a href="' + item.link + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:10px 18px;background:var(--acc);color:#fff;border-radius:20px;text-decoration:none;font-size:.9rem;font-weight:600;transition:all .3s" onmouseover="this.style.transform=\'translateY(-3px)\';this.style.boxShadow=\'0 8px 20px rgba(194,65,12,.4)\'" onmouseout="this.style.transform=\'none\';this.style.boxShadow=\'none\'">📥 ' + window.t('download', LANG) + '</a>';
+      html += '<a href="' + item.link + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:10px 18px;background:var(--acc);color:#fff;border-radius:20px;text-decoration:none;font-size:.9rem;font-weight:600;transition:all .3s" onmouseover="this.style.transform=\'translateY(-3px)\'" onmouseout="this.style.transform=\'none\'">📥 ' + window.t('download', LANG) + '</a>';
     }
     
     if (item.map) {
@@ -690,7 +950,7 @@ function renderSection(id) {
 }
 
 // ============================================
-// خريطة SVG
+// Render Map
 // ============================================
 function renderMap(section, category) {
   const app = document.getElementById('app');
@@ -747,7 +1007,6 @@ function showPlace(sectionId, buildingId, categoryId) {
   
   const name = b.nameKey ? window.t(b.nameKey, LANG) : (b.name || '');
   
-  // Modal بدلاً من alert
   const overlay = document.createElement('div');
   overlay.className = 'modal-overlay';
   overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
@@ -760,7 +1019,7 @@ function showPlace(sectionId, buildingId, categoryId) {
 }
 
 // ============================================
-// مترو
+// Metro
 // ============================================
 function renderMetroMap(section) {
   const app = document.getElementById('app');
@@ -800,7 +1059,7 @@ function showMetroType(type) {
     html += '<button class="metro-station' + (isKey ? ' key' : '') + '" style="left:' + s.x + '%;top:50%;--station-color:' + color + ';--station-size:' + size + ';--station-border:' + border + ';animation-delay:' + delay + 's" onclick="showStation(\'' + type + '\',' + i + ')" title="' + s[LANG] + '"></button>';
   });
   html += '</div>';
-  html += '<h3 style="color:' + color + ';margin:20px 0 12px;font-size:1.15rem;display:flex;align-items:center;gap:8px;animation:fadeInUp .5s ease-out">';
+  html += '<h3 style="color:' + color + ';margin:20px 0 12px;font-size:1.15rem;display:flex;align-items:center;gap:8px">';
   html += '<span style="font-size:1.4rem">' + icon + '</span><span>' + title + ' — ' + stations.length + ' stations</span></h3>';
   html += '<div class="metro-stations-list">';
   stations.forEach((s, i) => {
@@ -835,8 +1094,7 @@ function showStation(type, index) {
     '<div style="display:flex;gap:8px;margin-top:16px">' +
       '<button onclick="this.closest(\'.modal-overlay\').remove()" style="flex:1;padding:12px;background:' + color + ';color:#fff;border:0;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit">' + (window.t('close') || 'Fermer') + '</button>' +
       '<button onclick="openStationMaps(\'' + encodeURIComponent(s.fr + ' ' + typeName + ' Alger') + '\')" style="flex:1;padding:12px;background:#f1f5f9;color:#1d2433;border:0;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit">📍 Maps</button>' +
-    '</div>' +
-    '</div>';
+    '</div></div>';
   document.body.appendChild(overlay);
 }
 
@@ -911,7 +1169,7 @@ function showQR(sectionId, itemIndex, categoryId) {
 }
 
 // ============================================
-// البحث
+// Search
 // ============================================
 function doSearch(q) {
   q = q.trim();
@@ -924,7 +1182,12 @@ function doSearch(q) {
   const results = (typeof smartSearch === 'function') ? smartSearch(q, window.SECTIONS) : [];
   
   if (results.length === 0) {
-    app.innerHTML = '<div style="text-align:center;padding:40px;color:var(--mut);animation:fadeIn .4s ease-out"><b style="font-size:3rem;display:block;margin-bottom:10px">🔍</b>' + window.t('noResult', LANG) + '<br><small>' + window.t('tryOther', LANG) + '</small></div>';
+    app.innerHTML = '<div style="text-align:center;padding:40px;color:var(--mut);animation:fadeIn .4s ease-out">' +
+      '<b style="font-size:3rem;display:block;margin-bottom:10px">🔍</b>' +
+      window.t('noResult', LANG) + '<br><small>' + window.t('tryOther', LANG) + '</small>' +
+      '<br><br>' +
+      '<button onclick="openAISearch()" style="padding:12px 24px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:#fff;border:0;border-radius:50px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 8px 20px rgba(139,92,246,.4)">✨ Demander à l\'IA</button>' +
+      '</div>';
     return;
   }
   
@@ -939,8 +1202,186 @@ function doSearch(q) {
     if (desc) html += '<p style="color:var(--mut);font-size:.9rem">' + desc + '</p>';
     html += '</div>';
   });
+  
+  // زر AI في نهاية النتائج
+  html += '<div style="text-align:center;margin-top:24px;padding:20px;background:linear-gradient(135deg,rgba(139,92,246,.05),rgba(124,58,237,.05));border-radius:16px;border:1px dashed #8b5cf6">';
+  html += '<p style="color:var(--mut);font-size:.9rem;margin:0 0 12px">Vous ne trouvez pas ce que vous cherchez ?</p>';
+  html += '<button onclick="openAISearch()" style="padding:12px 24px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:#fff;border:0;border-radius:50px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 8px 20px rgba(139,92,246,.4)">✨ Demander à l\'IA</button>';
+  html += '</div>';
+  
   app.innerHTML = html;
 }
+
+// ============================================
+// 🆕 AI SEARCH FUNCTIONS
+// ============================================
+function openAISearch() {
+  const modal = document.getElementById('aiSearchModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    setTimeout(() => document.getElementById('aiQuestion')?.focus(), 100);
+    
+    // حدّث الحصة
+    if (typeof getRemainingQuota === 'function') {
+      const remaining = getRemainingQuota();
+      const quota = document.getElementById('aiQuota');
+      if (quota) {
+        quota.textContent = '⚡ ' + remaining + ' question(s) restante(s) aujourd\'hui';
+      }
+    }
+  }
+}
+
+function closeAISearch() {
+  const modal = document.getElementById('aiSearchModal');
+  if (modal) {
+    modal.style.display = 'none';
+    const answer = document.getElementById('aiAnswer');
+    if (answer) {
+      answer.style.display = 'none';
+      answer.innerHTML = '';
+    }
+    const q = document.getElementById('aiQuestion');
+    if (q) q.value = '';
+  }
+}
+
+async function submitAIQuestion() {
+  const question = document.getElementById('aiQuestion')?.value.trim();
+  const answerDiv = document.getElementById('aiAnswer');
+  const submitBtn = document.getElementById('aiSubmitBtn');
+  
+  if (!question || question.length < 3) {
+    showToast('⚠️ Posez une question plus longue');
+    return;
+  }
+  
+  if (typeof askGemini !== 'function') {
+    answerDiv.style.display = 'block';
+    answerDiv.innerHTML = '<p style="margin:0;color:#dc2626;font-weight:600">❌ Erreur : Le module IA n\'est pas chargé.</p>';
+    return;
+  }
+  
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span class="spinner-small"></span> Réflexion...';
+  
+  answerDiv.style.display = 'block';
+  answerDiv.innerHTML = '<div style="display:flex;align-items:center;gap:10px;color:var(--mut)">' +
+    '<div style="width:20px;height:20px;border:3px solid rgba(139,92,246,.2);border-top-color:#8b5cf6;border-radius:50%;animation:spin .8s linear infinite"></div>' +
+    '<span>L\'IA réfléchit...</span></div>';
+  
+  try {
+    const answer = await askGemini(question, LANG);
+    
+    answerDiv.innerHTML = 
+      '<div style="display:flex;align-items:flex-start;gap:10px">' +
+        '<span style="font-size:1.5rem;flex-shrink:0">🤖</span>' +
+        '<div style="flex:1;line-height:1.7;white-space:pre-wrap">' + escapeHtmlAI(answer) + '</div>' +
+      '</div>' +
+      '<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:.75rem;color:var(--mut);text-align:center">' +
+        '✨ Réponse générée par Google Gemini' +
+      '</div>';
+    
+    if (typeof getRemainingQuota === 'function') {
+      const remaining = getRemainingQuota();
+      const quota = document.getElementById('aiQuota');
+      if (quota) {
+        quota.textContent = '⚡ ' + remaining + ' question(s) restante(s) aujourd\'hui';
+      }
+    }
+    
+  } catch(err) {
+    console.error('AI Error:', err);
+    answerDiv.innerHTML = 
+      '<div style="display:flex;align-items:flex-start;gap:10px">' +
+        '<span style="font-size:1.5rem;flex-shrink:0">⚠️</span>' +
+        '<div style="flex:1;color:#dc2626">' +
+          '<b>Erreur :</b><br>' + escapeHtmlAI(err.message) +
+        '</div>' +
+      '</div>';
+  }
+  
+  submitBtn.disabled = false;
+  const btns = { fr: "🚀 Demander à l'IA", ar: "🚀 اسأل الذكاء الاصطناعي", en: "🚀 Ask AI" };
+  submitBtn.innerHTML = btns[LANG] || btns.fr;
+}
+
+function escapeHtmlAI(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// ============================================
+// Toast
+// ============================================
+function showToast(message, duration = 3000) {
+  const existing = document.getElementById('custom-toast');
+  if (existing) existing.remove();
+  
+  const toast = document.createElement('div');
+  toast.id = 'custom-toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => toast.classList.add('show'), 50);
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
+}
+
+// ============================================
+// PWA + Notifications
+// ============================================
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  setTimeout(() => {
+    if (!localStorage.getItem('installDismissed')) showInstallBanner();
+  }, 5000);
+});
+
+function showInstallBanner() {
+  if (document.getElementById('installBanner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'installBanner';
+  banner.className = 'show';
+  banner.innerHTML = 
+    '<span class="ib-icon">📱</span>' +
+    '<div class="ib-text"><strong>Installer l\'application</strong><span>Accès rapide et hors ligne</span></div>' +
+    '<button class="ib-btn" onclick="installPWA()">Installer</button>' +
+    '<button class="ib-close" onclick="dismissInstallBanner()">×</button>';
+  document.body.appendChild(banner);
+}
+
+async function installPWA() {
+  if (!deferredPrompt) {
+    showToast('📱 Sur iOS : Partager 📤 → Sur l\'écran d\'accueil');
+    return;
+  }
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === 'accepted') {
+    showToast('✅ Application installée !');
+    localStorage.setItem('installDismissed', '1');
+  }
+  deferredPrompt = null;
+  document.getElementById('installBanner')?.remove();
+}
+
+function dismissInstallBanner() {
+  localStorage.setItem('installDismissed', '1');
+  document.getElementById('installBanner')?.remove();
+}
+
+window.addEventListener('appinstalled', () => {
+  showToast('🎉 Guide ENSTP installé !');
+  localStorage.setItem('installDismissed', '1');
+});
 
 // ============================================
 // Scroll Animations
@@ -958,7 +1399,6 @@ function setupScrollAnimations() {
         }
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    
     els.forEach(el => observer.observe(el));
   } else {
     els.forEach(el => el.classList.add('visible'));
@@ -974,9 +1414,7 @@ function scrollToTop() {
 
 window.addEventListener('scroll', () => {
   const btn = document.getElementById('backToTop');
-  if (btn) {
-    btn.classList.toggle('show', window.scrollY > 300);
-  }
+  if (btn) btn.classList.toggle('show', window.scrollY > 300);
 });
 
 // ============================================
@@ -997,7 +1435,6 @@ document.addEventListener('click', (e) => {
   ripple.style.width = ripple.style.height = '20px';
   
   target.appendChild(ripple);
-  
   setTimeout(() => ripple.remove(), 600);
 });
 
@@ -1027,8 +1464,18 @@ updateOnlineStatus();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js', { scope: './' })
-      .then(() => console.log('✅ SW'))
-      .catch((err) => console.log('❌ SW:', err));
+      .then((reg) => {
+        console.log('✅ SW registered');
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              showToast('🔄 Nouvelle version disponible ! Rechargez.');
+            }
+          });
+        });
+      })
+      .catch((err) => console.log('❌ SW error:', err));
   });
 }
 
@@ -1041,269 +1488,30 @@ document.addEventListener('keydown', (e) => {
     e.preventDefault();
     document.getElementById('q')?.focus();
   }
-  // Escape → Back
+  // Ctrl+Shift+A → AI
+  if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+    e.preventDefault();
+    openAISearch();
+  }
+  // Escape → Close AI or Back
   if (e.key === 'Escape') {
-    if (CURRENT_SECTION) renderHome();
+    const modal = document.getElementById('aiSearchModal');
+    if (modal && modal.style.display === 'flex') {
+      closeAISearch();
+    } else if (CURRENT_SECTION) {
+      renderHome();
+    }
+  }
+  // Ctrl+Enter in AI modal → Submit
+  if (e.ctrlKey && e.key === 'Enter') {
+    const modal = document.getElementById('aiSearchModal');
+    if (modal && modal.style.display === 'flex') {
+      e.preventDefault();
+      submitAIQuestion();
+    }
   }
 });
 
-   // ============================================
-// 🔔 NOTIFICATIONS
-// ============================================
-async function requestNotificationPermission() {
-  if (!('Notification' in window)) {
-    console.log('Notifications non supportées');
-    return false;
-  }
-  
-  if (Notification.permission === 'granted') {
-    return true;
-  }
-  
-  if (Notification.permission !== 'denied') {
-    const permission = await Notification.requestPermission();
-    return permission === 'granted';
-  }
-  
-  return false;
-}
-
-async function showNotification(title, body, icon = 'icon-192.png') {
-  if (!('Notification' in window)) return false;
-  
-  const permission = await requestNotificationPermission();
-  if (!permission) return false;
-  
-  try {
-    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-      const registration = await navigator.serviceWorker.ready;
-      await registration.showNotification(title, {
-        body: body,
-        icon: icon,
-        badge: icon,
-        vibrate: [200, 100, 200],
-        data: { url: location.href }
-      });
-    } else {
-      new Notification(title, { body: body, icon: icon });
-    }
-    return true;
-  } catch(e) {
-    console.error('Notification error:', e);
-    return false;
-  }
-}
-
-// زر الإشعارات
-function addNotificationButton() {
-  const controls = document.querySelector('.top-controls');
-  if (!controls || document.getElementById('notifBtn')) return;
-  
-  const pill = controls.querySelector('.pill:last-child');
-  if (!pill) return;
-  
-  const btn = document.createElement('button');
-  btn.className = 'ctrl-btn';
-  btn.id = 'notifBtn';
-  btn.title = 'Notifications';
-  btn.textContent = '🔔';
-  btn.onclick = async () => {
-    const granted = await requestNotificationPermission();
-    if (granted) {
-      btn.textContent = '🔕';
-      btn.title = 'Notifications activées';
-      showNotification('✅ Notifications activées', 'Vous recevrez les mises à jour du guide ENSTP.');
-    } else {
-      alert('⚠️ Les notifications sont bloquées. Activez-les dans les paramètres du navigateur.');
-    }
-  };
-  
-  pill.appendChild(btn);
-}
-
-// ============================================
-// 📤 SHARE
-// ============================================
-async function shareSite() {
-  const shareData = {
-    title: 'Guide de survie ENSTP',
-    text: 'Découvre le guide de survie des étudiants ENSTP !',
-    url: location.origin + location.pathname
-  };
-  
-  try {
-    if (navigator.share) {
-      await navigator.share(shareData);
-      console.log('✅ Partagé');
-    } else {
-      // Fallback: نسخ الرابط
-      await navigator.clipboard.writeText(shareData.url);
-      showToast('✅ Lien copié !');
-    }
-  } catch(e) {
-    if (e.name !== 'AbortError') {
-      console.error('Share error:', e);
-      // Fallback
-      const url = shareData.url;
-      const text = shareData.text + ' ' + url;
-      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
-    }
-  }
-}
-
-// زر المشاركة
-function addShareButton() {
-  const controls = document.querySelector('.top-controls');
-  if (!controls || document.getElementById('shareBtn')) return;
-  
-  const pill = controls.querySelector('.pill:last-child');
-  if (!pill) return;
-  
-  const btn = document.createElement('button');
-  btn.className = 'ctrl-btn';
-  btn.id = 'shareBtn';
-  btn.title = 'Partager';
-  btn.textContent = '📤';
-  btn.onclick = shareSite;
-  
-  pill.appendChild(btn);
-}
-
-// ============================================
-// Toast
-// ============================================
-function showToast(message, duration = 3000) {
-  const existing = document.getElementById('custom-toast');
-  if (existing) existing.remove();
-  
-  const toast = document.createElement('div');
-  toast.id = 'custom-toast';
-  toast.textContent = message;
-  toast.style.cssText = `
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: var(--acc);
-    color: #fff;
-    padding: 12px 24px;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: .95rem;
-    box-shadow: 0 8px 24px rgba(0,0,0,.3);
-    z-index: 9999;
-    opacity: 0;
-    transition: all .3s ease-out;
-    pointer-events: none;
-  `;
-  document.body.appendChild(toast);
-  
-  setTimeout(() => {
-    toast.style.opacity = '1';
-    toast.style.transform = 'translateX(-50%) translateY(0)';
-  }, 50);
-  
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateX(-50%) translateY(100px)';
-    setTimeout(() => toast.remove(), 300);
-  }, duration);
-}
-
-// ============================================
-// PWA Install Banner
-// ============================================
-let deferredPrompt = null;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  console.log('📱 PWA prêt à installer');
-  
-  // أظهر بانر بعد 5 ثوان
-  setTimeout(() => {
-    if (!localStorage.getItem('installDismissed')) {
-      showInstallBanner();
-    }
-  }, 5000);
-});
-
-function showInstallBanner() {
-  if (document.getElementById('installBanner')) return;
-  
-  const banner = document.createElement('div');
-  banner.id = 'installBanner';
-  banner.className = 'install-banner show';
-  banner.innerHTML = `
-    <span class="ib-icon">📱</span>
-    <div class="ib-text">
-      <strong>Installer l'application</strong>
-      <span>Accès rapide et hors ligne</span>
-    </div>
-    <button class="ib-btn" onclick="installPWA()">Installer</button>
-    <button class="ib-close" onclick="dismissInstallBanner()">×</button>
-  `;
-  document.body.appendChild(banner);
-}
-
-async function installPWA() {
-  if (!deferredPrompt) {
-    // iOS
-    showToast('📱 Sur iOS : Partager 📤 → Sur l\'écran d\'accueil');
-    return;
-  }
-  
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  
-  if (outcome === 'accepted') {
-    showToast('✅ Application installée !');
-    localStorage.setItem('installDismissed', '1');
-  }
-  
-  deferredPrompt = null;
-  document.getElementById('installBanner')?.remove();
-}
-
-function dismissInstallBanner() {
-  localStorage.setItem('installDismissed', '1');
-  document.getElementById('installBanner')?.remove();
-}
-
-window.addEventListener('appinstalled', () => {
-  showToast('🎉 Guide ENSTP installé !');
-  localStorage.setItem('installDismissed', '1');
-});
-
-// ============================================
-// Service Worker Registration + Update
-// ============================================
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js', { scope: './' })
-      .then((reg) => {
-        console.log('✅ SW registered', reg.scope);
-        
-        // تحديث تلقائي
-        reg.addEventListener('updatefound', () => {
-          const newWorker = reg.installing;
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              showToast('🔄 Nouvelle version disponible ! Rechargez la page.');
-            }
-          });
-        });
-      })
-      .catch((err) => console.log('❌ SW error:', err));
-  });
-}
-
-// اجعلها متاحة عالمياً
-window.installPWA = installPWA;
-window.dismissInstallBanner = dismissInstallBanner;
-window.shareSite = shareSite;
-window.showToast = showToast;
-window.showNotification = showNotification;
 // ============================================
 // Init
 // ============================================
@@ -1318,12 +1526,7 @@ window.showNotification = showNotification;
   }, 300);
 })();
 
-     // PWA + Notifications
-  setTimeout(() => {
-    addNotificationButton();
-    addShareButton();
-  }, 500);
-// اجعل الدوال متاحة عالمياً
+// تصدير عالمي
 window.openSection = openSection;
 window.renderHome = renderHome;
 window.renderCategory = renderCategory;
@@ -1336,6 +1539,12 @@ window.showPlace = showPlace;
 window.doSearch = doSearch;
 window.setLang = setLang;
 window.scrollToTop = scrollToTop;
+window.openAISearch = openAISearch;
+window.closeAISearch = closeAISearch;
+window.submitAIQuestion = submitAIQuestion;
+window.installPWA = installPWA;
+window.dismissInstallBanner = dismissInstallBanner;
+window.showToast = showToast;
 </script>
 
 </body>
