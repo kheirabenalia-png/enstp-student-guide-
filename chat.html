@@ -3,279 +3,303 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Chat — ENSTP</title>
-<link rel="stylesheet" href="style.css">
+<title>Chat — ENSTP Forum</title>
 <style>
-html, body {
-  height: 100%;
-  margin: 0;
-  background: var(--bg, #f6f4ef);
-  color: var(--ink, #1d2433);
-  font: 1rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+:root{
+  --acc:#c2410c;--acc2:#9a3412;--acc-soft:#fde8dc;
+  --bg:#f6f4ef;--card:#fff;
+  --ink:#1d2433;--mut:#667085;--line:#e5e1d8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  height:100%;
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font:1rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
 }
 
 /* ============================================
    HEADER
    ============================================ */
-.chat-header {
-  background: linear-gradient(135deg, #c2410c, #9a3412);
-  color: #fff;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,.15);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  flex-shrink: 0;
+.chat-header{
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:#fff;
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 4px 20px rgba(0,0,0,.15);
+  z-index:100;
+  flex-shrink:0;
 }
-.chat-header .back-btn {
-  background: rgba(255,255,255,.15);
-  border: 0;
-  color: #fff;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all .2s;
+.chat-header .back-btn{
+  background:rgba(255,255,255,.15);
+  border:0;
+  color:#fff;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  font-size:1.2rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  transition:all .2s;
+  font-family:inherit;
 }
-.chat-header .back-btn:hover { background: rgba(255,255,255,.3); }
-
-.chat-header .room-info {
-  flex: 1;
-  min-width: 0;
+.chat-header .back-btn:hover{background:rgba(255,255,255,.3)}
+.chat-header .room-info{
+  flex:1;
+  min-width:0;
 }
-.chat-header .room-info h1 {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 800;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.chat-header .room-info h1{
+  margin:0;
+  font-size:1.05rem;
+  font-weight:800;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
-.chat-header .room-info .room-sub {
-  font-size: .78rem;
-  opacity: .9;
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.chat-header .room-info .room-sub{
+  font-size:.78rem;
+  opacity:.9;
+  margin-top:2px;
+  display:flex;
+  align-items:center;
+  gap:6px;
 }
-.chat-header .room-info .status-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #10b981;
-  animation: pulse 2s infinite;
+.chat-header .room-info .status-dot{
+  display:inline-block;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#10b981;
+  animation:pulse 2s infinite;
 }
-@keyframes pulse {
-  0%,100% { opacity: 1; }
-  50% { opacity: .4; }
+@keyframes pulse{
+  0%,100%{opacity:1}
+  50%{opacity:.4}
 }
+.chat-header .header-action{
+  background:rgba(255,255,255,.15);
+  border:0;
+  color:#fff;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  font-size:1.1rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  transition:all .2s;
+  font-family:inherit;
+}
+.chat-header .header-action:hover{background:rgba(255,255,255,.3)}
 
 /* ============================================
    MESSAGES
    ============================================ */
-.messages-container {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background: #f6f4ef;
+.messages-container{
+  flex:1;
+  overflow-y:auto;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  background:var(--bg);
+  -webkit-overflow-scrolling:touch;
 }
-.messages-container::-webkit-scrollbar { width: 8px; }
-.messages-container::-webkit-scrollbar-track { background: transparent; }
-.messages-container::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 4px;
-}
-
-.message {
-  display: flex;
-  gap: 8px;
-  max-width: 78%;
-  animation: msgSlide .25s ease-out;
-}
-@keyframes msgSlide {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+.messages-container::-webkit-scrollbar{width:8px}
+.messages-container::-webkit-scrollbar-track{background:transparent}
+.messages-container::-webkit-scrollbar-thumb{
+  background:#d1d5db;
+  border-radius:4px;
 }
 
-.message.own {
-  align-self: flex-end;
-  flex-direction: row-reverse;
+.message{
+  display:flex;
+  gap:8px;
+  max-width:80%;
+  animation:msgSlide .25s ease-out;
 }
-
-.message .msg-avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #c2410c, #9a3412);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: .85rem;
-  flex-shrink: 0;
+@keyframes msgSlide{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
 }
-.message.own .msg-avatar {
-  background: linear-gradient(135deg, #10b981, #059669);
+.message.own{
+  align-self:flex-end;
+  flex-direction:row-reverse;
 }
-
-.message .msg-content {
-  min-width: 0;
+.message .msg-avatar{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:.85rem;
+  flex-shrink:0;
 }
-.message .msg-name {
-  font-size: .72rem;
-  color: #667085;
-  margin-bottom: 3px;
-  font-weight: 600;
+.message.own .msg-avatar{
+  background:linear-gradient(135deg,#10b981,#059669);
 }
-.message.own .msg-name {
-  text-align: right;
-  color: #10b981;
+.message .msg-content{
+  min-width:0;
 }
-
-.message .msg-bubble {
-  background: #fff;
-  padding: 10px 14px;
-  border-radius: 16px;
-  border-top-left-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.05);
-  word-wrap: break-word;
-  word-break: break-word;
-  line-height: 1.5;
-  font-size: .95rem;
-  border: 1px solid #e5e1d8;
+.message .msg-name{
+  font-size:.72rem;
+  color:var(--mut);
+  margin-bottom:3px;
+  font-weight:600;
 }
-.message.own .msg-bubble {
-  background: linear-gradient(135deg, #c2410c, #9a3412);
-  color: #fff;
-  border: 0;
-  border-radius: 16px;
-  border-top-right-radius: 4px;
+.message.own .msg-name{
+  text-align:right;
+  color:#10b981;
 }
-.message .msg-time {
-  font-size: .68rem;
-  color: #94a3b8;
-  margin-top: 3px;
+.message .msg-bubble{
+  background:var(--card);
+  padding:10px 14px;
+  border-radius:16px;
+  border-top-left-radius:4px;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);
+  word-wrap:break-word;
+  word-break:break-word;
+  line-height:1.5;
+  font-size:.95rem;
+  border:1px solid var(--line);
 }
-.message.own .msg-time {
-  text-align: right;
+.message.own .msg-bubble{
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:#fff;
+  border:0;
+  border-radius:16px;
+  border-top-right-radius:4px;
+}
+.message .msg-time{
+  font-size:.68rem;
+  color:#94a3b8;
+  margin-top:3px;
+}
+.message.own .msg-time{
+  text-align:right;
 }
 
 /* ============================================
    EMPTY / LOADING
    ============================================ */
-.empty-chat, .loading-chat {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #94a3b8;
-  text-align: center;
-  padding: 40px 20px;
-  gap: 10px;
+.empty-chat,.loading-chat{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#94a3b8;
+  text-align:center;
+  padding:40px 20px;
+  gap:10px;
 }
-.empty-chat .icon, .loading-chat .icon {
-  font-size: 4rem;
-  margin-bottom: 10px;
+.empty-chat .icon,.loading-chat .icon{
+  font-size:4rem;
+  margin-bottom:10px;
 }
-.loading-chat .spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid #fde8dc;
-  border-top-color: #c2410c;
-  border-radius: 50%;
-  animation: spin .8s linear infinite;
+.loading-chat .spinner{
+  width:32px;
+  height:32px;
+  border:3px solid var(--acc-soft);
+  border-top-color:var(--acc);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* ============================================
    INPUT BAR
    ============================================ */
-.input-bar {
-  padding: 12px 16px;
-  background: #fff;
-  border-top: 1px solid #e5e1d8;
-  display: flex;
-  gap: 10px;
-  align-items: flex-end;
-  flex-shrink: 0;
-  box-shadow: 0 -4px 20px rgba(0,0,0,.05);
+.input-bar{
+  padding:12px 16px;
+  background:var(--card);
+  border-top:1px solid var(--line);
+  display:flex;
+  gap:10px;
+  align-items:flex-end;
+  flex-shrink:0;
+  box-shadow:0 -4px 20px rgba(0,0,0,.05);
 }
-.input-bar textarea {
-  flex: 1;
-  padding: 12px 16px;
-  border: 1px solid #e5e1d8;
-  border-radius: 22px;
-  font-size: .95rem;
-  font-family: inherit;
-  resize: none;
-  outline: none;
-  max-height: 120px;
-  min-height: 44px;
-  line-height: 1.4;
-  background: #f6f4ef;
-  transition: all .2s;
+.input-bar textarea{
+  flex:1;
+  padding:12px 16px;
+  border:1px solid var(--line);
+  border-radius:22px;
+  font-size:.95rem;
+  font-family:inherit;
+  resize:none;
+  outline:none;
+  max-height:120px;
+  min-height:44px;
+  line-height:1.4;
+  background:var(--bg);
+  color:var(--ink);
+  transition:all .2s;
 }
-.input-bar textarea:focus {
-  border-color: #c2410c;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(194,65,12,.1);
+.input-bar textarea:focus{
+  border-color:var(--acc);
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(194,65,12,.1);
 }
-.input-bar .send-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #c2410c, #9a3412);
-  color: #fff;
-  border: 0;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all .2s;
-  box-shadow: 0 4px 12px rgba(194,65,12,.3);
+.input-bar textarea:disabled{
+  opacity:.5;
+  cursor:not-allowed;
 }
-.input-bar .send-btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 6px 18px rgba(194,65,12,.4);
+.input-bar .send-btn{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:#fff;
+  border:0;
+  font-size:1.2rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  transition:all .2s;
+  box-shadow:0 4px 12px rgba(194,65,12,.3);
+  font-family:inherit;
 }
-.input-bar .send-btn:disabled {
-  opacity: .4;
-  cursor: not-allowed;
-  transform: none;
+.input-bar .send-btn:hover{
+  transform:scale(1.08);
+  box-shadow:0 6px 18px rgba(194,65,12,.4);
+}
+.input-bar .send-btn:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+  transform:none;
 }
 
 /* ============================================
    MOBILE
    ============================================ */
-@media (max-width: 600px) {
-  .message { max-width: 88%; }
-  .message .msg-avatar { width: 30px; height: 30px; font-size: .75rem; }
-  .message .msg-bubble { font-size: .9rem; padding: 9px 12px; }
-  .chat-header .room-info h1 { font-size: .95rem; }
-  .input-bar textarea { font-size: 16px; } /* منع zoom في iOS */
+@media (max-width:600px){
+  .message{max-width:88%}
+  .message .msg-avatar{width:30px;height:30px;font-size:.75rem}
+  .message .msg-bubble{font-size:.9rem;padding:9px 12px}
+  .chat-header .room-info h1{font-size:.95rem}
+  .input-bar textarea{font-size:16px}
 }
 </style>
 </head>
@@ -303,7 +327,7 @@ html, body {
 
 <!-- Input -->
 <div class="input-bar">
-  <textarea id="messageInput" placeholder="Écrivez votre message..." rows="1" maxlength="2000"></textarea>
+  <textarea id="messageInput" placeholder="Écrivez votre message..." rows="1" maxlength="2000" disabled></textarea>
   <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>📤</button>
 </div>
 
@@ -311,8 +335,8 @@ html, body {
 import { 
   auth, db,
   onAuthStateChanged,
-  collection, query, where, orderBy, limit,
-  addDoc, getDocs, getDoc, doc,
+  collection, orderBy, limit,
+  addDoc, getDoc, doc,
   onSnapshot, serverTimestamp
 } from './firebase-config.js';
 
@@ -321,7 +345,7 @@ import {
 // ============================================
 let currentUser = null;
 let currentUserData = null;
-let roomType = 'general'; // 'general' أو 'wilaya'
+let roomType = 'general';
 let roomName = 'Général';
 let currentRoomId = null;
 let unsubscribeMessages = null;
@@ -334,18 +358,8 @@ const sendBtn = document.getElementById('sendBtn');
 // قراءة معاملات الرابط
 // ============================================
 const urlParams = new URLSearchParams(window.location.search);
-
-if (urlParams.get('room') === 'general') {
-  roomType = 'general';
-  roomName = '🌍 Salle générale ENSTP';
-} else if (urlParams.get('wilaya')) {
-  roomType = 'wilaya';
-  roomName = '📍 ' + urlParams.get('wilaya');
-} else {
-  // افتراضي: الولاية (إذا كان مسجلاً)
-  roomType = 'auto';
-  roomName = 'Chargement...';
-}
+const roomParam = urlParams.get('room');
+const wilayaParam = urlParams.get('wilaya');
 
 // ============================================
 // التحقق من المستخدم
@@ -373,44 +387,39 @@ onAuthStateChanged(auth, async (user) => {
     };
   }
   
-  // إذا كان auto، اختر ولاية المستخدم
-  if (roomType === 'auto') {
-    if (currentUserData.wilaya && currentUserData.wilaya !== 'غير محدد') {
-      roomType = 'wilaya';
-      roomName = '📍 ' + currentUserData.wilaya;
-    } else {
-      roomType = 'general';
-      roomName = '🌍 Salle générale ENSTP';
-    }
-  }
-  
-  // حدد roomId
-  if (roomType === 'general') {
+  // حدد الغرفة
+  if (roomParam === 'general') {
+    roomType = 'general';
+    roomName = '🌍 Salle générale ENSTP';
     currentRoomId = 'general';
+  } else if (wilayaParam) {
+    roomType = 'wilaya';
+    roomName = '📍 ' + wilayaParam;
+    currentRoomId = 'wilaya_' + wilayaParam;
+  } else if (currentUserData.wilaya && currentUserData.wilaya !== 'غير محدد') {
+    roomType = 'wilaya';
+    roomName = '📍 ' + currentUserData.wilaya;
+    currentRoomId = 'wilaya_' + currentUserData.wilaya;
   } else {
-    currentRoomId = 'wilaya_' + (currentUserData.wilaya || 'unknown');
-    // إذا كنا في غرفة ولاية محددة، استخدمها
-    const wilayaParam = urlParams.get('wilaya');
-    if (wilayaParam) {
-      currentRoomId = 'wilaya_' + wilayaParam;
-      roomName = '📍 ' + wilayaParam;
-    }
+    roomType = 'general';
+    roomName = '🌍 Salle générale ENSTP';
+    currentRoomId = 'general';
   }
   
   // حدّث العنوان
   document.getElementById('roomTitle').textContent = roomName;
-  document.getElementById('roomSub').textContent = 'Connecté en tant que ' + currentUserData.name;
+  document.getElementById('roomSub').textContent = 'Connecté : ' + (currentUserData.name || 'Étudiant');
   document.title = roomName + ' — ENSTP Chat';
   
   // ابدأ الاستماع
-  await loadMessages();
+  loadMessages();
   setupInput();
 });
 
 // ============================================
 // تحميل الرسائل (Realtime)
 // ============================================
-async function loadMessages() {
+function loadMessages() {
   messagesContainer.innerHTML = '<div class="loading-chat"><div class="spinner"></div><p>Chargement...</p></div>';
   
   try {
@@ -425,7 +434,7 @@ async function loadMessages() {
       renderMessages(messages);
     }, (error) => {
       console.error('Erreur messages:', error);
-      messagesContainer.innerHTML = '<div class="empty-chat"><div class="icon">⚠️</div><p>Erreur de chargement</p><p style="font-size:.8rem;color:#94a3b8">Vérifiez les règles Firestore</p></div>';
+      messagesContainer.innerHTML = '<div class="empty-chat"><div class="icon">⚠️</div><p>Erreur de chargement</p><p style="font-size:.8rem">' + error.message + '</p></div>';
     });
     
   } catch(e) {
@@ -454,7 +463,7 @@ function renderMessages(messages) {
     html += '<div class="message' + (isOwn ? ' own' : '') + '">';
     html += '<div class="msg-avatar">' + initials + '</div>';
     html += '<div class="msg-content">';
-    html += '<div class="msg-name">' + (isOwn ? 'Moi' : name) + '</div>';
+    html += '<div class="msg-name">' + (isOwn ? 'Moi' : escapeHtml(name)) + '</div>';
     html += '<div class="msg-bubble">' + text + '</div>';
     html += '<div class="msg-time">' + time + '</div>';
     html += '</div>';
@@ -498,12 +507,10 @@ function escapeHtml(text) {
 // ============================================
 function setupInput() {
   messageInput.disabled = false;
-  sendBtn.disabled = false;
+  sendBtn.disabled = true;
   
   messageInput.addEventListener('input', () => {
     sendBtn.disabled = !messageInput.value.trim();
-    
-    // Auto-resize
     messageInput.style.height = 'auto';
     messageInput.style.height = Math.min(messageInput.scrollHeight, 120) + 'px';
   });
@@ -543,7 +550,7 @@ async function sendMessage() {
     messageInput.value = text;
   }
   
-  sendBtn.disabled = false;
+  sendBtn.disabled = !messageInput.value.trim();
 }
 
 // ============================================
@@ -554,9 +561,7 @@ function goBack() {
   window.location.href = 'forum.html';
 }
 
-// ============================================
 // اجعل الدوال متاحة عالمياً
-// ============================================
 window.sendMessage = sendMessage;
 window.goBack = goBack;
 </script>
