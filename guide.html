@@ -100,6 +100,36 @@
 <main id="app" style="max-width:900px;margin:0 auto;padding:14px"></main>
 
 <!-- ============================================ -->
+<!-- Firebase SDK -->
+<!-- ============================================ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD35OVZ9JPlWr7ayQJMu8yVPFu3N_gZD1g",
+  authDomain: "enstp-forum-19a28.firebaseapp.com",
+  projectId: "enstp-forum-19a28",
+  storageBucket: "enstp-forum-19a28.firebasestorage.app",
+  messagingSenderId: "598736412518",
+  appId: "1:598736412518:web:a2a7c69a537e6567ffb2a7"
+};
+
+try {
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  window.__firebaseAuth = auth;
+  console.log('✅ Firebase Auth initialisé dans guide.html');
+  
+  onAuthStateChanged(auth, (user) => {
+    window.__currentFirebaseUser = user;
+  });
+} catch(e) {
+  console.warn('⚠️ Firebase non initialisé:', e.message);
+}
+</script>
+
+<!-- ============================================ -->
 <!-- تحميل الملفات -->
 <!-- ============================================ -->
 <script src="lang.js"></script>
@@ -219,7 +249,7 @@ function openSection(id) {
   const s = window.SECTIONS.find(x => x.id === id);
   if (!s) return;
   
-  // أقسام مخصصة (custom)
+  // أقسام مخصصة
   if (s.type === 'custom' && typeof s.render === 'function') {
     document.getElementById('app').innerHTML = s.render();
     window.scrollTo(0, 0);
@@ -243,7 +273,7 @@ function openSection(id) {
 }
 
 // ============================================
-// عرض تصنيفات قسم
+// تصنيفات
 // ============================================
 function renderCategoriesList(sectionId) {
   const s = window.SECTIONS.find(x => x.id === sectionId);
@@ -271,9 +301,6 @@ function renderCategoriesList(sectionId) {
   window.scrollTo(0, 0);
 }
 
-// ============================================
-// عرض تصنيف محدد
-// ============================================
 function renderCategory(sectionId, categoryId) {
   const s = window.SECTIONS.find(x => x.id === sectionId);
   if (!s || !s.categories) return;
@@ -288,7 +315,7 @@ function renderCategory(sectionId, categoryId) {
 }
 
 // ============================================
-// عرض البطاقات
+// البطاقات
 // ============================================
 function renderItems(section, items, category) {
   const app = document.getElementById('app');
@@ -298,15 +325,11 @@ function renderItems(section, items, category) {
     html += '<button class="back" onclick="renderCategoriesList(\'' + section.id + '\')">' + window.t('back', LANG) + '</button>';
     const ct = category.titleKey ? window.t(category.titleKey, LANG) : (category.title || '');
     html += '<h2>' + (category.icon || '') + ' ' + ct + '</h2>';
-    if (category.intro) {
-      html += '<p style="color:var(--mut);margin-bottom:16px">' + category.intro + '</p>';
-    }
+    if (category.intro) html += '<p style="color:var(--mut);margin-bottom:16px">' + category.intro + '</p>';
   } else {
     html += '<button class="back" onclick="renderHome()">' + window.t('back', LANG) + '</button>';
-    const title = window.t(section.titleKey, LANG);
-    const intro = window.t(section.introKey, LANG);
-    html += '<h2>' + section.icon + ' ' + title + '</h2>';
-    html += '<p style="color:var(--mut);margin-bottom:16px">' + intro + '</p>';
+    html += '<h2>' + section.icon + ' ' + window.t(section.titleKey, LANG) + '</h2>';
+    html += '<p style="color:var(--mut);margin-bottom:16px">' + window.t(section.introKey, LANG) + '</p>';
   }
   
   items.forEach((item, idx) => {
@@ -321,9 +344,7 @@ function renderItems(section, items, category) {
     html += '<button onclick="showQR(\'' + section.id + '\',' + idx + ',\'' + (category ? category.id : '') + '\')" style="background:var(--acc-soft);border:0;color:var(--acc);padding:6px 10px;border-radius:10px;cursor:pointer;font-size:1rem">📱</button>';
     html += '</div>';
     
-    if (item.img) {
-      html += '<img src="' + item.img + '" style="width:100%;border-radius:10px;margin:10px 0" loading="lazy" alt="">';
-    }
+    if (item.img) html += '<img src="' + item.img + '" style="width:100%;border-radius:10px;margin:10px 0" loading="lazy" alt="">';
     
     if (item.video) {
       html += '<div style="position:relative;padding-bottom:56.25%;height:0;margin:10px 0;border-radius:10px;overflow:hidden">';
@@ -331,36 +352,22 @@ function renderItems(section, items, category) {
       html += '</div>';
     }
     
-    if (desc) {
-      html += '<p style="color:var(--mut);margin:8px 0;font-size:.95rem;line-height:1.6">' + desc + '</p>';
-    }
-    
-    if (item.hours) {
-      html += '<p style="margin:6px 0;font-size:.9rem"><b>🕐 ' + window.t('labelHours', LANG) + ':</b> ' + item.hours + '</p>';
-    }
-    if (item.budget) {
-      html += '<p style="margin:6px 0;font-size:.9rem"><b>💰 ' + window.t('labelBudget', LANG) + ':</b> ' + item.budget + '</p>';
-    }
-    if (item.extra) {
-      html += '<p style="margin:6px 0;font-size:.9rem;color:var(--acc)"><b>' + item.extra + '</b></p>';
-    }
+    if (desc) html += '<p style="color:var(--mut);margin:8px 0;font-size:.95rem;line-height:1.6">' + desc + '</p>';
+    if (item.hours) html += '<p style="margin:6px 0;font-size:.9rem"><b>🕐 ' + window.t('labelHours', LANG) + ':</b> ' + item.hours + '</p>';
+    if (item.budget) html += '<p style="margin:6px 0;font-size:.9rem"><b>💰 ' + window.t('labelBudget', LANG) + ':</b> ' + item.budget + '</p>';
+    if (item.extra) html += '<p style="margin:6px 0;font-size:.9rem;color:var(--acc)"><b>' + item.extra + '</b></p>';
     
     if (item.services && item.services.length) {
       html += '<p style="margin:10px 0 6px;font-weight:600;color:var(--acc)">' + window.t('labelServices', LANG) + ':</p>';
       html += '<ul style="padding-' + (LANG === 'ar' ? 'right' : 'left') + ':20px;color:var(--mut);font-size:.9rem">';
-      item.services.forEach(srv => {
-        html += '<li>' + (srv[LANG] || srv.fr) + '</li>';
-      });
+      item.services.forEach(srv => { html += '<li>' + (srv[LANG] || srv.fr) + '</li>'; });
       html += '</ul>';
     }
     
     if (item.steps && item.steps.length) {
-      html += '<details style="margin-top:10px">';
-      html += '<summary style="cursor:pointer;color:var(--acc);font-weight:600;font-size:.9rem">📋 ' + window.t('labelSteps', LANG) + '</summary>';
+      html += '<details style="margin-top:10px"><summary style="cursor:pointer;color:var(--acc);font-weight:600;font-size:.9rem">📋 ' + window.t('labelSteps', LANG) + '</summary>';
       html += '<ol style="padding-' + (LANG === 'ar' ? 'right' : 'left') + ':20px;margin-top:8px;color:var(--mut);font-size:.9rem;line-height:1.7">';
-      item.steps.forEach(step => {
-        html += '<li>' + (step[LANG] || step.fr) + '</li>';
-      });
+      item.steps.forEach(step => { html += '<li>' + (step[LANG] || step.fr) + '</li>'; });
       html += '</ol></details>';
     }
     
@@ -381,7 +388,7 @@ function renderItems(section, items, category) {
 }
 
 // ============================================
-// عرض قسم
+// renderSection
 // ============================================
 function renderSection(id) {
   const s = window.SECTIONS.find(x => x.id === id);
@@ -403,7 +410,7 @@ function renderSection(id) {
 }
 
 // ============================================
-// عرض الخريطة SVG
+// خريطة SVG
 // ============================================
 function renderMap(section, category) {
   const app = document.getElementById('app');
@@ -431,7 +438,6 @@ function renderMap(section, category) {
   });
   
   html += '</div></div>';
-  
   html += '<h3 style="color:var(--acc);margin:20px 0 12px">📍 ' + (window.t('mapPlaces', LANG) || 'Lieux') + '</h3>';
   buildings.forEach(b => {
     const name = b.nameKey ? window.t(b.nameKey, LANG) : (b.name || '');
@@ -452,56 +458,41 @@ function showPlace(sectionId, buildingId, categoryId) {
   if (categoryId && s.categories) {
     const c = s.categories.find(x => x.id === categoryId);
     buildings = c ? c.buildings : [];
-  } else {
-    buildings = s.buildings;
-  }
+  } else buildings = s.buildings;
   if (!buildings) return;
   const b = buildings.find(x => x.id === buildingId);
   if (!b) return;
-  const name = b.nameKey ? window.t(b.nameKey, LANG) : (b.name || '');
-  alert('📍 ' + name);
+  alert('📍 ' + (b.nameKey ? window.t(b.nameKey, LANG) : (b.name || '')));
 }
 
 // ============================================
-// خريطة المترو والترامواي
+// مترو
 // ============================================
 function renderMetroMap(section) {
   const app = document.getElementById('app');
-  
   let html = '<button class="back" onclick="renderHome()">' + window.t('back', LANG) + '</button>';
   html += '<h2>' + section.icon + ' ' + window.t(section.titleKey, LANG) + '</h2>';
   html += '<p style="color:var(--mut);margin-bottom:20px">' + window.t(section.introKey, LANG) + '</p>';
-  
   html += '<div class="metro-tabs">';
   html += '<button class="metro-tab active" onclick="showMetroType(\'metro\')" data-tab="metro">🚇 <span>' + (window.t('trMetro') || 'Métro') + '</span></button>';
   html += '<button class="metro-tab" onclick="showMetroType(\'tram\')" data-tab="tram">🚊 <span>' + (window.t('trTram') || 'Tramway') + '</span></button>';
-  html += '</div>';
-  
-  html += '<div id="metro-content"></div>';
-  
+  html += '</div><div id="metro-content"></div>';
   app.innerHTML = html;
   setTimeout(() => showMetroType('metro'), 100);
 }
 
 function showMetroType(type) {
-  document.querySelectorAll('.metro-tab').forEach(t => {
-    t.classList.toggle('active', t.dataset.tab === type);
-  });
-  
+  document.querySelectorAll('.metro-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === type));
   const content = document.getElementById('metro-content');
   if (!content) return;
-  
   const stations = type === 'metro' ? window.METRO_STATIONS : window.TRAM_STATIONS;
   if (!stations) return;
-  
   const color = type === 'metro' ? '#2563eb' : '#dc2626';
   const bg = type === 'metro' ? 'linear-gradient(135deg,#dbeafe,#eff6ff)' : 'linear-gradient(135deg,#fee2e2,#fef2f2)';
   const icon = type === 'metro' ? '🚇' : '🚊';
   const title = type === 'metro' ? (window.t('trMetro') || 'Métro') : (window.t('trTram') || 'Tramway');
   
-  let html = '';
-  
-  html += '<div class="metro-map" style="background:' + bg + '">';
+  let html = '<div class="metro-map" style="background:' + bg + '">';
   html += '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;z-index:1">';
   html += '<line x1="' + stations[0].x + '" y1="50" x2="' + stations[stations.length - 1].x + '" y2="50" stroke="' + color + '" stroke-width="2" stroke-linecap="round" opacity="0.8"/>';
   html += '</svg>';
@@ -512,28 +503,18 @@ function showMetroType(type) {
     const border = isKey ? '3px' : '2px';
     html += '<button class="metro-station' + (isKey ? ' key' : '') + '" style="left:' + s.x + '%;top:50%;--station-color:' + color + ';--station-size:' + size + ';--station-border:' + border + '" onclick="showStation(\'' + type + '\',' + i + ')" title="' + s[LANG] + '"></button>';
   });
-  
   html += '</div>';
-  
   html += '<h3 style="color:' + color + ';margin:20px 0 12px;font-size:1.15rem;display:flex;align-items:center;gap:8px">';
-  html += '<span style="font-size:1.4rem">' + icon + '</span>';
-  html += '<span>' + title + ' — ' + stations.length + ' stations</span>';
-  html += '</h3>';
-  
+  html += '<span style="font-size:1.4rem">' + icon + '</span><span>' + title + ' — ' + stations.length + ' stations</span></h3>';
   html += '<div class="metro-stations-list">';
   stations.forEach((s, i) => {
-    const isKey = s.key;
-    html += '<button class="metro-station-card' + (isKey ? ' key' : '') + '" style="--station-color:' + color + '" onclick="showStation(\'' + type + '\',' + i + ')">';
+    html += '<button class="metro-station-card' + (s.key ? ' key' : '') + '" style="--station-color:' + color + '" onclick="showStation(\'' + type + '\',' + i + ')">';
     html += '<div class="msc-num">' + (i + 1) + '</div>';
-    html += '<div class="msc-info">';
-    html += '<div class="msc-name">' + s[LANG] + '</div>';
-    html += '<div class="msc-zone">📍 ' + s.zone + '</div>';
-    html += '</div>';
-    if (isKey) html += '<div class="msc-badge">⭐</div>';
+    html += '<div class="msc-info"><div class="msc-name">' + s[LANG] + '</div><div class="msc-zone">📍 ' + s.zone + '</div></div>';
+    if (s.key) html += '<div class="msc-badge">⭐</div>';
     html += '</button>';
   });
   html += '</div>';
-  
   content.innerHTML = html;
 }
 
@@ -541,7 +522,6 @@ function showStation(type, index) {
   const stations = type === 'metro' ? window.METRO_STATIONS : window.TRAM_STATIONS;
   const s = stations[index];
   if (!s) return;
-  
   const color = type === 'metro' ? '#2563eb' : '#dc2626';
   const icon = type === 'metro' ? '🚇' : '🚊';
   const typeName = type === 'metro' ? (window.t('trMetro') || 'Métro') : (window.t('trTram') || 'Tramway');
@@ -549,7 +529,6 @@ function showStation(type, index) {
   const overlay = document.createElement('div');
   overlay.id = 'station-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(6px)';
-  
   const box = document.createElement('div');
   box.style.cssText = 'background:#fff;padding:28px;border-radius:24px;text-align:center;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5)';
   box.innerHTML = 
@@ -559,10 +538,9 @@ function showStation(type, index) {
     '<p style="margin:0 0 6px;color:#667085;font-size:.9rem">📍 ' + s.zone + '</p>' +
     '<p style="margin:12px 0;color:#94a3b8;font-size:.8rem">Station n° ' + (index + 1) + ' / ' + stations.length + '</p>' +
     '<div style="display:flex;gap:8px;margin-top:16px">' +
-      '<button onclick="closeStation()" style="flex:1;padding:12px;background:' + color + ';color:#fff;border:0;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem">' + (window.t('close') || 'Fermer') + '</button>' +
-      '<button onclick="openStationMaps(\'' + encodeURIComponent(s.fr + ' ' + typeName + ' Alger') + '\')" style="flex:1;padding:12px;background:#f1f5f9;color:#1d2433;border:0;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem">📍 Maps</button>' +
+      '<button onclick="closeStation()" style="flex:1;padding:12px;background:' + color + ';color:#fff;border:0;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit">' + (window.t('close') || 'Fermer') + '</button>' +
+      '<button onclick="openStationMaps(\'' + encodeURIComponent(s.fr + ' ' + typeName + ' Alger') + '\')" style="flex:1;padding:12px;background:#f1f5f9;color:#1d2433;border:0;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit">📍 Maps</button>' +
     '</div>';
-  
   overlay.appendChild(box);
   overlay.onclick = (e) => { if (e.target === overlay) closeStation(); };
   document.body.appendChild(overlay);
@@ -583,34 +561,25 @@ function openStationMaps(query) {
 // ============================================
 function renderQR(section) {
   const app = document.getElementById('app');
-  
   let html = '<button class="back" onclick="renderHome()">' + window.t('back', LANG) + '</button>';
   html += '<h2>' + section.icon + ' ' + window.t(section.titleKey, LANG) + '</h2>';
   html += '<p style="color:var(--mut);margin-bottom:16px">' + window.t('qrIntro', LANG) + '</p>';
   html += '<div id="qr-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px"></div>';
-  
   app.innerHTML = html;
   
   setTimeout(() => {
     const grid = document.getElementById('qr-grid');
     if (!grid) return;
     const base = location.origin + location.pathname;
-    
     window.SECTIONS.filter(x => x.id !== 'qr').forEach(sec => {
       const title = window.t(sec.titleKey, LANG);
       const div = document.createElement('div');
       div.style.cssText = 'background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center';
-      
       const qrId = 'qrc-' + sec.id;
       div.innerHTML = '<div style="background:#fff;padding:8px;display:inline-block;border-radius:8px;margin-bottom:8px" id="' + qrId + '"></div><div style="font-size:.85rem;font-weight:600">' + sec.icon + ' ' + title + '</div>';
       grid.appendChild(div);
-      
       if (typeof QRCode !== 'undefined') {
-        new QRCode(document.getElementById(qrId), {
-          text: base + '#' + sec.id,
-          width: 120, height: 120,
-          colorDark: '#1d2433', colorLight: '#ffffff'
-        });
+        new QRCode(document.getElementById(qrId), { text: base + '#' + sec.id, width: 120, height: 120, colorDark: '#1d2433', colorLight: '#ffffff' });
       }
     });
   }, 100);
@@ -619,14 +588,11 @@ function renderQR(section) {
 function showQR(sectionId, itemIndex, categoryId) {
   const s = window.SECTIONS.find(x => x.id === sectionId);
   if (!s) return;
-  
   let item;
   if (categoryId && s.categories) {
     const c = s.categories.find(x => x.id === categoryId);
     if (c && c.items) item = c.items[itemIndex];
-  } else if (s.items) {
-    item = s.items[itemIndex];
-  }
+  } else if (s.items) item = s.items[itemIndex];
   if (!item) return;
   
   const url = location.origin + location.pathname + '#' + sectionId;
@@ -635,7 +601,6 @@ function showQR(sectionId, itemIndex, categoryId) {
   const overlay = document.createElement('div');
   overlay.id = 'qr-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(4px)';
-  
   const box = document.createElement('div');
   box.style.cssText = 'background:#fff;padding:24px;border-radius:20px;text-align:center;max-width:320px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5)';
   box.innerHTML = '<h3 style="margin:0 0 8px;color:#c2410c;font-size:1.1rem">📱 ' + title + '</h3>' +
@@ -643,7 +608,6 @@ function showQR(sectionId, itemIndex, categoryId) {
                   '<div id="qr-popup-box" style="background:#fff;padding:12px;display:inline-block;border-radius:12px;border:1px solid #e5e1d8"></div>' +
                   '<p style="margin:16px 0 0;font-size:.75rem;color:#94a3b8;word-break:break-all">' + url + '</p>' +
                   '<button onclick="closeQR()" style="margin-top:16px;padding:10px 24px;background:#c2410c;color:#fff;border:0;border-radius:20px;font-weight:600;cursor:pointer;font-family:inherit">' + window.t('close', LANG) + '</button>';
-  
   overlay.appendChild(box);
   overlay.onclick = (e) => { if (e.target === overlay) closeQR(); };
   document.body.appendChild(overlay);
@@ -668,7 +632,6 @@ function closeQR() {
 function doSearch(q) {
   q = q.trim();
   if (!q) { renderHome(); return; }
-  
   const results = (typeof smartSearch === 'function') ? smartSearch(q, window.SECTIONS) : [];
   const app = document.getElementById('app');
   
@@ -683,13 +646,11 @@ function doSearch(q) {
     const desc = r.item.desc 
       ? ((typeof r.item.desc === 'object') ? (r.item.desc[LANG] || r.item.desc.fr) : r.item.desc)
       : (r.item.descKey ? window.t(r.item.descKey, LANG) : '');
-    
     html += '<div class="card-3d" style="margin-bottom:12px">';
     html += '<h3 style="color:var(--acc);margin:0 0 6px">' + (r.item.icon || r.section.icon) + ' ' + title + '</h3>';
     if (desc) html += '<p style="color:var(--mut);font-size:.9rem">' + desc + '</p>';
     html += '</div>';
   });
-  
   app.innerHTML = html;
 }
 
@@ -698,16 +659,13 @@ function doSearch(q) {
 // ============================================
 function handleHash() {
   const h = location.hash.slice(1);
-  if (h && window.SECTIONS.find(s => s.id === h)) {
-    openSection(h);
-  } else {
-    renderHome();
-  }
+  if (h && window.SECTIONS.find(s => s.id === h)) openSection(h);
+  else renderHome();
 }
 window.addEventListener('hashchange', handleHash);
 
 // ============================================
-// حالة الاتصال
+// Offline
 // ============================================
 function updateOnlineStatus() {
   document.body.classList.toggle('offline', !navigator.onLine);
@@ -736,6 +694,21 @@ if ('serviceWorker' in navigator) {
   setLang(localStorage.getItem('lang') || 'fr');
   setTimeout(handleHash, 200);
 })();
+
+// اجعل الدوال متاحة عالمياً
+window.openSection = openSection;
+window.renderHome = renderHome;
+window.renderCategory = renderCategory;
+window.renderCategoriesList = renderCategoriesList;
+window.showMetroType = showMetroType;
+window.showStation = showStation;
+window.closeStation = closeStation;
+window.openStationMaps = openStationMaps;
+window.showQR = showQR;
+window.closeQR = closeQR;
+window.showPlace = showPlace;
+window.doSearch = doSearch;
+window.setLang = setLang;
 </script>
 
 </body>
