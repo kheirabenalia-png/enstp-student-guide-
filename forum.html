@@ -5,372 +5,63 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Forum — ENSTP</title>
 <style>
-:root{
-  --acc:#c2410c;--acc2:#9a3412;--acc-soft:#fde8dc;
-  --bg:#f6f4ef;--bg-2:#fff;--card:#fff;
-  --ink:#1d2433;--mut:#667085;--line:#e5e1d8;
-}
+:root{--acc:#c2410c;--acc2:#9a3412;--acc-soft:#fde8dc;--bg:#f6f4ef;--card:#fff;--ink:#1d2433;--mut:#667085;--line:#e5e1d8}
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-  font:1rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  min-height:100vh;
-  background:var(--bg);
-  color:var(--ink);
-  padding-bottom:40px;
-}
-
-/* ============================================
-   HEADER
-   ============================================ */
-.forum-header{
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
-  color:#fff;
-  padding:14px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:0 4px 20px rgba(0,0,0,.15);
-  position:sticky;
-  top:0;
-  z-index:100;
-  flex-wrap:wrap;
-  gap:10px;
-}
-.forum-header h1{
-  margin:0;
-  font-size:1.15rem;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-weight:800;
-}
-.forum-header .user-info{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:.85rem;
-}
-.forum-header .user-info .avatar{
-  width:36px;height:36px;
-  border-radius:50%;
-  background:#fff;
-  color:var(--acc);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
-  font-size:1rem;
-  flex-shrink:0;
-}
-.forum-header button{
-  background:rgba(255,255,255,.2);
-  color:#fff;
-  border:1px solid rgba(255,255,255,.3);
-  padding:7px 14px;
-  border-radius:20px;
-  font-size:.8rem;
-  cursor:pointer;
-  font-family:inherit;
-  font-weight:600;
-  transition:all .2s;
-}
+body{font:1rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;background:var(--bg);color:var(--ink);padding-bottom:40px}
+.forum-header{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,.15);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:10px}
+.forum-header h1{margin:0;font-size:1.15rem;display:flex;align-items:center;gap:8px;font-weight:800}
+.forum-header .user-info{display:flex;align-items:center;gap:10px;font-size:.85rem}
+.forum-header .user-info .avatar{width:36px;height:36px;border-radius:50%;background:#fff;color:var(--acc);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0}
+.forum-header button{background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);padding:7px 14px;border-radius:20px;font-size:.8rem;cursor:pointer;font-family:inherit;font-weight:600;transition:all .2s}
 .forum-header button:hover{background:rgba(255,255,255,.3)}
-
-/* ============================================
-   CONTAINER
-   ============================================ */
-.forum-container{
-  max-width:900px;
-  margin:0 auto;
-  padding:20px;
-}
-
-.welcome-card{
-  background:var(--card);
-  border-radius:20px;
-  padding:22px;
-  margin-bottom:18px;
-  box-shadow:0 4px 20px rgba(0,0,0,.06);
-  border:1px solid var(--line);
-}
-.welcome-card h2{
-  margin:0 0 8px;
-  color:var(--acc);
-  font-size:1.15rem;
-  font-weight:800;
-}
-.welcome-card p{
-  margin:0;
-  color:var(--mut);
-  line-height:1.6;
-  font-size:.95rem;
-}
-
-/* ============================================
-   STATS
-   ============================================ */
-.stats-row{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin-bottom:18px;
-}
-.stat-box{
-  background:var(--card);
-  padding:14px 10px;
-  border-radius:16px;
-  text-align:center;
-  border:1px solid var(--line);
-  box-shadow:0 2px 10px rgba(0,0,0,.04);
-}
-.stat-box b{
-  display:block;
-  font-size:1.6rem;
-  color:var(--acc);
-  font-weight:900;
-}
-.stat-box span{
-  font-size:.78rem;
-  color:var(--mut);
-}
-
-/* ============================================
-   SEARCH
-   ============================================ */
-.search-bar{
-  margin-bottom:18px;
-}
-.search-bar input{
-  width:100%;
-  padding:12px 16px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  font-size:1rem;
-  background:var(--card);
-  color:var(--ink);
-  outline:none;
-  font-family:inherit;
-  transition:all .2s;
-}
-.search-bar input:focus{
-  border-color:var(--acc);
-  box-shadow:0 0 0 3px rgba(194,65,12,.1);
-}
-
-/* ============================================
-   TABS
-   ============================================ */
-.tabs{
-  display:flex;
-  gap:8px;
-  margin-bottom:18px;
-  background:var(--card);
-  padding:6px;
-  border-radius:16px;
-  border:1px solid var(--line);
-}
-.tab-btn{
-  flex:1;
-  padding:12px 14px;
-  border-radius:12px;
-  background:transparent;
-  border:0;
-  color:var(--mut);
-  font-weight:600;
-  font-size:.9rem;
-  cursor:pointer;
-  font-family:inherit;
-  transition:all .25s;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-}
+.forum-container{max-width:900px;margin:0 auto;padding:20px}
+.welcome-card{background:var(--card);border-radius:20px;padding:22px;margin-bottom:18px;box-shadow:0 4px 20px rgba(0,0,0,.06);border:1px solid var(--line)}
+.welcome-card h2{margin:0 0 8px;color:var(--acc);font-size:1.15rem;font-weight:800}
+.welcome-card p{margin:0;color:var(--mut);line-height:1.6;font-size:.95rem}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.stat-box{background:var(--card);padding:14px 10px;border-radius:16px;text-align:center;border:1px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.stat-box b{display:block;font-size:1.6rem;color:var(--acc);font-weight:900}
+.stat-box span{font-size:.78rem;color:var(--mut)}
+.search-bar{margin-bottom:18px}
+.search-bar input{width:100%;padding:12px 16px;border:1px solid var(--line);border-radius:14px;font-size:1rem;background:var(--card);color:var(--ink);outline:none;font-family:inherit;transition:all .2s}
+.search-bar input:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(194,65,12,.1)}
+.tabs{display:flex;gap:8px;margin-bottom:18px;background:var(--card);padding:6px;border-radius:16px;border:1px solid var(--line)}
+.tab-btn{flex:1;padding:12px 14px;border-radius:12px;background:transparent;border:0;color:var(--mut);font-weight:600;font-size:.9rem;cursor:pointer;font-family:inherit;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:6px}
 .tab-btn:hover{background:var(--acc-soft);color:var(--acc)}
-.tab-btn.active{
-  background:var(--acc);
-  color:#fff;
-  box-shadow:0 4px 12px rgba(194,65,12,.3);
-}
-
-/* ============================================
-   SECTION TITLE
-   ============================================ */
-.section-title{
-  color:var(--acc);
-  font-size:1.05rem;
-  font-weight:800;
-  margin:20px 0 12px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-/* ============================================
-   ROOMS
-   ============================================ */
-.rooms-list{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-  gap:12px;
-}
-.room-card{
-  background:var(--card);
-  border:2px solid var(--line);
-  border-radius:16px;
-  padding:14px;
-  transition:all .25s;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  font-family:inherit;
-  text-align:left;
-  color:inherit;
-  width:100%;
-}
-.room-card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 8px 25px rgba(0,0,0,.08);
-  border-color:var(--acc);
-}
-.room-card.mine{
-  border-color:#10b981;
-  background:linear-gradient(135deg,#f0fdf4,#dcfce7);
-}
+.tab-btn.active{background:var(--acc);color:#fff;box-shadow:0 4px 12px rgba(194,65,12,.3)}
+.section-title{color:var(--acc);font-size:1.05rem;font-weight:800;margin:20px 0 12px;display:flex;align-items:center;gap:8px}
+.rooms-list,.users-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.room-card{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px;transition:all .25s;cursor:pointer;display:flex;align-items:center;gap:12px;font-family:inherit;text-align:left;color:inherit;width:100%}
+.room-card:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,.08);border-color:var(--acc)}
+.room-card.mine{border-color:#10b981;background:linear-gradient(135deg,#f0fdf4,#dcfce7)}
 .room-card.mine:hover{border-color:#059669}
-.room-card.global{
-  border-color:#2563eb;
-  background:linear-gradient(135deg,#eff6ff,#dbeafe);
-  grid-column:1/-1;
-}
+.room-card.global{border-color:#2563eb;background:linear-gradient(135deg,#eff6ff,#dbeafe);grid-column:1/-1}
 .room-card.global:hover{border-color:#1d4ed8}
-.room-card .room-icon{
-  width:44px;height:44px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:1.3rem;
-  flex-shrink:0;
-}
+.room-card .room-icon{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
 .room-card.mine .room-icon{background:linear-gradient(135deg,#10b981,#059669)}
 .room-card.global .room-icon{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
 .room-card .room-info{flex:1;min-width:0}
-.room-card .room-name{
-  font-weight:700;
-  color:var(--ink);
-  font-size:1rem;
-  margin-bottom:3px;
-}
-.room-card .room-count{
-  font-size:.8rem;
-  color:var(--mut);
-}
-
-/* ============================================
-   USERS
-   ============================================ */
-.users-list{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-  gap:12px;
-}
-.user-card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:14px;
-  transition:all .25s;
-}
-.user-card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 8px 25px rgba(0,0,0,.08);
-  border-color:var(--acc);
-}
-.user-card .u-head{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:10px;
-}
-.user-card .u-avatar{
-  width:44px;height:44px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
-  font-size:1.1rem;
-  flex-shrink:0;
-}
+.room-card .room-name{font-weight:700;color:var(--ink);font-size:1rem;margin-bottom:3px}
+.room-card .room-count{font-size:.8rem;color:var(--mut)}
+.user-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;transition:all .25s}
+.user-card:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,.08);border-color:var(--acc)}
+.user-card .u-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.user-card .u-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;flex-shrink:0}
 .user-card .u-info{min-width:0;flex:1}
-.user-card .u-name{
-  font-weight:700;
-  color:var(--ink);
-  font-size:.95rem;
-  margin-bottom:2px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.user-card .u-wilaya{
-  font-size:.8rem;
-  color:var(--mut);
-}
-.user-card .u-details{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-}
-.u-badge{
-  background:var(--acc-soft);
-  color:var(--acc);
-  padding:3px 8px;
-  border-radius:10px;
-  font-size:.7rem;
-  font-weight:600;
-}
-
-/* ============================================
-   LOADING / EMPTY
-   ============================================ */
-.loading{
-  text-align:center;
-  padding:40px;
-  color:var(--mut);
-}
-.loading .spinner{
-  display:inline-block;
-  width:30px;height:30px;
-  border:3px solid var(--acc-soft);
-  border-top-color:var(--acc);
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-  margin-bottom:10px;
-}
+.user-card .u-name{font-weight:700;color:var(--ink);font-size:.95rem;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-card .u-wilaya{font-size:.8rem;color:var(--mut)}
+.user-card .u-details{display:flex;gap:6px;flex-wrap:wrap}
+.u-badge{background:var(--acc-soft);color:var(--acc);padding:3px 8px;border-radius:10px;font-size:.7rem;font-weight:600}
+.loading{text-align:center;padding:40px;color:var(--mut)}
+.loading .spinner{display:inline-block;width:30px;height:30px;border:3px solid var(--acc-soft);border-top-color:var(--acc);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:10px}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-.empty{
-  text-align:center;
-  padding:40px 20px;
-  color:#94a3b8;
-  font-size:.9rem;
-}
+.empty{text-align:center;padding:40px 20px;color:#94a3b8;font-size:.9rem}
 .empty b{font-size:2.5rem;display:block;margin-bottom:8px}
-
-/* ============================================
-   MOBILE
-   ============================================ */
 @media (max-width:600px){
   .stats-row{grid-template-columns:repeat(3,1fr);gap:8px}
   .stat-box b{font-size:1.3rem}
   .stat-box span{font-size:.7rem}
-  .users-list,.rooms-list{grid-template-columns:1fr}
+  .rooms-list,.users-list{grid-template-columns:1fr}
   .forum-header{flex-direction:column;text-align:center}
   .forum-header h1{font-size:1rem}
 }
@@ -378,7 +69,6 @@ body{
 </head>
 <body>
 
-<!-- Header -->
 <div class="forum-header">
   <h1>🎓 Forum ENSTP</h1>
   <div class="user-info">
@@ -389,55 +79,35 @@ body{
 </div>
 
 <div class="forum-container">
-
-  <!-- Welcome -->
   <div class="welcome-card">
     <h2>👋 Bienvenue, <span id="welcomeName">...</span> !</h2>
-    <p>Discute avec les étudiants de ta wilaya et de toute l'Algérie. Rejoins la salle générale ou celle de ta wilaya.</p>
+    <p>Discute avec les étudiants de ta wilaya et de toute l'Algérie.</p>
   </div>
 
-  <!-- Stats -->
   <div class="stats-row">
-    <div class="stat-box">
-      <b id="statUsers">-</b>
-      <span>👥 Étudiants</span>
-    </div>
-    <div class="stat-box">
-      <b id="statWilayas">69</b>
-      <span>📍 Wilayas</span>
-    </div>
-    <div class="stat-box">
-      <b id="statMyWilaya">-</b>
-      <span>🏠 Ma wilaya</span>
-    </div>
+    <div class="stat-box"><b id="statUsers">-</b><span>👥 Étudiants</span></div>
+    <div class="stat-box"><b id="statWilayas">69</b><span>📍 Wilayas</span></div>
+    <div class="stat-box"><b id="statMyWilaya">-</b><span>🏠 Ma wilaya</span></div>
   </div>
 
-  <!-- Search -->
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="🔍 Rechercher une wilaya ou un étudiant..." oninput="filterContent()">
+    <input type="text" id="searchInput" placeholder="🔍 Rechercher..." oninput="filterContent()">
   </div>
 
-  <!-- Tabs -->
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('rooms')" id="tabRooms">🏠 Salles</button>
     <button class="tab-btn" onclick="switchTab('users')" id="tabUsers">👥 Étudiants</button>
   </div>
 
-  <!-- Content -->
   <div id="content">
-    <div class="loading">
-      <div class="spinner"></div>
-      <p>Chargement...</p>
-    </div>
+    <div class="loading"><div class="spinner"></div><p>Chargement...</p></div>
   </div>
-
 </div>
 
 <script type="module">
 import { 
   auth, db, WILAYAS,
-  onAuthStateChanged,
-  signOut,
+  onAuthStateChanged, signOut,
   collection, getDocs, getDoc, doc
 } from './firebase-config.js';
 
@@ -447,40 +117,23 @@ let allUsers = [];
 let allRooms = [];
 let currentTab = 'rooms';
 
-// ============================================
-// التحقق من المستخدم
-// ============================================
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
     window.location.href = 'login.html';
     return;
   }
-  
   currentUser = user;
-  
   try {
-    const userSnap = await getDoc(doc(db, 'users', user.uid));
-    if (userSnap.exists()) {
-      currentUserData = userSnap.data();
-    } else {
-      currentUserData = {
-        name: user.displayName || 'Étudiant',
-        email: user.email,
-        wilaya: 'غير محدد',
-        role: 'student'
-      };
-    }
-  } catch(e) {
-    console.error('Erreur lecture user:', e);
-    currentUserData = {
+    const snap = await getDoc(doc(db, 'users', user.uid));
+    currentUserData = snap.exists() ? snap.data() : {
       name: user.displayName || 'Étudiant',
       email: user.email,
-      wilaya: 'غير محدد',
-      role: 'student'
+      wilaya: 'غير محدد'
     };
+  } catch(e) {
+    currentUserData = { name: user.displayName || 'Étudiant', email: user.email, wilaya: 'غير محدد' };
   }
   
-  // حدّث الواجهة
   const initials = (currentUserData.name || '?').charAt(0).toUpperCase();
   document.getElementById('userAvatar').textContent = initials;
   document.getElementById('userName').textContent = currentUserData.name || 'Étudiant';
@@ -490,9 +143,6 @@ onAuthStateChanged(auth, async (user) => {
   await loadAllData();
 });
 
-// ============================================
-// تحميل البيانات
-// ============================================
 async function loadAllData() {
   await loadUsers();
   await loadRooms();
@@ -506,146 +156,96 @@ async function loadUsers() {
     allUsers = [];
     snap.forEach(d => {
       const data = d.data();
-      if (data.uid !== currentUser.uid) {
-        allUsers.push(data);
-      }
+      if (data.uid !== currentUser.uid) allUsers.push(data);
     });
-    console.log('Users loaded:', allUsers.length);
-  } catch(e) {
-    console.error('Erreur users:', e);
-    allUsers = [];
-  }
+  } catch(e) { allUsers = []; }
 }
 
 async function loadRooms() {
   try {
-    allRooms = WILAYAS.map(w => {
-      const count = allUsers.filter(u => u.wilaya === w).length;
-      return { wilaya: w, count: count };
-    });
-    
+    allRooms = WILAYAS.map(w => ({
+      wilaya: w,
+      count: allUsers.filter(u => u.wilaya === w).length
+    }));
     if (currentUserData && currentUserData.wilaya) {
-      const myWilaya = allRooms.find(r => r.wilaya === currentUserData.wilaya);
-      if (myWilaya) myWilaya.count++;
+      const my = allRooms.find(r => r.wilaya === currentUserData.wilaya);
+      if (my) my.count++;
     }
-    
     allRooms.sort((a, b) => {
       if (a.wilaya === currentUserData.wilaya) return -1;
       if (b.wilaya === currentUserData.wilaya) return 1;
       return b.count - a.count;
     });
-    
-    console.log('Rooms loaded:', allRooms.length);
-  } catch(e) {
-    console.error('Erreur rooms:', e);
-    allRooms = [];
-  }
+  } catch(e) { allRooms = []; }
 }
 
-// ============================================
-// عرض المحتوى
-// ============================================
 function renderContent() {
   const content = document.getElementById('content');
-  
-  if (currentTab === 'rooms') {
-    renderRooms(content);
-  } else {
-    renderUsers(content);
-  }
+  if (currentTab === 'rooms') renderRooms(content);
+  else renderUsers(content);
 }
 
 function renderRooms(content) {
   const search = (document.getElementById('searchInput').value || '').toLowerCase().trim();
   let rooms = allRooms;
-  
-  if (search) {
-    rooms = rooms.filter(r => r.wilaya.toLowerCase().includes(search));
-  }
+  if (search) rooms = rooms.filter(r => r.wilaya.toLowerCase().includes(search));
   
   let html = '';
-  
-  // 🌍 الغرفة العامة
   if (!search || 'général générale general عامة'.toLowerCase().includes(search)) {
-    const totalUsers = allUsers.length + 1;
+    const total = allUsers.length + 1;
     html += '<button class="room-card global" onclick="openRoom(\'__general__\')">';
     html += '<div class="room-icon">🌍</div>';
-    html += '<div class="room-info">';
-    html += '<div class="room-name">Salle générale ENSTP</div>';
-    html += '<div class="room-count">👥 ' + totalUsers + ' étudiant' + (totalUsers > 1 ? 's' : '') + ' — Toutes les wilayas</div>';
-    html += '</div>';
-    html += '</button>';
+    html += '<div class="room-info"><div class="room-name">Salle générale ENSTP</div>';
+    html += '<div class="room-count">👥 ' + total + ' étudiant' + (total > 1 ? 's' : '') + ' — Toutes les wilayas</div>';
+    html += '</div></button>';
   }
   
-  // 📍 غرف الولايات
   if (rooms.length > 0) {
-    html += '<h3 class="section-title">📍 Salles par wilaya (69)</h3>';
-    html += '<div class="rooms-list">';
-    
+    html += '<h3 class="section-title">📍 Salles par wilaya (69)</h3><div class="rooms-list">';
     rooms.forEach(r => {
       const isMine = r.wilaya === currentUserData.wilaya;
       html += '<button class="room-card' + (isMine ? ' mine' : '') + '" onclick="openRoom(\'' + r.wilaya.replace(/'/g, "\\'") + '\')">';
       html += '<div class="room-icon">' + (isMine ? '⭐' : '🏠') + '</div>';
-      html += '<div class="room-info">';
-      html += '<div class="room-name">' + r.wilaya + (isMine ? ' <span style="color:#10b981;font-size:.75rem">— Ma wilaya</span>' : '') + '</div>';
+      html += '<div class="room-info"><div class="room-name">' + r.wilaya + (isMine ? ' <span style="color:#10b981;font-size:.75rem">— Ma wilaya</span>' : '') + '</div>';
       html += '<div class="room-count">👥 ' + r.count + ' étudiant' + (r.count > 1 ? 's' : '') + '</div>';
-      html += '</div>';
-      html += '</button>';
+      html += '</div></button>';
     });
-    
     html += '</div>';
   }
   
-  if (!html) {
-    html = '<div class="empty"><b>🔍</b>Aucune wilaya trouvée</div>';
-  }
-  
+  if (!html) html = '<div class="empty"><b>🔍</b>Aucune wilaya trouvée</div>';
   content.innerHTML = html;
 }
 
 function renderUsers(content) {
   const search = (document.getElementById('searchInput').value || '').toLowerCase().trim();
   let users = allUsers;
-  
-  if (search) {
-    users = users.filter(u => 
-      (u.name || '').toLowerCase().includes(search) ||
-      (u.wilaya || '').toLowerCase().includes(search)
-    );
-  }
+  if (search) users = users.filter(u => 
+    (u.name || '').toLowerCase().includes(search) ||
+    (u.wilaya || '').toLowerCase().includes(search)
+  );
   
   if (users.length === 0) {
     content.innerHTML = '<div class="empty"><b>👥</b>Aucun étudiant trouvé</div>';
     return;
   }
   
-  let html = '<h3 class="section-title">👥 Étudiants inscrits (' + users.length + ')</h3>';
-  html += '<div class="users-list">';
-  
+  let html = '<h3 class="section-title">👥 Étudiants inscrits (' + users.length + ')</h3><div class="users-list">';
   users.forEach(u => {
     const initials = (u.name || '?').charAt(0).toUpperCase();
-    html += '<div class="user-card">';
-    html += '<div class="u-head">';
+    html += '<div class="user-card"><div class="u-head">';
     html += '<div class="u-avatar">' + initials + '</div>';
-    html += '<div class="u-info">';
-    html += '<div class="u-name">' + (u.name || 'Étudiant') + '</div>';
-    html += '<div class="u-wilaya">📍 ' + (u.wilaya || 'غير محدد') + '</div>';
-    html += '</div>';
-    html += '</div>';
+    html += '<div class="u-info"><div class="u-name">' + (u.name || 'Étudiant') + '</div>';
+    html += '<div class="u-wilaya">📍 ' + (u.wilaya || 'غير محدد') + '</div></div></div>';
     html += '<div class="u-details">';
     if (u.year) html += '<span class="u-badge">🎓 ' + u.year + '</span>';
     if (u.groupe) html += '<span class="u-badge">' + u.groupe + '</span>';
-    html += '</div>';
-    html += '</div>';
+    html += '</div></div>';
   });
-  
   html += '</div>';
   content.innerHTML = html;
 }
 
-// ============================================
-// التبويبات
-// ============================================
 function switchTab(tab) {
   currentTab = tab;
   document.getElementById('tabRooms').classList.toggle('active', tab === 'rooms');
@@ -653,13 +253,8 @@ function switchTab(tab) {
   renderContent();
 }
 
-function filterContent() {
-  renderContent();
-}
+function filterContent() { renderContent(); }
 
-// ============================================
-// فتح غرفة
-// ============================================
 function openRoom(wilaya) {
   if (wilaya === '__general__') {
     window.location.href = 'chat.html?room=general';
@@ -668,9 +263,6 @@ function openRoom(wilaya) {
   }
 }
 
-// ============================================
-// الخروج
-// ============================================
 async function handleLogout() {
   if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
     await signOut(auth);
@@ -678,7 +270,6 @@ async function handleLogout() {
   }
 }
 
-// اجعل الدوال متاحة عالمياً
 window.switchTab = switchTab;
 window.filterContent = filterContent;
 window.openRoom = openRoom;
