@@ -2,27 +2,37 @@
 <html lang="fr" dir="ltr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Forum — ENSTP</title>
 <link rel="stylesheet" href="style.css">
 <style>
 body {
   min-height: 100vh;
   background: var(--bg, #f6f4ef);
+  color: var(--ink, #1d2433);
   padding-bottom: 40px;
+  font: 1rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 .forum-header {
   background: linear-gradient(135deg, #c2410c, #9a3412);
   color: #fff;
-  padding: 20px;
+  padding: 16px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 4px 20px rgba(0,0,0,.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 .forum-header h1 {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .forum-header .user-info {
   display: flex;
@@ -30,9 +40,9 @@ body {
   gap: 10px;
   font-size: .85rem;
 }
-.forum-header .user-info img,
 .forum-header .user-info .avatar {
-  width: 36px; height: 36px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: #fff;
   color: #c2410c;
@@ -41,16 +51,19 @@ body {
   justify-content: center;
   font-weight: 800;
   font-size: 1rem;
+  flex-shrink: 0;
 }
 .forum-header button {
   background: rgba(255,255,255,.2);
   color: #fff;
   border: 1px solid rgba(255,255,255,.3);
-  padding: 6px 12px;
+  padding: 7px 14px;
   border-radius: 20px;
   font-size: .8rem;
   cursor: pointer;
   font-family: inherit;
+  font-weight: 600;
+  transition: all .2s;
 }
 .forum-header button:hover { background: rgba(255,255,255,.3); }
 
@@ -63,31 +76,32 @@ body {
 .welcome-card {
   background: #fff;
   border-radius: 20px;
-  padding: 24px;
-  margin-bottom: 20px;
+  padding: 22px;
+  margin-bottom: 18px;
   box-shadow: 0 4px 20px rgba(0,0,0,.06);
   border: 1px solid #e5e1d8;
 }
 .welcome-card h2 {
   margin: 0 0 8px;
   color: #c2410c;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 .welcome-card p {
   margin: 0;
   color: #667085;
   line-height: 1.6;
+  font-size: .95rem;
 }
 
 .stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 .stat-box {
   background: #fff;
-  padding: 16px;
+  padding: 14px 10px;
   border-radius: 16px;
   text-align: center;
   border: 1px solid #e5e1d8;
@@ -95,19 +109,19 @@ body {
 }
 .stat-box b {
   display: block;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #c2410c;
   font-weight: 900;
 }
 .stat-box span {
-  font-size: .8rem;
+  font-size: .78rem;
   color: #667085;
 }
 
 .search-bar {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 .search-bar input {
   flex: 1;
@@ -127,7 +141,7 @@ body {
 .tabs {
   display: flex;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   background: #fff;
   padding: 6px;
   border-radius: 16px;
@@ -145,6 +159,10 @@ body {
   cursor: pointer;
   font-family: inherit;
   transition: all .25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 .tab-btn:hover { background: #fde8dc; color: #c2410c; }
 .tab-btn.active {
@@ -155,7 +173,7 @@ body {
 
 .section-title {
   color: #c2410c;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 800;
   margin: 20px 0 12px;
   display: flex;
@@ -173,9 +191,8 @@ body {
   background: #fff;
   border: 1px solid #e5e1d8;
   border-radius: 16px;
-  padding: 16px;
+  padding: 14px;
   transition: all .25s;
-  cursor: pointer;
 }
 .user-card:hover {
   transform: translateY(-3px);
@@ -201,9 +218,7 @@ body {
   font-size: 1.1rem;
   flex-shrink: 0;
 }
-.user-card .u-info {
-  min-width: 0;
-}
+.user-card .u-info { min-width: 0; flex: 1; }
 .user-card .u-name {
   font-weight: 700;
   color: #1d2433;
@@ -221,7 +236,6 @@ body {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
-  margin-top: 8px;
 }
 .u-badge {
   background: #fde8dc;
@@ -236,13 +250,16 @@ body {
   background: #fff;
   border: 2px solid #e5e1d8;
   border-radius: 16px;
-  padding: 16px;
+  padding: 14px;
   transition: all .25s;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 12px;
-  position: relative;
+  font-family: inherit;
+  text-align: left;
+  color: inherit;
+  width: 100%;
 }
 .room-card:hover {
   transform: translateY(-3px);
@@ -253,7 +270,14 @@ body {
   border-color: #10b981;
   background: linear-gradient(135deg, #f0fdf4, #dcfce7);
 }
-.room-card .room-flag {
+.room-card.mine:hover { border-color: #059669; }
+.room-card.global {
+  border-color: #2563eb;
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  grid-column: 1 / -1;
+}
+.room-card.global:hover { border-color: #1d4ed8; }
+.room-card .room-icon {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -265,8 +289,11 @@ body {
   font-size: 1.3rem;
   flex-shrink: 0;
 }
-.room-card.mine .room-flag {
+.room-card.mine .room-icon {
   background: linear-gradient(135deg, #10b981, #059669);
+}
+.room-card.global .room-icon {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
 }
 .room-card .room-info { flex: 1; min-width: 0; }
 .room-card .room-name {
@@ -305,16 +332,20 @@ body {
 .empty b { font-size: 2.5rem; display: block; margin-bottom: 8px; }
 
 @media (max-width: 600px) {
-  .stats-row { grid-template-columns: 1fr; gap: 8px; }
+  .stats-row { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stat-box b { font-size: 1.3rem; }
+  .stat-box span { font-size: .7rem; }
   .users-list, .rooms-list { grid-template-columns: 1fr; }
-  .forum-header { padding: 14px; flex-direction: column; gap: 10px; text-align: center; }
+  .forum-header { flex-direction: column; text-align: center; }
+  .forum-header h1 { font-size: 1.05rem; }
 }
 </style>
 </head>
 <body>
 
+<!-- Header -->
 <div class="forum-header">
-  <h1>🎓 ENSTP Forum</h1>
+  <h1>🎓 Forum ENSTP</h1>
   <div class="user-info">
     <div class="avatar" id="userAvatar">?</div>
     <span id="userName">Chargement...</span>
@@ -324,36 +355,36 @@ body {
 
 <div class="forum-container">
 
-  <!-- Welcome Card -->
+  <!-- Welcome -->
   <div class="welcome-card">
     <h2>👋 Bienvenue, <span id="welcomeName">...</span> !</h2>
-    <p>Rejoins la discussion avec les étudiants de ta wilaya. Découvre les autres étudiants de l'ENSTP à travers l'Algérie.</p>
+    <p>Discute avec les étudiants de ta wilaya et de toute l'Algérie. Rejoins la salle générale ou celle de ta wilaya.</p>
   </div>
 
   <!-- Stats -->
   <div class="stats-row">
     <div class="stat-box">
       <b id="statUsers">-</b>
-      <span>👥 Étudiants inscrits</span>
+      <span>👥 Étudiants</span>
     </div>
     <div class="stat-box">
       <b id="statWilayas">69</b>
       <span>📍 Wilayas</span>
     </div>
     <div class="stat-box">
-      <b id="statMessages">-</b>
-      <span>💬 Messages</span>
+      <b id="statMyWilaya">-</b>
+      <span>🏠 Ma wilaya</span>
     </div>
   </div>
 
   <!-- Search -->
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="🔍 Rechercher un étudiant ou une wilaya..." oninput="filterContent()">
+    <input type="text" id="searchInput" placeholder="🔍 Rechercher une wilaya ou un étudiant..." oninput="filterContent()">
   </div>
 
   <!-- Tabs -->
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('rooms')" id="tabRooms">🏠 Salles par wilaya</button>
+    <button class="tab-btn active" onclick="switchTab('rooms')" id="tabRooms">🏠 Salles</button>
     <button class="tab-btn" onclick="switchTab('users')" id="tabUsers">👥 Étudiants</button>
   </div>
 
@@ -392,7 +423,6 @@ onAuthStateChanged(auth, async (user) => {
   
   currentUser = user;
   
-  // اقرأ بيانات المستخدم
   try {
     const userSnap = await getDoc(doc(db, 'users', user.uid));
     if (userSnap.exists()) {
@@ -420,8 +450,8 @@ onAuthStateChanged(auth, async (user) => {
   document.getElementById('userAvatar').textContent = initials;
   document.getElementById('userName').textContent = currentUserData.name || 'Étudiant';
   document.getElementById('welcomeName').textContent = currentUserData.name || 'Étudiant';
+  document.getElementById('statMyWilaya').textContent = currentUserData.wilaya || '-';
   
-  // ابدأ تحميل البيانات
   await loadAllData();
 });
 
@@ -429,12 +459,10 @@ onAuthStateChanged(auth, async (user) => {
 // تحميل البيانات
 // ============================================
 async function loadAllData() {
-  await Promise.all([
-    loadUsers(),
-    loadRooms()
-  ]);
+  await loadUsers();
+  await loadRooms();
   renderContent();
-  loadStats();
+  document.getElementById('statUsers').textContent = allUsers.length + 1;
 }
 
 async function loadUsers() {
@@ -456,19 +484,17 @@ async function loadUsers() {
 
 async function loadRooms() {
   try {
-    // لكل ولاية، نحسب عدد الطلبة
     allRooms = WILAYAS.map(w => {
       const count = allUsers.filter(u => u.wilaya === w).length;
       return { wilaya: w, count: count };
     });
     
-    // أضف الطالب نفسه
     if (currentUserData && currentUserData.wilaya) {
       const myWilaya = allRooms.find(r => r.wilaya === currentUserData.wilaya);
       if (myWilaya) myWilaya.count++;
     }
     
-    // رتب: ولايتي أولاً، ثم الأكثر سكاناً
+    // رتّب: ولايتي أولاً، ثم الأكثر سكاناً
     allRooms.sort((a, b) => {
       if (a.wilaya === currentUserData.wilaya) return -1;
       if (b.wilaya === currentUserData.wilaya) return 1;
@@ -479,18 +505,6 @@ async function loadRooms() {
   } catch(e) {
     console.error('Erreur rooms:', e);
     allRooms = [];
-  }
-}
-
-async function loadStats() {
-  try {
-    const usersSnap = await getDocs(collection(db, 'users'));
-    document.getElementById('statUsers').textContent = usersSnap.size || '0';
-    
-    // عدد الرسائل الكلي (تقديري)
-    document.getElementById('statMessages').textContent = '...';
-  } catch(e) {
-    document.getElementById('statUsers').textContent = allUsers.length;
   }
 }
 
@@ -515,26 +529,43 @@ function renderRooms(content) {
     rooms = rooms.filter(r => r.wilaya.toLowerCase().includes(search));
   }
   
-  if (rooms.length === 0) {
-    content.innerHTML = '<div class="empty"><b>🔍</b>Aucune wilaya trouvée</div>';
-    return;
+  let html = '';
+  
+  // 🆕 الغرفة العامة أولاً
+  if (!search || 'général générale general عامة'.toLowerCase().includes(search)) {
+    const totalUsers = allUsers.length + 1;
+    html += '<button class="room-card global" onclick="openRoom(\'__general__\')">';
+    html += '<div class="room-icon">🌍</div>';
+    html += '<div class="room-info">';
+    html += '<div class="room-name">Salle générale ENSTP</div>';
+    html += '<div class="room-count">👥 ' + totalUsers + ' étudiant' + (totalUsers > 1 ? 's' : '') + ' — Toutes les wilayas</div>';
+    html += '</div>';
+    html += '</button>';
   }
   
-  let html = '<h3 class="section-title">🏠 Salles de discussion par wilaya</h3>';
-  html += '<div class="rooms-list">';
-  
-  rooms.forEach(r => {
-    const isMine = r.wilaya === currentUserData.wilaya;
-    html += '<div class="room-card' + (isMine ? ' mine' : '') + '" onclick="openRoom(\'' + r.wilaya.replace(/'/g, "\\'") + '\')">';
-    html += '<div class="room-flag">🏠</div>';
-    html += '<div class="room-info">';
-    html += '<div class="room-name">' + r.wilaya + (isMine ? ' <span style="color:#10b981">⭐ Ma wilaya</span>' : '') + '</div>';
-    html += '<div class="room-count">👥 ' + r.count + ' étudiant' + (r.count > 1 ? 's' : '') + '</div>';
+  // غرف الولايات
+  if (rooms.length > 0) {
+    html += '<h3 class="section-title">📍 Salles par wilaya (69)</h3>';
+    html += '<div class="rooms-list">';
+    
+    rooms.forEach(r => {
+      const isMine = r.wilaya === currentUserData.wilaya;
+      html += '<button class="room-card' + (isMine ? ' mine' : '') + '" onclick="openRoom(\'' + r.wilaya.replace(/'/g, "\\'") + '\')">';
+      html += '<div class="room-icon">' + (isMine ? '⭐' : '🏠') + '</div>';
+      html += '<div class="room-info">';
+      html += '<div class="room-name">' + r.wilaya + (isMine ? ' <span style="color:#10b981;font-size:.75rem">— Ma wilaya</span>' : '') + '</div>';
+      html += '<div class="room-count">👥 ' + r.count + ' étudiant' + (r.count > 1 ? 's' : '') + '</div>';
+      html += '</div>';
+      html += '</button>';
+    });
+    
     html += '</div>';
-    html += '</div>';
-  });
+  }
   
-  html += '</div>';
+  if (!html) {
+    html = '<div class="empty"><b>🔍</b>Aucune wilaya trouvée</div>';
+  }
+  
   content.innerHTML = html;
 }
 
@@ -596,7 +627,11 @@ function filterContent() {
 // فتح غرفة
 // ============================================
 function openRoom(wilaya) {
-  window.location.href = 'chat.html?wilaya=' + encodeURIComponent(wilaya);
+  if (wilaya === '__general__') {
+    window.location.href = 'chat.html?room=general';
+  } else {
+    window.location.href = 'chat.html?wilaya=' + encodeURIComponent(wilaya);
+  }
 }
 
 // ============================================
