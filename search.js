@@ -1,110 +1,104 @@
 // ============================================
 // search.js — محرك البحث الذكي
 // Guide de survie ENSTP
+// Version 2.0
 // ============================================
 
-// ============================================
-// 1. المرادفات
-// ============================================
 const SYNONYMS = {
-  // ==== فرنسي ====
-  "salle": ["classe", "amphi", "amphithéâtre", "cours", "td", "tp", "laboratoire", "labo"],
+  // فرنسي
+  "salle": ["classe", "amphi", "amphithéâtre", "cours", "td", "tp", "laboratoire"],
   "amphi": ["amphithéâtre", "salle", "grande salle"],
-  "laboratoire": ["labo", "tp", "salle de tp", "expérience"],
-  "prof": ["enseignant", "professeur", "maître", "intervenant"],
-  "enseignant": ["prof", "professeur", "maître"],
-  "probleme": ["aide", "souci", "difficulté", "service", "question"],
-  "aide": ["probleme", "service", "secours", "assistance"],
+  "laboratoire": ["labo", "tp", "expérience"],
+  "prof": ["enseignant", "professeur", "maître"],
+  "enseignant": ["prof", "professeur"],
+  "probleme": ["aide", "souci", "difficulté", "service"],
+  "aide": ["probleme", "service", "secours"],
   "absence": ["absent", "justificatif", "manqué"],
-  "carte": ["badge", "identité", "carte etudiant"],
-  "transport": ["bus", "taxi", "métro", "tram", "déplacement", "trajet"],
-  "bus": ["transport", "arrêt", "ligne", "autobus"],
-  "taxi": ["transport", "voiture", "station", "tacsi"],
-  "cite": ["résidence", "logement", "chambre", "internat"],
-  "residence": ["cite", "logement", "chambre", "dortoir"],
-  "manger": ["restaurant", "repas", "café", "snack", "pizzeria", "boulangerie", "nourriture", "bouffe"],
-  "restaurant": ["manger", "repas", "snack", "café"],
-  "bibliotheque": ["livre", "adhésion", "inscription", "prêt", "biblio"],
+  "carte": ["badge", "identité"],
+  "transport": ["bus", "taxi", "métro", "tram", "déplacement"],
+  "bus": ["transport", "arrêt", "ligne"],
+  "taxi": ["transport", "voiture", "station"],
+  "cite": ["résidence", "logement", "chambre"],
+  "residence": ["cite", "logement"],
+  "manger": ["restaurant", "repas", "snack", "café", "pizzeria", "boulangerie"],
+  "restaurant": ["manger", "repas", "snack"],
+  "bibliotheque": ["livre", "adhésion", "prêt"],
   "notes": ["résultats", "examens", "moyenne"],
-  "examens": ["notes", "résultats", "contrôle"],
-  "tourisme": ["visite", "lieu", "sortie", "touristique", "alger", "loisir"],
-  "sport": ["football", "basket", "running", "gym"],
-  "medecin": ["docteur", "santé", "hopital", "infirmerie"],
-  "pharmacie": ["médicament", "santé"],
-  "laboratoire": ["labo", "expérience"],
-  "physique": ["labo physique", "expérience physique"],
-  "chimie": ["labo chimie", "expérience chimie"],
-  "mecanique": ["fluides", "hydraulique"],
-  "electricite": ["circuit", "électrique"],
-  "informatique": ["info", "ordinateur", "programmation"],
-  "economie": ["éco", "gestion"],
-  "gestion": ["management", "entreprise"],
-
-  // ==== عربي ====
-  "قاعة": ["قسم", "مدرج", "صف", "حصة", "سال", "قاعه"],
-  "مدرج": ["قاعة", "أمفي", "حصة", "مدرج كبير"],
-  "مخبر": ["مختبر", "تجربة", "أعمال تطبيقية", "لابو"],
-  "أستاذ": ["معلم", "بروف", "أستاذة", "مدرس"],
-  "أساتذة": ["أستاذ", "معلم", "بروف", "مدرسين"],
-  "مشكلة": ["مساعدة", "سؤال", "صعوبة", "خدمة", "مشكله"],
-  "مساعدة": ["مشكلة", "خدمة", "عون"],
-  "غياب": ["غائب", "تبرير", "مبرر", "تخلف"],
-  "بطاقة": ["بطاقه", "هوية", "شارة", "كارط"],
-  "نقل": ["حافلة", "طاكسي", "مترو", "ترامواي", "تنقل", "باص"],
-  "حافلة": ["نقل", "باص", "محطة", "حافله"],
-  "طاكسي": ["نقل", "سيارة", "تكسي", "طاكسي جماعي"],
-  "إقامة": ["حي", "سكن", "غرفة", "داخلية", "اقامه"],
-  "سكن": ["إقامة", "حي", "غرفة", "سكن جامعي"],
-  "أكل": ["مطعم", "ماكلة", "وجبة", "مأكولات", "طعام", "اكل"],
-  "ماكلة": ["أكل", "مطعم", "وجبة", "طعام"],
-  "مطعم": ["أكل", "ماكلة", "وجبة", "طعام", "ريستوران"],
-  "مكتبة": ["كتاب", "انضمام", "تسجيل", "استعارة", "مكتبه"],
-  "نقاط": ["نتائج", "امتحانات", "معدل", "علامات"],
-  "امتحانات": ["نقاط", "نتائج", "اختبارات", "امتحان"],
-  "سياحة": ["زيارة", "أماكن", "خرجة", "العاصمة", "الجزائر"],
-  "رياضة": ["كرة", "جري", "تمرين", "ملعب"],
-  "طبيب": ["عيادة", "صحة", "مستشفى", "إسعاف"],
-  "صيدلية": ["دواء", "صحة", "ميدكاية"],
-  "فيزياء": ["مخبر فيزياء", "تجربة"],
-  "كيمياء": ["مخبر كيمياء", "تحليل"],
-  "كهرباء": ["مخبر كهرباء", "دارة"],
-  "ميكانيك": ["موائع", "هيدروليك"],
-  "اقتصاد": ["تسيير", "مالية"],
-  "تسيير": ["إدارة", "مؤسسة"],
-  "إعلام": ["حاسوب", "برمجة", "معلومية"],
-  "بحث": ["بحث علمي", "مرجع"],
-  "منحة": ["مساعدة مالية", "بورصة"],
-
-  // ==== إنجليزي ====
-  "room": ["class", "amphi", "classroom", "lecture", "lab"],
-  "teacher": ["professor", "instructor", "prof"],
-  "problem": ["help", "issue", "question", "service"],
-  "help": ["problem", "service", "assistance"],
-  "absence": ["absent", "justification"],
-  "card": ["badge", "student", "id"],
-  "transport": ["bus", "taxi", "metro", "tram"],
-  "bus": ["transport", "stop", "line"],
-  "taxi": ["transport", "car", "station"],
-  "dorm": ["residence", "housing", "room"],
-  "eat": ["restaurant", "food", "meal"],
-  "food": ["eat", "restaurant", "meal"],
-  "library": ["book", "membership"],
-  "grades": ["results", "exams", "marks"],
-  "exams": ["grades", "results", "tests"],
-  "tourism": ["visit", "place", "outing", "algiers"],
+  "examens": ["notes", "résultats"],
   "sport": ["football", "basket", "running"],
-  "doctor": ["hospital", "health", "clinic"],
-  "pharmacy": ["medicine", "health"],
-  "physics": ["lab", "experiment"],
-  "chemistry": ["lab", "analysis"],
-  "electricity": ["circuit", "electrical"],
-  "computer": ["programming", "it"],
-  "economics": ["management", "business"],
-  "management": ["business", "company"]
+  "medecin": ["docteur", "santé", "infirmerie"],
+  "pharmacie": ["médicament", "santé"],
+  "forum": ["discussion", "chat", "étudiants", "communauté"],
+  "etudiant": ["élève", "étudiants", "apprenant"],
+  
+  // عربي
+  "قاعة": ["قسم", "مدرج", "صف", "حصة"],
+  "مدرج": ["قاعة", "أمفي"],
+  "مخبر": ["مختبر", "تجربة", "تطبيقي"],
+  "أستاذ": ["معلم", "بروف", "مدرس"],
+  "أساتذة": ["أستاذ", "معلم"],
+  "مشكلة": ["مساعدة", "سؤال", "صعوبة"],
+  "مساعدة": ["مشكلة", "خدمة"],
+  "غياب": ["غائب", "تبرير", "مبرر"],
+  "بطاقة": ["هوية", "شارة"],
+  "نقل": ["حافلة", "طاكسي", "مترو", "ترامواي"],
+  "حافلة": ["نقل", "باص", "محطة"],
+  "طاكسي": ["نقل", "سيارة", "تكسي"],
+  "إقامة": ["حي", "سكن", "غرفة"],
+  "سكن": ["إقامة", "حي"],
+  "أكل": ["مطعم", "ماكلة", "وجبة", "طعام"],
+  "ماكلة": ["أكل", "مطعم", "وجبة"],
+  "مطعم": ["أكل", "ماكلة", "وجبة"],
+  "مكتبة": ["كتاب", "انضمام", "استعارة"],
+  "نقاط": ["نتائج", "امتحانات", "معدل"],
+  "امتحانات": ["نقاط", "نتائج"],
+  "رياضة": ["كرة", "جري", "تمرين"],
+  "طبيب": ["عيادة", "صحة", "إسعاف"],
+  "صيدلية": ["دواء", "صحة"],
+  "ملتقى": ["دردشة", "طلبة", "مجتمع", "تواصل"],
+  "طلبة": ["طلاب", "ملتقى"],
+  
+  // إنجليزي
+  "room": ["class", "amphi", "classroom"],
+  "teacher": ["professor", "instructor"],
+  "problem": ["help", "issue", "service"],
+  "help": ["problem", "service"],
+  "transport": ["bus", "taxi", "metro"],
+  "dorm": ["residence", "housing"],
+  "eat": ["restaurant", "food", "meal"],
+  "library": ["book", "membership"],
+  "grades": ["results", "exams"],
+  "forum": ["discussion", "chat", "community"]
 };
 
 // ============================================
-// 2. تصحيح الأخطاء الإملائية
+// تطبيع النص
+// ============================================
+function normalize(text) {
+  if (!text) return '';
+  return text.toString().toLowerCase()
+    .replace(/[éèêë]/g, 'e').replace(/[àâä]/g, 'a').replace(/[îï]/g, 'i')
+    .replace(/[ôö]/g, 'o').replace(/[ùûü]/g, 'u').replace(/[ç]/g, 'c')
+    .replace(/[إأآا]/g, 'ا').replace(/[ىي]/g, 'ي').replace(/[ةه]/g, 'ه')
+    .replace(/[ًٌٍَُِّْ]/g, '').trim();
+}
+
+// ============================================
+// توسيع الكلمة بالمرادفات
+// ============================================
+function expandWord(word) {
+  const norm = normalize(word);
+  const expanded = new Set([norm]);
+  Object.keys(SYNONYMS).forEach(key => {
+    if (normalize(key) === norm) {
+      SYNONYMS[key].forEach(syn => expanded.add(normalize(syn)));
+    }
+  });
+  return Array.from(expanded);
+}
+
+// ============================================
+// Levenshtein (تصحيح الأخطاء الإملائية)
 // ============================================
 function levenshtein(a, b) {
   if (a.length === 0) return b.length;
@@ -129,44 +123,18 @@ function levenshtein(a, b) {
 }
 
 // ============================================
-// 3. تطبيع النص
-// ============================================
-function normalize(text) {
-  if (!text) return '';
-  return text.toString().toLowerCase()
-    .replace(/[éèêë]/g, 'e').replace(/[àâä]/g, 'a').replace(/[îï]/g, 'i')
-    .replace(/[ôö]/g, 'o').replace(/[ùûü]/g, 'u').replace(/[ç]/g, 'c')
-    .replace(/[إأآا]/g, 'ا').replace(/[ىي]/g, 'ي').replace(/[ةه]/g, 'ه')
-    .replace(/[ًٌٍَُِّْ]/g, '').trim();
-}
-
-// ============================================
-// 4. توسيع الكلمة بالمرادفات
-// ============================================
-function expandWord(word) {
-  const norm = normalize(word);
-  const expanded = new Set([norm]);
-  Object.keys(SYNONYMS).forEach(key => {
-    if (normalize(key) === norm) {
-      SYNONYMS[key].forEach(syn => expanded.add(normalize(syn)));
-    }
-  });
-  return Array.from(expanded);
-}
-
-// ============================================
-// 5. البحث الرئيسي
+// البحث الذكي
 // ============================================
 function smartSearch(query, sections) {
   const q = normalize(query);
   if (!q) return [];
-
+  
   const words = q.split(/\s+/).filter(w => w.length > 1);
   if (words.length === 0) return [];
-
+  
   const expandedWords = words.map(w => expandWord(w));
   const results = [];
-
+  
   sections.forEach(section => {
     // بحث في items
     if (section.items) {
@@ -183,19 +151,19 @@ function smartSearch(query, sections) {
         }
       });
     }
-
+    
     // بحث في categories
     if (section.categories) {
       section.categories.forEach(cat => {
-        // بحث في عنوان التصنيف
-        if (cat.titleKey) {
-          const ct = (typeof window !== 'undefined' && window.t) ? window.t(cat.titleKey, getCurrentLang()) : '';
+        // عنوان التصنيف
+        if (cat.titleKey && typeof window.t === 'function') {
+          const ct = window.t(cat.titleKey, getCurrentLang()) || '';
           const ctext = normalize(ct);
           expandedWords.forEach(group => group.forEach(w => {
             if (ctext.includes(w)) {
               results.push({
                 section: section,
-                item: { titleKey: cat.titleKey, icon: cat.icon, descKey: cat.descKey },
+                item: { titleKey: cat.titleKey, icon: cat.icon },
                 itemIndex: null,
                 categoryId: cat.id,
                 score: 15
@@ -204,7 +172,7 @@ function smartSearch(query, sections) {
           }));
         }
         
-        // بحث في items داخل التصنيف
+        // items داخل التصنيف
         if (cat.items) {
           cat.items.forEach((item, idx) => {
             const score = scoreItem(item, expandedWords, section);
@@ -222,7 +190,7 @@ function smartSearch(query, sections) {
       });
     }
   });
-
+  
   // إزالة التكرارات
   const seen = new Set();
   const unique = [];
@@ -233,29 +201,25 @@ function smartSearch(query, sections) {
       unique.push(r);
     }
   });
-
+  
   unique.sort((a, b) => b.score - a.score);
   return unique;
 }
 
-// ============================================
-// 6. حساب أهمية النتيجة
-// ============================================
 function scoreItem(item, expandedWords, section) {
   let score = 0;
-  
   const titleText = normalize(
-    (item.titleKey ? getTextForKey(item.titleKey) : '') + ' ' +
-    (item.title || '')
+    (item.titleKey && typeof window.t === 'function' ? window.t(item.titleKey, 'fr') + ' ' + window.t(item.titleKey, 'ar') + ' ' + window.t(item.titleKey, 'en') : '') + ' ' +
+    (typeof item.title === 'object' ? (item.title.fr + ' ' + item.title.ar + ' ' + item.title.en) : (item.title || ''))
   );
   const descText = normalize(
-    (item.descKey ? getTextForKey(item.descKey) : '') + ' ' +
-    (item.desc || '')
+    (item.descKey && typeof window.t === 'function' ? window.t(item.descKey, 'fr') + ' ' + window.t(item.descKey, 'ar') + ' ' + window.t(item.descKey, 'en') : '') + ' ' +
+    (typeof item.desc === 'object' ? (item.desc.fr + ' ' + item.desc.ar + ' ' + item.desc.en) : (item.desc || ''))
   );
   const secText = normalize(
-    (section.titleKey ? getTextForKey(section.titleKey) : '')
+    section.titleKey && typeof window.t === 'function' ? window.t(section.titleKey, 'fr') + ' ' + window.t(section.titleKey, 'ar') + ' ' + window.t(section.titleKey, 'en') : ''
   );
-
+  
   expandedWords.forEach(group => {
     group.forEach(w => {
       if (titleText.includes(w)) score += 10;
@@ -263,22 +227,8 @@ function scoreItem(item, expandedWords, section) {
       if (secText.includes(w)) score += 1;
     });
   });
-
+  
   return score;
-}
-
-// ============================================
-// 7. الحصول على نص من مفتاح (كل اللغات)
-// ============================================
-function getTextForKey(key) {
-  if (typeof LANG_DATA === 'undefined') return '';
-  let text = '';
-  ['fr', 'ar', 'en'].forEach(lang => {
-    if (LANG_DATA[lang] && LANG_DATA[lang][key]) {
-      text += ' ' + LANG_DATA[lang][key];
-    }
-  });
-  return text.trim();
 }
 
 function getCurrentLang() {
@@ -286,7 +236,7 @@ function getCurrentLang() {
 }
 
 // ============================================
-// 8. اقتراحات ذكية
+// اقتراحات
 // ============================================
 function suggestWords(query) {
   const q = normalize(query);
@@ -301,9 +251,7 @@ function suggestWords(query) {
   return suggestions.slice(0, 3).map(s => s.word);
 }
 
-// ============================================
 // تصدير
-// ============================================
 if (typeof window !== 'undefined') {
   window.smartSearch = smartSearch;
   window.suggestWords = suggestWords;
