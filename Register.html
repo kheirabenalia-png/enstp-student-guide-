@@ -152,7 +152,6 @@ h1{text-align:center;color:var(--ink);font-size:1.5rem;margin-bottom:8px}
 import { registerUser, onAuthChange } from './auth.js';
 import { WILAYAS } from './firebase-config.js';
 
-// املأ قائمة الولايات
 const wilayaSelect = document.getElementById('wilaya');
 WILAYAS.forEach(w => {
   const opt = document.createElement('option');
@@ -161,14 +160,12 @@ WILAYAS.forEach(w => {
   wilayaSelect.appendChild(opt);
 });
 
-// إذا كان مسجلاً، اذهب للفورم
 onAuthChange(user => {
   if (user) {
     window.location.href = 'forum.html';
   }
 });
 
-// معالج التسجيل
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   
@@ -186,7 +183,6 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   const year = document.getElementById('year').value;
   const groupe = document.getElementById('groupe').value.trim();
   
-  // التحقق من البريد
   if (!email.toLowerCase().endsWith('@enstp.edu.dz')) {
     errorMsg.textContent = '⚠️ Utilisez uniquement votre email @enstp.edu.dz';
     errorMsg.classList.add('show');
