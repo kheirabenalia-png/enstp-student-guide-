@@ -1047,6 +1047,263 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+   // ============================================
+// 🔔 NOTIFICATIONS
+// ============================================
+async function requestNotificationPermission() {
+  if (!('Notification' in window)) {
+    console.log('Notifications non supportées');
+    return false;
+  }
+  
+  if (Notification.permission === 'granted') {
+    return true;
+  }
+  
+  if (Notification.permission !== 'denied') {
+    const permission = await Notification.requestPermission();
+    return permission === 'granted';
+  }
+  
+  return false;
+}
+
+async function showNotification(title, body, icon = 'icon-192.png') {
+  if (!('Notification' in window)) return false;
+  
+  const permission = await requestNotificationPermission();
+  if (!permission) return false;
+  
+  try {
+    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+      const registration = await navigator.serviceWorker.ready;
+      await registration.showNotification(title, {
+        body: body,
+        icon: icon,
+        badge: icon,
+        vibrate: [200, 100, 200],
+        data: { url: location.href }
+      });
+    } else {
+      new Notification(title, { body: body, icon: icon });
+    }
+    return true;
+  } catch(e) {
+    console.error('Notification error:', e);
+    return false;
+  }
+}
+
+// زر الإشعارات
+function addNotificationButton() {
+  const controls = document.querySelector('.top-controls');
+  if (!controls || document.getElementById('notifBtn')) return;
+  
+  const pill = controls.querySelector('.pill:last-child');
+  if (!pill) return;
+  
+  const btn = document.createElement('button');
+  btn.className = 'ctrl-btn';
+  btn.id = 'notifBtn';
+  btn.title = 'Notifications';
+  btn.textContent = '🔔';
+  btn.onclick = async () => {
+    const granted = await requestNotificationPermission();
+    if (granted) {
+      btn.textContent = '🔕';
+      btn.title = 'Notifications activées';
+      showNotification('✅ Notifications activées', 'Vous recevrez les mises à jour du guide ENSTP.');
+    } else {
+      alert('⚠️ Les notifications sont bloquées. Activez-les dans les paramètres du navigateur.');
+    }
+  };
+  
+  pill.appendChild(btn);
+}
+
+// ============================================
+// 📤 SHARE
+// ============================================
+async function shareSite() {
+  const shareData = {
+    title: 'Guide de survie ENSTP',
+    text: 'Découvre le guide de survie des étudiants ENSTP !',
+    url: location.origin + location.pathname
+  };
+  
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+      console.log('✅ Partagé');
+    } else {
+      // Fallback: نسخ الرابط
+      await navigator.clipboard.writeText(shareData.url);
+      showToast('✅ Lien copié !');
+    }
+  } catch(e) {
+    if (e.name !== 'AbortError') {
+      console.error('Share error:', e);
+      // Fallback
+      const url = shareData.url;
+      const text = shareData.text + ' ' + url;
+      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+    }
+  }
+}
+
+// زر المشاركة
+function addShareButton() {
+  const controls = document.querySelector('.top-controls');
+  if (!controls || document.getElementById('shareBtn')) return;
+  
+  const pill = controls.querySelector('.pill:last-child');
+  if (!pill) return;
+  
+  const btn = document.createElement('button');
+  btn.className = 'ctrl-btn';
+  btn.id = 'shareBtn';
+  btn.title = 'Partager';
+  btn.textContent = '📤';
+  btn.onclick = shareSite;
+  
+  pill.appendChild(btn);
+}
+
+// ============================================
+// Toast
+// ============================================
+function showToast(message, duration = 3000) {
+  const existing = document.getElementById('custom-toast');
+  if (existing) existing.remove();
+  
+  const toast = document.createElement('div');
+  toast.id = 'custom-toast';
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--acc);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: .95rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    z-index: 9999;
+    opacity: 0;
+    transition: all .3s ease-out;
+    pointer-events: none;
+  `;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+  }, 50);
+  
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(100px)';
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
+}
+
+// ============================================
+// PWA Install Banner
+// ============================================
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  console.log('📱 PWA prêt à installer');
+  
+  // أظهر بانر بعد 5 ثوان
+  setTimeout(() => {
+    if (!localStorage.getItem('installDismissed')) {
+      showInstallBanner();
+    }
+  }, 5000);
+});
+
+function showInstallBanner() {
+  if (document.getElementById('installBanner')) return;
+  
+  const banner = document.createElement('div');
+  banner.id = 'installBanner';
+  banner.className = 'install-banner show';
+  banner.innerHTML = `
+    <span class="ib-icon">📱</span>
+    <div class="ib-text">
+      <strong>Installer l'application</strong>
+      <span>Accès rapide et hors ligne</span>
+    </div>
+    <button class="ib-btn" onclick="installPWA()">Installer</button>
+    <button class="ib-close" onclick="dismissInstallBanner()">×</button>
+  `;
+  document.body.appendChild(banner);
+}
+
+async function installPWA() {
+  if (!deferredPrompt) {
+    // iOS
+    showToast('📱 Sur iOS : Partager 📤 → Sur l\'écran d\'accueil');
+    return;
+  }
+  
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  
+  if (outcome === 'accepted') {
+    showToast('✅ Application installée !');
+    localStorage.setItem('installDismissed', '1');
+  }
+  
+  deferredPrompt = null;
+  document.getElementById('installBanner')?.remove();
+}
+
+function dismissInstallBanner() {
+  localStorage.setItem('installDismissed', '1');
+  document.getElementById('installBanner')?.remove();
+}
+
+window.addEventListener('appinstalled', () => {
+  showToast('🎉 Guide ENSTP installé !');
+  localStorage.setItem('installDismissed', '1');
+});
+
+// ============================================
+// Service Worker Registration + Update
+// ============================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js', { scope: './' })
+      .then((reg) => {
+        console.log('✅ SW registered', reg.scope);
+        
+        // تحديث تلقائي
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              showToast('🔄 Nouvelle version disponible ! Rechargez la page.');
+            }
+          });
+        });
+      })
+      .catch((err) => console.log('❌ SW error:', err));
+  });
+}
+
+// اجعلها متاحة عالمياً
+window.installPWA = installPWA;
+window.dismissInstallBanner = dismissInstallBanner;
+window.shareSite = shareSite;
+window.showToast = showToast;
+window.showNotification = showNotification;
 // ============================================
 // Init
 // ============================================
@@ -1061,6 +1318,11 @@ document.addEventListener('keydown', (e) => {
   }, 300);
 })();
 
+     // PWA + Notifications
+  setTimeout(() => {
+    addNotificationButton();
+    addShareButton();
+  }, 500);
 // اجعل الدوال متاحة عالمياً
 window.openSection = openSection;
 window.renderHome = renderHome;
