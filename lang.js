@@ -1,7 +1,7 @@
 // ============================================
 // lang.js — نظام اللغات الثلاث
 // Guide de survie ENSTP
-// Version 2.5 — avec Forum
+// Version 3.0 — avec Forum
 // ============================================
 
 const LANG_DATA = {
@@ -27,14 +27,17 @@ const LANG_DATA = {
     loading: "Chargement…",
     download: "Télécharger",
     open: "Ouvrir",
+    qrScan: "Scannez ce QR code",
 
-    // ============ حقول إضافية ============
+    // ============ حقول ============
     labelHours: "Horaires",
     labelBudget: "Budget",
     labelExtra: "Info",
     labelSteps: "Étapes",
     labelContact: "Contact",
     labelServices: "Services disponibles",
+    mapPlaces: "Lieux",
+    qrIntro: "Scannez ces QR codes pour accéder directement aux sections.",
 
     // ============ الصفحة الرئيسية ============
     welcomeTitle: "Bienvenue",
@@ -308,10 +311,9 @@ const LANG_DATA = {
     aboutWarning: "Avertissement",
     aboutWarningDesc: "Les informations sont fournies à titre indicatif. Vérifie toujours auprès de l'administration.",
     aboutUpdate: "Dernière mise à jour",
-    aboutUpdateDesc: "Octobre 2026 — Version 2.5",
+    aboutUpdateDesc: "Octobre 2026 — Version 3.0",
 
     // ============ 14. رموز QR ============
-    qrIntro: "Scannez ces QR codes pour accéder directement aux sections.",
     qrPrint: "🖨️ Imprimer",
     qrDownload: "📥 Télécharger",
     qrShare: "📤 Partager",
@@ -326,7 +328,10 @@ const LANG_DATA = {
 
     // ============ Text Size ============
     tspTitle: "Taille du texte",
-    tsSmall: "Petit", tsNormal: "Normal", tsLarge: "Grand", tsXLarge: "Très grand",
+    tsSmall: "Petit",
+    tsNormal: "Normal",
+    tsLarge: "Grand",
+    tsXLarge: "Très grand",
 
     // ============ الفوتر ============
     footerTitle: "Guide de survie ENSTP",
@@ -339,7 +344,6 @@ const LANG_DATA = {
   // العربية
   // ============================================
   ar: {
-    // ============ عام ============
     appName: "دليل البقاء ENSTP",
     tagline: "يومك الأول، في جيبك.",
     back: "→ رجوع",
@@ -356,6 +360,7 @@ const LANG_DATA = {
     loading: "جارٍ التحميل…",
     download: "تحميل",
     open: "فتح",
+    qrScan: "امسح رمز QR",
 
     labelHours: "المواعيد",
     labelBudget: "الميزانية",
@@ -363,6 +368,8 @@ const LANG_DATA = {
     labelSteps: "الخطوات",
     labelContact: "الاتصال",
     labelServices: "الخدمات المتوفرة",
+    mapPlaces: "الأماكن",
+    qrIntro: "امسح رموز QR هذه للوصول مباشرة إلى الأقسام.",
 
     welcomeTitle: "مرحباً",
     welcomeSubtitle: "كل ما تحتاجه ليومك الأول في المدرسة.",
@@ -620,9 +627,8 @@ const LANG_DATA = {
     aboutWarning: "تنبيه",
     aboutWarningDesc: "المعلومات إرشادية. تحقق دائماً من الإدارة.",
     aboutUpdate: "آخر تحديث",
-    aboutUpdateDesc: "أكتوبر 2026 — الإصدار 2.5",
+    aboutUpdateDesc: "أكتوبر 2026 — الإصدار 3.0",
 
-    qrIntro: "امسح رموز QR هذه للوصول مباشرة إلى الأقسام.",
     qrPrint: "🖨️ طباعة",
     qrDownload: "📥 تحميل",
     qrShare: "📤 مشاركة",
@@ -636,7 +642,10 @@ const LANG_DATA = {
     qrNotFound: "رمز QR غير متوفر",
 
     tspTitle: "حجم النص",
-    tsSmall: "صغير", tsNormal: "عادي", tsLarge: "كبير", tsXLarge: "كبير جداً",
+    tsSmall: "صغير",
+    tsNormal: "عادي",
+    tsLarge: "كبير",
+    tsXLarge: "كبير جداً",
 
     footerTitle: "دليل البقاء ENSTP",
     footerSub: "مشروع طلاب السنة الأولى مهندس، المجموعة 2 — المنشآت القاعدية.",
@@ -664,6 +673,7 @@ const LANG_DATA = {
     loading: "Loading…",
     download: "Download",
     open: "Open",
+    qrScan: "Scan this QR code",
 
     labelHours: "Hours",
     labelBudget: "Budget",
@@ -671,6 +681,8 @@ const LANG_DATA = {
     labelSteps: "Steps",
     labelContact: "Contact",
     labelServices: "Available services",
+    mapPlaces: "Places",
+    qrIntro: "Scan these QR codes to access sections directly.",
 
     welcomeTitle: "Welcome",
     welcomeSubtitle: "Everything you need for your first day at ENSTP.",
@@ -928,9 +940,8 @@ const LANG_DATA = {
     aboutWarning: "Warning",
     aboutWarningDesc: "Information is indicative. Always verify with administration.",
     aboutUpdate: "Last update",
-    aboutUpdateDesc: "October 2026 — Version 2.5",
+    aboutUpdateDesc: "October 2026 — Version 3.0",
 
-    qrIntro: "Scan these QR codes to access sections directly.",
     qrPrint: "🖨️ Print",
     qrDownload: "📥 Download",
     qrShare: "📤 Share",
@@ -944,7 +955,10 @@ const LANG_DATA = {
     qrNotFound: "QR Code not available",
 
     tspTitle: "Text size",
-    tsSmall: "Small", tsNormal: "Normal", tsLarge: "Large", tsXLarge: "X-Large",
+    tsSmall: "Small",
+    tsNormal: "Normal",
+    tsLarge: "Large",
+    tsXLarge: "X-Large",
 
     footerTitle: "ENSTP Survival Guide",
     footerSub: "A project by 1st year Engineering students, Group 2 — Infrastructures de Base.",
