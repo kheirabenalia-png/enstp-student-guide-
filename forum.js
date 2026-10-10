@@ -24,7 +24,15 @@ function renderForumSection() {
   const lang = (typeof LANG !== 'undefined') ? LANG : (localStorage.getItem('lang') || 'fr');
   const t = (key) => (window.LANG_DATA && window.LANG_DATA[lang] && window.LANG_DATA[lang][key]) || key;
   
-  const currentUser = (typeof auth !== 'undefined' && auth.currentUser) ? auth.currentUser : null;
+  // تحقق إن كان المستخدم مسجلاً
+  let currentUser = null;
+  try {
+    if (typeof auth !== 'undefined' && auth && auth.currentUser) {
+      currentUser = auth.currentUser;
+    }
+  } catch(e) {
+    currentUser = null;
+  }
   
   let html = '';
   html += '<button class="back" onclick="renderHome()">' + t('back') + '</button>';
@@ -52,7 +60,7 @@ function renderForumSection() {
   
   if (currentUser) {
     html += '<button onclick="window.location.href=\'forum.html\'" style="padding:16px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border:0;border-radius:14px;font-size:1.1rem;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 8px 20px rgba(194,65,12,.4)">';
-    html += '💬 ' + t('forumEnter') + ' (' + (currentUser.displayName || currentUser.email) + ')';
+    html += '💬 ' + t('forumEnter') + ' — ' + (currentUser.displayName || currentUser.email);
     html += '</button>';
   } else {
     html += '<button onclick="window.location.href=\'register.html\'" style="padding:16px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border:0;border-radius:14px;font-size:1.1rem;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 8px 20px rgba(194,65,12,.4)">';
@@ -64,8 +72,8 @@ function renderForumSection() {
   
   html += '</div>';
   
-  // معلومات
-  html += '<div style="margin-top:24px;padding:14px;background:var(--acc-soft);border-radius:12px;border-left:4px solid var(--acc)">';
+  // معلومات مهمة
+  html += '<div style="margin-top:24px;padding:14px;background:var(--acc-soft);border-radius:12px;border-' + (lang === 'ar' ? 'right' : 'left') + ':4px solid var(--acc)">';
   html += '<p style="margin:0;font-size:.85rem;color:var(--ink);line-height:1.6"><b>⚠️ ' + t('forumNote') + ':</b> ' + t('forumNoteText') + '</p>';
   html += '</div>';
   
