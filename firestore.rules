@@ -1,0 +1,72 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ============================================
+    // دالة مساعدة: هل المستخدم مسجّل؟
+    // ============================================
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    // ============================================
+    // دالة مساعدة: هل البريد جامعي؟
+    // ============================================
+    function isEnstpEmail() {
+      return isSignedIn() && 
+             request.auth.token.email.matches('.*@enstp\\.edu\\.dz$');
+    }
+    
+    // ============================================
+    // دالة مساعدة: هل المستخدم نفسه؟
+    // ============================================
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+    
+    // ============================================
+    // مجموعة المستخدمين
+    // ============================================
+    match /users/{userId} {
+      // القراءة: أي مستخدم مسجّل
+      allow read: if isEnstpEmail();
+      
+      // الإنشاء: المستخدم ينشئ ملفه الشخصي
+      allow create: if isOwner(userId) && isEnstpEmail();
+      
+      // التحديث: صاحب الملف فقط
+      allow update: if isOwner(userId) && isEnstpEmail();
+      
+      // الحذف: صاحب الملف فقط
+      allow delete: if isOwner(userId);
+    }
+    
+    // ============================================
+    // مجموعة الدردشات (حسب الولاية)
+    // ============================================
+    match /chats/{wilaya}/messages/{messageId} {
+      // القراءة: المستخدمون من نفس الولاية
+      allow read: if isEnstpEmail() && 
+                     get(/databases/$(database)/documents/users/$(request.auth.uid)).data.wilaya == wilaya;
+      
+      // الإنشاء: المستخدمون من نفس الولاية
+      allow create: if isEnstpEmail() && 
+                       get(/databases/$(database)/documents/users/$(request.auth.uid)).data.wilaya == wilaya &&
+                       request.resource.data.from == request.auth.uid &&
+                       request.resource.data.text is string &&
+                       request.resource.data.text.size() > 0;
+      
+      // الحذف: المشرفون فقط
+      allow delete: if isEnstpEmail() && 
+                       get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'moderator';
+    }
+    
+    // ============================================
+    // مجموعة الرموز (للمشرفين)
+    // ============================================
+    match /admin/{document=**} {
+      allow read, write: if isSignedIn() && 
+                            get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+  }
+}
