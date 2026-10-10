@@ -4,340 +4,375 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Forum — ENSTP</title>
-<link rel="stylesheet" href="style.css">
 <style>
-body {
-  min-height: 100vh;
-  background: var(--bg, #f6f4ef);
-  color: var(--ink, #1d2433);
-  padding-bottom: 40px;
-  font: 1rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+:root{
+  --acc:#c2410c;--acc2:#9a3412;--acc-soft:#fde8dc;
+  --bg:#f6f4ef;--bg-2:#fff;--card:#fff;
+  --ink:#1d2433;--mut:#667085;--line:#e5e1d8;
 }
-.forum-header {
-  background: linear-gradient(135deg, #c2410c, #9a3412);
-  color: #fff;
-  padding: 16px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,.15);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.forum-header h1 {
-  margin: 0;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.forum-header .user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: .85rem;
-}
-.forum-header .user-info .avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #fff;
-  color: #c2410c;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1rem;
-  flex-shrink: 0;
-}
-.forum-header button {
-  background: rgba(255,255,255,.2);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.3);
-  padding: 7px 14px;
-  border-radius: 20px;
-  font-size: .8rem;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  transition: all .2s;
-}
-.forum-header button:hover { background: rgba(255,255,255,.3); }
-
-.forum-container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font:1rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--ink);
+  padding-bottom:40px;
 }
 
-.welcome-card {
-  background: #fff;
-  border-radius: 20px;
-  padding: 22px;
-  margin-bottom: 18px;
-  box-shadow: 0 4px 20px rgba(0,0,0,.06);
-  border: 1px solid #e5e1d8;
+/* ============================================
+   HEADER
+   ============================================ */
+.forum-header{
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:#fff;
+  padding:14px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.15);
+  position:sticky;
+  top:0;
+  z-index:100;
+  flex-wrap:wrap;
+  gap:10px;
 }
-.welcome-card h2 {
-  margin: 0 0 8px;
-  color: #c2410c;
-  font-size: 1.2rem;
+.forum-header h1{
+  margin:0;
+  font-size:1.15rem;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:800;
 }
-.welcome-card p {
-  margin: 0;
-  color: #667085;
-  line-height: 1.6;
-  font-size: .95rem;
+.forum-header .user-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:.85rem;
+}
+.forum-header .user-info .avatar{
+  width:36px;height:36px;
+  border-radius:50%;
+  background:#fff;
+  color:var(--acc);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:1rem;
+  flex-shrink:0;
+}
+.forum-header button{
+  background:rgba(255,255,255,.2);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.3);
+  padding:7px 14px;
+  border-radius:20px;
+  font-size:.8rem;
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:600;
+  transition:all .2s;
+}
+.forum-header button:hover{background:rgba(255,255,255,.3)}
+
+/* ============================================
+   CONTAINER
+   ============================================ */
+.forum-container{
+  max-width:900px;
+  margin:0 auto;
+  padding:20px;
 }
 
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 18px;
+.welcome-card{
+  background:var(--card);
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 4px 20px rgba(0,0,0,.06);
+  border:1px solid var(--line);
 }
-.stat-box {
-  background: #fff;
-  padding: 14px 10px;
-  border-radius: 16px;
-  text-align: center;
-  border: 1px solid #e5e1d8;
-  box-shadow: 0 2px 10px rgba(0,0,0,.04);
+.welcome-card h2{
+  margin:0 0 8px;
+  color:var(--acc);
+  font-size:1.15rem;
+  font-weight:800;
 }
-.stat-box b {
-  display: block;
-  font-size: 1.6rem;
-  color: #c2410c;
-  font-weight: 900;
-}
-.stat-box span {
-  font-size: .78rem;
-  color: #667085;
+.welcome-card p{
+  margin:0;
+  color:var(--mut);
+  line-height:1.6;
+  font-size:.95rem;
 }
 
-.search-bar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 18px;
+/* ============================================
+   STATS
+   ============================================ */
+.stats-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-bottom:18px;
 }
-.search-bar input {
-  flex: 1;
-  padding: 12px 16px;
-  border: 1px solid #e5e1d8;
-  border-radius: 14px;
-  font-size: 1rem;
-  background: #fff;
-  outline: none;
-  font-family: inherit;
+.stat-box{
+  background:var(--card);
+  padding:14px 10px;
+  border-radius:16px;
+  text-align:center;
+  border:1px solid var(--line);
+  box-shadow:0 2px 10px rgba(0,0,0,.04);
 }
-.search-bar input:focus {
-  border-color: #c2410c;
-  box-shadow: 0 0 0 3px rgba(194,65,12,.1);
+.stat-box b{
+  display:block;
+  font-size:1.6rem;
+  color:var(--acc);
+  font-weight:900;
 }
-
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 18px;
-  background: #fff;
-  padding: 6px;
-  border-radius: 16px;
-  border: 1px solid #e5e1d8;
-}
-.tab-btn {
-  flex: 1;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: transparent;
-  border: 0;
-  color: #667085;
-  font-weight: 600;
-  font-size: .9rem;
-  cursor: pointer;
-  font-family: inherit;
-  transition: all .25s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-.tab-btn:hover { background: #fde8dc; color: #c2410c; }
-.tab-btn.active {
-  background: #c2410c;
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(194,65,12,.3);
+.stat-box span{
+  font-size:.78rem;
+  color:var(--mut);
 }
 
-.section-title {
-  color: #c2410c;
-  font-size: 1.05rem;
-  font-weight: 800;
-  margin: 20px 0 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* ============================================
+   SEARCH
+   ============================================ */
+.search-bar{
+  margin-bottom:18px;
+}
+.search-bar input{
+  width:100%;
+  padding:12px 16px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  font-size:1rem;
+  background:var(--card);
+  color:var(--ink);
+  outline:none;
+  font-family:inherit;
+  transition:all .2s;
+}
+.search-bar input:focus{
+  border-color:var(--acc);
+  box-shadow:0 0 0 3px rgba(194,65,12,.1);
 }
 
-.users-list, .rooms-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 12px;
+/* ============================================
+   TABS
+   ============================================ */
+.tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:18px;
+  background:var(--card);
+  padding:6px;
+  border-radius:16px;
+  border:1px solid var(--line);
+}
+.tab-btn{
+  flex:1;
+  padding:12px 14px;
+  border-radius:12px;
+  background:transparent;
+  border:0;
+  color:var(--mut);
+  font-weight:600;
+  font-size:.9rem;
+  cursor:pointer;
+  font-family:inherit;
+  transition:all .25s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.tab-btn:hover{background:var(--acc-soft);color:var(--acc)}
+.tab-btn.active{
+  background:var(--acc);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(194,65,12,.3);
 }
 
-.user-card {
-  background: #fff;
-  border: 1px solid #e5e1d8;
-  border-radius: 16px;
-  padding: 14px;
-  transition: all .25s;
-}
-.user-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0,0,0,.08);
-  border-color: #c2410c;
-}
-.user-card .u-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-.user-card .u-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #c2410c, #9a3412);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-.user-card .u-info { min-width: 0; flex: 1; }
-.user-card .u-name {
-  font-weight: 700;
-  color: #1d2433;
-  font-size: .95rem;
-  margin-bottom: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.user-card .u-wilaya {
-  font-size: .8rem;
-  color: #667085;
-}
-.user-card .u-details {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.u-badge {
-  background: #fde8dc;
-  color: #c2410c;
-  padding: 3px 8px;
-  border-radius: 10px;
-  font-size: .7rem;
-  font-weight: 600;
+/* ============================================
+   SECTION TITLE
+   ============================================ */
+.section-title{
+  color:var(--acc);
+  font-size:1.05rem;
+  font-weight:800;
+  margin:20px 0 12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-.room-card {
-  background: #fff;
-  border: 2px solid #e5e1d8;
-  border-radius: 16px;
-  padding: 14px;
-  transition: all .25s;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-family: inherit;
-  text-align: left;
-  color: inherit;
-  width: 100%;
+/* ============================================
+   ROOMS
+   ============================================ */
+.rooms-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:12px;
 }
-.room-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0,0,0,.08);
-  border-color: #c2410c;
+.room-card{
+  background:var(--card);
+  border:2px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  transition:all .25s;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-family:inherit;
+  text-align:left;
+  color:inherit;
+  width:100%;
 }
-.room-card.mine {
-  border-color: #10b981;
-  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+.room-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+  border-color:var(--acc);
 }
-.room-card.mine:hover { border-color: #059669; }
-.room-card.global {
-  border-color: #2563eb;
-  background: linear-gradient(135deg, #eff6ff, #dbeafe);
-  grid-column: 1 / -1;
+.room-card.mine{
+  border-color:#10b981;
+  background:linear-gradient(135deg,#f0fdf4,#dcfce7);
 }
-.room-card.global:hover { border-color: #1d4ed8; }
-.room-card .room-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #c2410c, #9a3412);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  flex-shrink: 0;
+.room-card.mine:hover{border-color:#059669}
+.room-card.global{
+  border-color:#2563eb;
+  background:linear-gradient(135deg,#eff6ff,#dbeafe);
+  grid-column:1/-1;
 }
-.room-card.mine .room-icon {
-  background: linear-gradient(135deg, #10b981, #059669);
+.room-card.global:hover{border-color:#1d4ed8}
+.room-card .room-icon{
+  width:44px;height:44px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.3rem;
+  flex-shrink:0;
 }
-.room-card.global .room-icon {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+.room-card.mine .room-icon{background:linear-gradient(135deg,#10b981,#059669)}
+.room-card.global .room-icon{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
+.room-card .room-info{flex:1;min-width:0}
+.room-card .room-name{
+  font-weight:700;
+  color:var(--ink);
+  font-size:1rem;
+  margin-bottom:3px;
 }
-.room-card .room-info { flex: 1; min-width: 0; }
-.room-card .room-name {
-  font-weight: 700;
-  color: #1d2433;
-  font-size: 1rem;
-  margin-bottom: 3px;
-}
-.room-card .room-count {
-  font-size: .8rem;
-  color: #667085;
+.room-card .room-count{
+  font-size:.8rem;
+  color:var(--mut);
 }
 
-.loading {
-  text-align: center;
-  padding: 40px;
-  color: #667085;
+/* ============================================
+   USERS
+   ============================================ */
+.users-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:12px;
 }
-.loading .spinner {
-  display: inline-block;
-  width: 30px; height: 30px;
-  border: 3px solid #fde8dc;
-  border-top-color: #c2410c;
-  border-radius: 50%;
-  animation: spin .8s linear infinite;
-  margin-bottom: 10px;
+.user-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  transition:all .25s;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+.user-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+  border-color:var(--acc);
+}
+.user-card .u-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.user-card .u-avatar{
+  width:44px;height:44px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:1.1rem;
+  flex-shrink:0;
+}
+.user-card .u-info{min-width:0;flex:1}
+.user-card .u-name{
+  font-weight:700;
+  color:var(--ink);
+  font-size:.95rem;
+  margin-bottom:2px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.user-card .u-wilaya{
+  font-size:.8rem;
+  color:var(--mut);
+}
+.user-card .u-details{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.u-badge{
+  background:var(--acc-soft);
+  color:var(--acc);
+  padding:3px 8px;
+  border-radius:10px;
+  font-size:.7rem;
+  font-weight:600;
+}
 
-.empty {
-  text-align: center;
-  padding: 40px 20px;
-  color: #94a3b8;
-  font-size: .9rem;
+/* ============================================
+   LOADING / EMPTY
+   ============================================ */
+.loading{
+  text-align:center;
+  padding:40px;
+  color:var(--mut);
 }
-.empty b { font-size: 2.5rem; display: block; margin-bottom: 8px; }
+.loading .spinner{
+  display:inline-block;
+  width:30px;height:30px;
+  border:3px solid var(--acc-soft);
+  border-top-color:var(--acc);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin-bottom:10px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-@media (max-width: 600px) {
-  .stats-row { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .stat-box b { font-size: 1.3rem; }
-  .stat-box span { font-size: .7rem; }
-  .users-list, .rooms-list { grid-template-columns: 1fr; }
-  .forum-header { flex-direction: column; text-align: center; }
-  .forum-header h1 { font-size: 1.05rem; }
+.empty{
+  text-align:center;
+  padding:40px 20px;
+  color:#94a3b8;
+  font-size:.9rem;
+}
+.empty b{font-size:2.5rem;display:block;margin-bottom:8px}
+
+/* ============================================
+   MOBILE
+   ============================================ */
+@media (max-width:600px){
+  .stats-row{grid-template-columns:repeat(3,1fr);gap:8px}
+  .stat-box b{font-size:1.3rem}
+  .stat-box span{font-size:.7rem}
+  .users-list,.rooms-list{grid-template-columns:1fr}
+  .forum-header{flex-direction:column;text-align:center}
+  .forum-header h1{font-size:1rem}
 }
 </style>
 </head>
@@ -403,7 +438,7 @@ import {
   auth, db, WILAYAS,
   onAuthStateChanged,
   signOut,
-  collection, query, where, getDocs, getDoc, doc, orderBy, limit, onSnapshot
+  collection, getDocs, getDoc, doc
 } from './firebase-config.js';
 
 let currentUser = null;
@@ -494,7 +529,6 @@ async function loadRooms() {
       if (myWilaya) myWilaya.count++;
     }
     
-    // رتّب: ولايتي أولاً، ثم الأكثر سكاناً
     allRooms.sort((a, b) => {
       if (a.wilaya === currentUserData.wilaya) return -1;
       if (b.wilaya === currentUserData.wilaya) return 1;
@@ -531,7 +565,7 @@ function renderRooms(content) {
   
   let html = '';
   
-  // 🆕 الغرفة العامة أولاً
+  // 🌍 الغرفة العامة
   if (!search || 'général générale general عامة'.toLowerCase().includes(search)) {
     const totalUsers = allUsers.length + 1;
     html += '<button class="room-card global" onclick="openRoom(\'__general__\')">';
@@ -543,7 +577,7 @@ function renderRooms(content) {
     html += '</button>';
   }
   
-  // غرف الولايات
+  // 📍 غرف الولايات
   if (rooms.length > 0) {
     html += '<h3 class="section-title">📍 Salles par wilaya (69)</h3>';
     html += '<div class="rooms-list">';
