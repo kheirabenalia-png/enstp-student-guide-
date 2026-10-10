@@ -17,9 +17,231 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="stylesheet" href="style.css">
+
+<style>
+/* ============================================
+   Loading Spinner
+   ============================================ */
+.loading-screen{
+  position:fixed;inset:0;
+  background:var(--bg);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  z-index:9999;
+  transition:opacity .4s ease, visibility .4s ease;
+}
+.loading-screen.hide{
+  opacity:0;visibility:hidden;
+}
+.loading-screen .logo-spin{
+  width:80px;height:80px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;
+  color:#fff;
+  margin-bottom:20px;
+  animation:pulse 1.5s ease-in-out infinite;
+  box-shadow:0 10px 30px rgba(194,65,12,.4);
+}
+.loading-screen .spin-ring{
+  width:40px;height:40px;
+  border:4px solid var(--acc-soft);
+  border-top-color:var(--acc);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin-bottom:12px;
+}
+.loading-screen p{
+  color:var(--mut);
+  font-size:.9rem;
+  font-weight:600;
+}
+
+/* ============================================
+   Page Transition
+   ============================================ */
+#app{
+  animation:fadeIn .5s ease-out;
+}
+#app.section-change{
+  animation:fadeInUp .4s ease-out;
+}
+
+/* ============================================
+   Progress Bar (top)
+   ============================================ */
+.progress-bar{
+  position:fixed;top:0;left:0;
+  height:3px;
+  background:linear-gradient(90deg,var(--acc),var(--acc2));
+  z-index:9999;
+  width:0%;
+  transition:width .3s ease;
+  box-shadow:0 0 10px var(--acc);
+}
+.progress-bar.active{
+  animation:progressLoad 1s ease-out forwards;
+}
+@keyframes progressLoad{
+  0%{width:0%}
+  50%{width:70%}
+  100%{width:100%;opacity:0}
+}
+
+/* ============================================
+   Card Entrance Animations
+   ============================================ */
+.card-3d{
+  animation:fadeInUp .5s cubic-bezier(.2,.8,.2,1) both;
+}
+.items-list .card-3d:nth-child(1){animation-delay:.05s}
+.items-list .card-3d:nth-child(2){animation-delay:.1s}
+.items-list .card-3d:nth-child(3){animation-delay:.15s}
+.items-list .card-3d:nth-child(4){animation-delay:.2s}
+.items-list .card-3d:nth-child(5){animation-delay:.25s}
+.items-list .card-3d:nth-child(6){animation-delay:.3s}
+.items-list .card-3d:nth-child(7){animation-delay:.35s}
+.items-list .card-3d:nth-child(8){animation-delay:.4s}
+.items-list .card-3d:nth-child(9){animation-delay:.45s}
+.items-list .card-3d:nth-child(10){animation-delay:.5s}
+
+/* ============================================
+   Scroll Animations
+   ============================================ */
+.scroll-anim{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.scroll-anim.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ============================================
+   Modal
+   ============================================ */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.8);
+  display:flex;align-items:center;justify-content:center;
+  z-index:9999;
+  padding:20px;
+  backdrop-filter:blur(6px);
+  animation:fadeIn .3s ease-out;
+}
+.modal-box{
+  background:var(--card);
+  color:var(--ink);
+  padding:28px;
+  border-radius:24px;
+  text-align:center;
+  max-width:400px;
+  width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  animation:bounceIn .4s cubic-bezier(.2,.8,.2,1);
+}
+
+/* ============================================
+   Floating Button (Back to Top)
+   ============================================ */
+.back-to-top{
+  position:fixed;
+  bottom:20px;left:20px;
+  width:48px;height:48px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:#fff;
+  border:0;
+  font-size:1.3rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 8px 20px rgba(194,65,12,.4);
+  transition:all .3s;
+  opacity:0;
+  visibility:hidden;
+  z-index:998;
+  font-family:inherit;
+}
+.back-to-top.show{
+  opacity:1;
+  visibility:visible;
+  animation:slideInBottom .4s ease-out;
+}
+.back-to-top:hover{
+  transform:translateY(-5px) scale(1.1);
+  box-shadow:0 12px 30px rgba(194,65,12,.6);
+}
+html[dir="rtl"] .back-to-top{left:auto;right:20px}
+
+/* ============================================
+   Feedback Button Floating
+   ============================================ */
+.feedback-float{
+  position:fixed;
+  bottom:20px;right:20px;
+  padding:14px 22px;
+  border-radius:50px;
+  background:linear-gradient(135deg,#c2410c,#9a3412);
+  color:#fff;
+  border:0;
+  font-size:.95rem;
+  font-weight:700;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  box-shadow:0 8px 24px rgba(194,65,12,.4);
+  transition:all .3s;
+  z-index:998;
+  font-family:inherit;
+  text-decoration:none;
+}
+.feedback-float:hover{
+  transform:translateY(-4px) scale(1.05);
+  box-shadow:0 12px 32px rgba(194,65,12,.6);
+}
+.feedback-float .fb-icon{
+  font-size:1.2rem;
+  animation:float 2s ease-in-out infinite;
+}
+html[dir="rtl"] .feedback-float{right:auto;left:20px}
+
+@media(max-width:600px){
+  .feedback-float{
+    padding:12px 18px;
+    font-size:.85rem;
+    bottom:80px;
+  }
+  .back-to-top{
+    bottom:80px;
+    width:44px;height:44px;
+  }
+}
+</style>
 </head>
 <body>
 
+<!-- ============================================ -->
+<!-- Progress Bar -->
+<!-- ============================================ -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ============================================ -->
+<!-- Loading Screen -->
+<!-- ============================================ -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="logo-spin">🎓</div>
+  <div class="spin-ring"></div>
+  <p>Chargement du guide...</p>
+</div>
+
+<!-- ============================================ -->
+<!-- شريط بدون إنترنت -->
+<!-- ============================================ -->
 <div class="offline-banner" id="offline-banner">📴 Mode hors ligne</div>
 
 <!-- ============================================ -->
@@ -84,20 +306,31 @@
 </div>
 
 <!-- الرأس -->
-<header style="background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;padding:18px 16px 14px;position:relative">
-  <a href="index.html" id="home-link" style="position:absolute;top:18px;right:16px;color:#fff;text-decoration:none;font-size:.85rem;opacity:.9;font-weight:600">🏠 <span id="home-text">Accueil</span></a>
+<header style="background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;padding:18px 16px 14px;position:relative;animation:fadeInDown .5s ease-out">
+  <a href="index.html" id="home-link" style="position:absolute;top:18px;right:16px;color:#fff;text-decoration:none;font-size:.85rem;opacity:.9;font-weight:600;transition:all .3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠 <span id="home-text">Accueil</span></a>
   <h1 id="siteName" style="margin:0;font-size:1.35rem;font-weight:800">Guide de survie ENSTP</h1>
   <p id="tagline" style="margin:4px 0 0;opacity:.9;font-size:.9rem">Ton premier jour, dans ta poche.</p>
 </header>
 
 <!-- مربع البحث -->
-<div style="padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line)">
+<div style="padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line);animation:fadeInDown .5s ease-out .1s both">
   <input id="q" placeholder="🔎 Chercher…" oninput="doSearch(this.value)"
-         style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-size:1rem;outline:none;font-family:inherit">
+         style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-size:1rem;outline:none;font-family:inherit;transition:all .3s"
+         onfocus="this.style.borderColor='var(--acc)';this.style.boxShadow='0 0 0 3px rgba(194,65,12,.1)'"
+         onblur="this.style.borderColor='var(--line)';this.style.boxShadow='none'">
 </div>
 
 <!-- المحتوى الرئيسي -->
 <main id="app" style="max-width:900px;margin:0 auto;padding:14px"></main>
+
+<!-- Feedback Floating Button -->
+<a href="feedback.html" class="feedback-float" id="feedbackFloat">
+  <span class="fb-icon">💬</span>
+  <span>Votre avis</span>
+</a>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="Haut de page">↑</button>
 
 <!-- ============================================ -->
 <!-- Firebase SDK -->
@@ -123,6 +356,7 @@ try {
   
   onAuthStateChanged(auth, (user) => {
     window.__currentFirebaseUser = user;
+    console.log(user ? '👤 Connecté : ' + (user.displayName || user.email) : '👤 Non connecté');
   });
 } catch(e) {
   console.warn('⚠️ Firebase non initialisé:', e.message);
@@ -161,6 +395,32 @@ try {
 let LANG = localStorage.getItem('lang') || 'fr';
 let CURRENT_SECTION = null;
 let CURRENT_CATEGORY = null;
+
+// ============================================
+// Loading Screen
+// ============================================
+function hideLoading() {
+  const el = document.getElementById('loadingScreen');
+  if (el) {
+    setTimeout(() => {
+      el.classList.add('hide');
+      setTimeout(() => el.remove(), 500);
+    }, 400);
+  }
+}
+
+// ============================================
+// Progress Bar
+// ============================================
+function showProgress() {
+  const bar = document.getElementById('progressBar');
+  if (!bar) return;
+  bar.classList.add('active');
+  setTimeout(() => {
+    bar.classList.remove('active');
+    bar.style.width = '0%';
+  }, 1200);
+}
 
 // ============================================
 // تبديل اللغة
@@ -220,16 +480,18 @@ function renderHome() {
   CURRENT_CATEGORY = null;
   
   const app = document.getElementById('app');
+  app.classList.add('section-change');
+  setTimeout(() => app.classList.remove('section-change'), 500);
   
   if (typeof window.SECTIONS === 'undefined' || !window.SECTIONS.length) {
-    app.innerHTML = '<div style="text-align:center;padding:40px;color:var(--mut)"><b style="font-size:3rem">⏳</b><br>Chargement…</div>';
+    app.innerHTML = '<div style="text-align:center;padding:40px;color:var(--mut)"><b style="font-size:3rem;display:block;margin-bottom:10px">⏳</b>Chargement…</div>';
     return;
   }
   
   let html = '<div class="tile-grid">';
-  window.SECTIONS.forEach(s => {
+  window.SECTIONS.forEach((s, i) => {
     const title = (window.t ? window.t(s.titleKey, LANG) : s.titleKey);
-    html += '<button class="tile-3d" onclick="openSection(\'' + s.id + '\')">';
+    html += '<button class="tile-3d ripple" onclick="openSection(\'' + s.id + '\')">';
     html += '<span class="tile-icon">' + s.icon + '</span>';
     html += '<span class="tile-label">' + title + '</span>';
     html += '</button>';
@@ -238,21 +500,28 @@ function renderHome() {
   
   app.innerHTML = html;
   window.scrollTo(0, 0);
+  setupScrollAnimations();
 }
 
 // ============================================
 // فتح قسم
 // ============================================
 function openSection(id) {
+  showProgress();
   CURRENT_SECTION = id;
   CURRENT_CATEGORY = null;
   const s = window.SECTIONS.find(x => x.id === id);
   if (!s) return;
   
+  const app = document.getElementById('app');
+  app.classList.add('section-change');
+  setTimeout(() => app.classList.remove('section-change'), 500);
+  
   // أقسام مخصصة
   if (s.type === 'custom' && typeof s.render === 'function') {
     document.getElementById('app').innerHTML = s.render();
     window.scrollTo(0, 0);
+    setupScrollAnimations();
     return;
   }
   
@@ -290,7 +559,7 @@ function renderCategoriesList(sectionId) {
   
   s.categories.forEach(c => {
     const ct = c.titleKey ? window.t(c.titleKey, LANG) : (c.title || '');
-    html += '<button class="tile-3d" onclick="renderCategory(\'' + s.id + '\',\'' + c.id + '\')">';
+    html += '<button class="tile-3d ripple" onclick="renderCategory(\'' + s.id + '\',\'' + c.id + '\')">';
     html += '<span class="tile-icon">' + (c.icon || '📁') + '</span>';
     html += '<span class="tile-label">' + ct + '</span>';
     html += '</button>';
@@ -299,6 +568,7 @@ function renderCategoriesList(sectionId) {
   html += '</div>';
   app.innerHTML = html;
   window.scrollTo(0, 0);
+  setupScrollAnimations();
 }
 
 function renderCategory(sectionId, categoryId) {
@@ -309,6 +579,10 @@ function renderCategory(sectionId, categoryId) {
   
   CURRENT_SECTION = sectionId;
   CURRENT_CATEGORY = categoryId;
+  
+  const app = document.getElementById('app');
+  app.classList.add('section-change');
+  setTimeout(() => app.classList.remove('section-change'), 500);
   
   if (c.type === 'map' && c.buildings) { renderMap(s, c); return; }
   if (c.items) { renderItems(s, c.items, c); return; }
@@ -332,16 +606,18 @@ function renderItems(section, items, category) {
     html += '<p style="color:var(--mut);margin-bottom:16px">' + window.t(section.introKey, LANG) + '</p>';
   }
   
+  html += '<div class="items-list">';
+  
   items.forEach((item, idx) => {
     const title = (typeof item.title === 'object') ? (item.title[LANG] || item.title.fr) : window.t(item.titleKey, LANG);
     const desc = item.desc 
       ? ((typeof item.desc === 'object') ? (item.desc[LANG] || item.desc.fr) : item.desc)
       : (item.descKey ? window.t(item.descKey, LANG) : '');
     
-    html += '<div class="card-3d" style="margin-bottom:14px">';
+    html += '<div class="card-3d scroll-anim" style="margin-bottom:14px">';
     html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">';
     html += '<h3 style="margin:0;color:var(--acc);font-size:1.1rem">' + (item.icon || '') + ' ' + title + '</h3>';
-    html += '<button onclick="showQR(\'' + section.id + '\',' + idx + ',\'' + (category ? category.id : '') + '\')" style="background:var(--acc-soft);border:0;color:var(--acc);padding:6px 10px;border-radius:10px;cursor:pointer;font-size:1rem">📱</button>';
+    html += '<button onclick="showQR(\'' + section.id + '\',' + idx + ',\'' + (category ? category.id : '') + '\')" style="background:var(--acc-soft);border:0;color:var(--acc);padding:6px 10px;border-radius:10px;cursor:pointer;font-size:1rem;transition:all .3s" onmouseover="this.style.transform=\'scale(1.15) rotate(10deg)\'" onmouseout="this.style.transform=\'scale(1)\'">📱</button>';
     html += '</div>';
     
     if (item.img) html += '<img src="' + item.img + '" style="width:100%;border-radius:10px;margin:10px 0" loading="lazy" alt="">';
@@ -372,19 +648,22 @@ function renderItems(section, items, category) {
     }
     
     if (item.link) {
-      html += '<a href="' + item.link + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:10px 18px;background:var(--acc);color:#fff;border-radius:20px;text-decoration:none;font-size:.9rem;font-weight:600">📥 ' + window.t('download', LANG) + '</a>';
+      html += '<a href="' + item.link + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:10px 18px;background:var(--acc);color:#fff;border-radius:20px;text-decoration:none;font-size:.9rem;font-weight:600;transition:all .3s" onmouseover="this.style.transform=\'translateY(-3px)\';this.style.boxShadow=\'0 8px 20px rgba(194,65,12,.4)\'" onmouseout="this.style.transform=\'none\';this.style.boxShadow=\'none\'">📥 ' + window.t('download', LANG) + '</a>';
     }
     
     if (item.map) {
       const mapUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(item.map);
-      html += '<a href="' + mapUrl + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:8px 14px;background:var(--acc);color:#fff;border-radius:20px;text-decoration:none;font-size:.9rem">' + window.t('viewMap', LANG) + '</a>';
+      html += '<a href="' + mapUrl + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:8px 14px;background:var(--acc);color:#fff;border-radius:20px;text-decoration:none;font-size:.9rem;transition:all .3s" onmouseover="this.style.transform=\'translateY(-3px)\'" onmouseout="this.style.transform=\'none\'">' + window.t('viewMap', LANG) + '</a>';
     }
     
     html += '</div>';
   });
   
+  html += '</div>';
+  
   app.innerHTML = html;
   window.scrollTo(0, 0);
+  setupScrollAnimations();
 }
 
 // ============================================
@@ -399,6 +678,7 @@ function renderSection(id) {
   if (s.type === 'custom' && typeof s.render === 'function') {
     document.getElementById('app').innerHTML = s.render();
     window.scrollTo(0, 0);
+    setupScrollAnimations();
     return;
   }
   
@@ -429,19 +709,20 @@ function renderMap(section, category) {
   const desc = (category && category.descKey) ? window.t(category.descKey, LANG) : window.t(section.introKey, LANG);
   html += '<p style="color:var(--mut);margin-bottom:16px">' + desc + '</p>';
   
-  html += '<div style="position:relative;width:100%;aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:12px 0">';
+  html += '<div style="position:relative;width:100%;aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:12px 0;animation:scaleIn .6s ease-out">';
   html += '<div style="position:relative;width:100%;height:100%;background:linear-gradient(135deg,var(--acc-soft),var(--card))">';
   
-  buildings.forEach(b => {
+  buildings.forEach((b, i) => {
     const name = b.nameKey ? window.t(b.nameKey, LANG) : (b.name || '');
-    html += '<button onclick="showPlace(\'' + section.id + '\',\'' + b.id + '\',\'' + (category ? category.id : '') + '\')" style="position:absolute;left:' + b.x + '%;top:' + b.y + '%;transform:translate(-50%,-50%);background:var(--card);border:2px solid var(--acc);border-radius:50%;width:40px;height:40px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.15);padding:0" title="' + name + '">' + b.icon + '</button>';
+    const delay = i * 0.05;
+    html += '<button onclick="showPlace(\'' + section.id + '\',\'' + b.id + '\',\'' + (category ? category.id : '') + '\')" style="position:absolute;left:' + b.x + '%;top:' + b.y + '%;transform:translate(-50%,-50%);background:var(--card);border:2px solid var(--acc);border-radius:50%;width:40px;height:40px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.15);padding:0;transition:all .3s;animation:bounceIn .5s ease-out ' + delay + 's both" onmouseover="this.style.transform=\'translate(-50%,-50%) scale(1.3)\'" onmouseout="this.style.transform=\'translate(-50%,-50%) scale(1)\'" title="' + name + '">' + b.icon + '</button>';
   });
   
   html += '</div></div>';
   html += '<h3 style="color:var(--acc);margin:20px 0 12px">📍 ' + (window.t('mapPlaces', LANG) || 'Lieux') + '</h3>';
   buildings.forEach(b => {
     const name = b.nameKey ? window.t(b.nameKey, LANG) : (b.name || '');
-    html += '<button style="width:100%;text-align:left;margin-bottom:10px;cursor:pointer;padding:14px;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;color:var(--ink);font-family:inherit;font-size:1rem" onclick="showPlace(\'' + section.id + '\',\'' + b.id + '\',\'' + (category ? category.id : '') + '\')">';
+    html += '<button class="scroll-anim" style="width:100%;text-align:left;margin-bottom:10px;cursor:pointer;padding:14px;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;color:var(--ink);font-family:inherit;font-size:1rem;transition:all .3s" onclick="showPlace(\'' + section.id + '\',\'' + b.id + '\',\'' + (category ? category.id : '') + '\')" onmouseover="this.style.transform=\'translateX(8px)\';this.style.borderColor=\'var(--acc)\'" onmouseout="this.style.transform=\'none\';this.style.borderColor=\'var(--line)\'">';
     html += '<span style="font-size:1.5rem">' + b.icon + '</span>';
     html += '<span style="font-weight:600">' + name + '</span>';
     html += '</button>';
@@ -449,6 +730,7 @@ function renderMap(section, category) {
   
   app.innerHTML = html;
   window.scrollTo(0, 0);
+  setupScrollAnimations();
 }
 
 function showPlace(sectionId, buildingId, categoryId) {
@@ -462,7 +744,19 @@ function showPlace(sectionId, buildingId, categoryId) {
   if (!buildings) return;
   const b = buildings.find(x => x.id === buildingId);
   if (!b) return;
-  alert('📍 ' + (b.nameKey ? window.t(b.nameKey, LANG) : (b.name || '')));
+  
+  const name = b.nameKey ? window.t(b.nameKey, LANG) : (b.name || '');
+  
+  // Modal بدلاً من alert
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  overlay.innerHTML = '<div class="modal-box">' +
+    '<div style="font-size:3rem;margin-bottom:12px">' + b.icon + '</div>' +
+    '<h3 style="margin:0 0 8px;color:var(--acc);font-size:1.3rem">' + name + '</h3>' +
+    '<button onclick="this.closest(\'.modal-overlay\').remove()" style="margin-top:16px;padding:12px 32px;background:var(--acc);color:#fff;border:0;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit">OK</button>' +
+    '</div>';
+  document.body.appendChild(overlay);
 }
 
 // ============================================
@@ -478,6 +772,7 @@ function renderMetroMap(section) {
   html += '<button class="metro-tab" onclick="showMetroType(\'tram\')" data-tab="tram">🚊 <span>' + (window.t('trTram') || 'Tramway') + '</span></button>';
   html += '</div><div id="metro-content"></div>';
   app.innerHTML = html;
+  window.scrollTo(0, 0);
   setTimeout(() => showMetroType('metro'), 100);
 }
 
@@ -501,14 +796,16 @@ function showMetroType(type) {
     const isKey = s.key;
     const size = isKey ? '1.5rem' : '1rem';
     const border = isKey ? '3px' : '2px';
-    html += '<button class="metro-station' + (isKey ? ' key' : '') + '" style="left:' + s.x + '%;top:50%;--station-color:' + color + ';--station-size:' + size + ';--station-border:' + border + '" onclick="showStation(\'' + type + '\',' + i + ')" title="' + s[LANG] + '"></button>';
+    const delay = i * 0.03;
+    html += '<button class="metro-station' + (isKey ? ' key' : '') + '" style="left:' + s.x + '%;top:50%;--station-color:' + color + ';--station-size:' + size + ';--station-border:' + border + ';animation-delay:' + delay + 's" onclick="showStation(\'' + type + '\',' + i + ')" title="' + s[LANG] + '"></button>';
   });
   html += '</div>';
-  html += '<h3 style="color:' + color + ';margin:20px 0 12px;font-size:1.15rem;display:flex;align-items:center;gap:8px">';
+  html += '<h3 style="color:' + color + ';margin:20px 0 12px;font-size:1.15rem;display:flex;align-items:center;gap:8px;animation:fadeInUp .5s ease-out">';
   html += '<span style="font-size:1.4rem">' + icon + '</span><span>' + title + ' — ' + stations.length + ' stations</span></h3>';
   html += '<div class="metro-stations-list">';
   stations.forEach((s, i) => {
-    html += '<button class="metro-station-card' + (s.key ? ' key' : '') + '" style="--station-color:' + color + '" onclick="showStation(\'' + type + '\',' + i + ')">';
+    const delay = i * 0.03;
+    html += '<button class="metro-station-card' + (s.key ? ' key' : '') + '" style="--station-color:' + color + ';animation-delay:' + delay + 's" onclick="showStation(\'' + type + '\',' + i + ')">';
     html += '<div class="msc-num">' + (i + 1) + '</div>';
     html += '<div class="msc-info"><div class="msc-name">' + s[LANG] + '</div><div class="msc-zone">📍 ' + s.zone + '</div></div>';
     if (s.key) html += '<div class="msc-badge">⭐</div>';
@@ -527,33 +824,26 @@ function showStation(type, index) {
   const typeName = type === 'metro' ? (window.t('trMetro') || 'Métro') : (window.t('trTram') || 'Tramway');
   
   const overlay = document.createElement('div');
-  overlay.id = 'station-overlay';
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(6px)';
-  const box = document.createElement('div');
-  box.style.cssText = 'background:#fff;padding:28px;border-radius:24px;text-align:center;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5)';
-  box.innerHTML = 
+  overlay.className = 'modal-overlay';
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  overlay.innerHTML = '<div class="modal-box">' +
     '<div style="font-size:3rem;margin-bottom:12px">' + icon + '</div>' +
     '<div style="display:inline-block;background:' + color + ';color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;margin-bottom:12px">' + typeName + '</div>' +
     '<h3 style="margin:0 0 8px;color:#1d2433;font-size:1.3rem;font-weight:800">' + s[LANG] + '</h3>' +
     '<p style="margin:0 0 6px;color:#667085;font-size:.9rem">📍 ' + s.zone + '</p>' +
     '<p style="margin:12px 0;color:#94a3b8;font-size:.8rem">Station n° ' + (index + 1) + ' / ' + stations.length + '</p>' +
     '<div style="display:flex;gap:8px;margin-top:16px">' +
-      '<button onclick="closeStation()" style="flex:1;padding:12px;background:' + color + ';color:#fff;border:0;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit">' + (window.t('close') || 'Fermer') + '</button>' +
+      '<button onclick="this.closest(\'.modal-overlay\').remove()" style="flex:1;padding:12px;background:' + color + ';color:#fff;border:0;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit">' + (window.t('close') || 'Fermer') + '</button>' +
       '<button onclick="openStationMaps(\'' + encodeURIComponent(s.fr + ' ' + typeName + ' Alger') + '\')" style="flex:1;padding:12px;background:#f1f5f9;color:#1d2433;border:0;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit">📍 Maps</button>' +
+    '</div>' +
     '</div>';
-  overlay.appendChild(box);
-  overlay.onclick = (e) => { if (e.target === overlay) closeStation(); };
   document.body.appendChild(overlay);
-}
-
-function closeStation() {
-  const o = document.getElementById('station-overlay');
-  if (o) o.remove();
 }
 
 function openStationMaps(query) {
   window.open('https://www.google.com/maps/search/?api=1&query=' + query, '_blank');
-  closeStation();
+  const o = document.querySelector('.modal-overlay');
+  if (o) o.remove();
 }
 
 // ============================================
@@ -566,15 +856,16 @@ function renderQR(section) {
   html += '<p style="color:var(--mut);margin-bottom:16px">' + window.t('qrIntro', LANG) + '</p>';
   html += '<div id="qr-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px"></div>';
   app.innerHTML = html;
+  window.scrollTo(0, 0);
   
   setTimeout(() => {
     const grid = document.getElementById('qr-grid');
     if (!grid) return;
     const base = location.origin + location.pathname;
-    window.SECTIONS.filter(x => x.id !== 'qr').forEach(sec => {
+    window.SECTIONS.filter(x => x.id !== 'qr').forEach((sec, i) => {
       const title = window.t(sec.titleKey, LANG);
       const div = document.createElement('div');
-      div.style.cssText = 'background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center';
+      div.style.cssText = 'background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;animation:bounceIn .4s ease-out ' + (i * 0.05) + 's both';
       const qrId = 'qrc-' + sec.id;
       div.innerHTML = '<div style="background:#fff;padding:8px;display:inline-block;border-radius:8px;margin-bottom:8px" id="' + qrId + '"></div><div style="font-size:.85rem;font-weight:600">' + sec.icon + ' ' + title + '</div>';
       grid.appendChild(div);
@@ -599,17 +890,15 @@ function showQR(sectionId, itemIndex, categoryId) {
   const title = (typeof item.title === 'object') ? (item.title[LANG] || item.title.fr) : window.t(item.titleKey, LANG);
   
   const overlay = document.createElement('div');
-  overlay.id = 'qr-overlay';
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(4px)';
-  const box = document.createElement('div');
-  box.style.cssText = 'background:#fff;padding:24px;border-radius:20px;text-align:center;max-width:320px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5)';
-  box.innerHTML = '<h3 style="margin:0 0 8px;color:#c2410c;font-size:1.1rem">📱 ' + title + '</h3>' +
-                  '<p style="margin:0 0 16px;color:#667085;font-size:.85rem">' + window.t('qrScan', LANG) + '</p>' +
-                  '<div id="qr-popup-box" style="background:#fff;padding:12px;display:inline-block;border-radius:12px;border:1px solid #e5e1d8"></div>' +
-                  '<p style="margin:16px 0 0;font-size:.75rem;color:#94a3b8;word-break:break-all">' + url + '</p>' +
-                  '<button onclick="closeQR()" style="margin-top:16px;padding:10px 24px;background:#c2410c;color:#fff;border:0;border-radius:20px;font-weight:600;cursor:pointer;font-family:inherit">' + window.t('close', LANG) + '</button>';
-  overlay.appendChild(box);
-  overlay.onclick = (e) => { if (e.target === overlay) closeQR(); };
+  overlay.className = 'modal-overlay';
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  overlay.innerHTML = '<div class="modal-box">' +
+    '<h3 style="margin:0 0 8px;color:var(--acc);font-size:1.1rem">📱 ' + title + '</h3>' +
+    '<p style="margin:0 0 16px;color:#667085;font-size:.85rem">' + window.t('qrScan', LANG) + '</p>' +
+    '<div id="qr-popup-box" style="background:#fff;padding:12px;display:inline-block;border-radius:12px;border:1px solid #e5e1d8"></div>' +
+    '<p style="margin:16px 0 0;font-size:.75rem;color:#94a3b8;word-break:break-all">' + url + '</p>' +
+    '<button onclick="this.closest(\'.modal-overlay\').remove()" style="margin-top:16px;padding:10px 24px;background:var(--acc);color:#fff;border:0;border-radius:20px;font-weight:600;cursor:pointer;font-family:inherit">' + window.t('close', LANG) + '</button>' +
+    '</div>';
   document.body.appendChild(overlay);
   
   setTimeout(() => {
@@ -621,38 +910,96 @@ function showQR(sectionId, itemIndex, categoryId) {
   }, 50);
 }
 
-function closeQR() {
-  const overlay = document.getElementById('qr-overlay');
-  if (overlay) overlay.remove();
-}
-
 // ============================================
 // البحث
 // ============================================
 function doSearch(q) {
   q = q.trim();
   if (!q) { renderHome(); return; }
-  const results = (typeof smartSearch === 'function') ? smartSearch(q, window.SECTIONS) : [];
+  
   const app = document.getElementById('app');
+  app.classList.add('section-change');
+  setTimeout(() => app.classList.remove('section-change'), 500);
+  
+  const results = (typeof smartSearch === 'function') ? smartSearch(q, window.SECTIONS) : [];
   
   if (results.length === 0) {
-    app.innerHTML = '<div style="text-align:center;padding:40px;color:var(--mut)"><b style="font-size:3rem">🔍</b><br>' + window.t('noResult', LANG) + '<br><small>' + window.t('tryOther', LANG) + '</small></div>';
+    app.innerHTML = '<div style="text-align:center;padding:40px;color:var(--mut);animation:fadeIn .4s ease-out"><b style="font-size:3rem;display:block;margin-bottom:10px">🔍</b>' + window.t('noResult', LANG) + '<br><small>' + window.t('tryOther', LANG) + '</small></div>';
     return;
   }
   
-  let html = '<h2>🔍 ' + results.length + '</h2>';
-  results.forEach(r => {
+  let html = '<h2 style="animation:fadeInUp .4s ease-out">🔍 ' + results.length + '</h2>';
+  results.forEach((r, i) => {
     const title = (typeof r.item.title === 'object') ? (r.item.title[LANG] || r.item.title.fr) : window.t(r.item.titleKey, LANG);
     const desc = r.item.desc 
       ? ((typeof r.item.desc === 'object') ? (r.item.desc[LANG] || r.item.desc.fr) : r.item.desc)
       : (r.item.descKey ? window.t(r.item.descKey, LANG) : '');
-    html += '<div class="card-3d" style="margin-bottom:12px">';
+    html += '<div class="card-3d" style="margin-bottom:12px;animation:fadeInUp .4s ease-out ' + (i * 0.05) + 's both">';
     html += '<h3 style="color:var(--acc);margin:0 0 6px">' + (r.item.icon || r.section.icon) + ' ' + title + '</h3>';
     if (desc) html += '<p style="color:var(--mut);font-size:.9rem">' + desc + '</p>';
     html += '</div>';
   });
   app.innerHTML = html;
 }
+
+// ============================================
+// Scroll Animations
+// ============================================
+function setupScrollAnimations() {
+  const els = document.querySelectorAll('.scroll-anim');
+  if (!els.length) return;
+  
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    
+    els.forEach(el => observer.observe(el));
+  } else {
+    els.forEach(el => el.classList.add('visible'));
+  }
+}
+
+// ============================================
+// Back to Top
+// ============================================
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('backToTop');
+  if (btn) {
+    btn.classList.toggle('show', window.scrollY > 300);
+  }
+});
+
+// ============================================
+// Ripple Effect
+// ============================================
+document.addEventListener('click', (e) => {
+  const target = e.target.closest('.ripple');
+  if (!target) return;
+  
+  const rect = target.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  const ripple = document.createElement('span');
+  ripple.className = 'ripple-effect';
+  ripple.style.left = x + 'px';
+  ripple.style.top = y + 'px';
+  ripple.style.width = ripple.style.height = '20px';
+  
+  target.appendChild(ripple);
+  
+  setTimeout(() => ripple.remove(), 600);
+});
 
 // ============================================
 // Hash
@@ -686,13 +1033,32 @@ if ('serviceWorker' in navigator) {
 }
 
 // ============================================
+// Keyboard shortcuts
+// ============================================
+document.addEventListener('keydown', (e) => {
+  // Ctrl+/ → Focus search
+  if (e.ctrlKey && e.key === '/') {
+    e.preventDefault();
+    document.getElementById('q')?.focus();
+  }
+  // Escape → Back
+  if (e.key === 'Escape') {
+    if (CURRENT_SECTION) renderHome();
+  }
+});
+
+// ============================================
 // Init
 // ============================================
 (function init() {
   if (typeof applyTheme === 'function') applyTheme();
   if (typeof applyTextSize === 'function') applyTextSize();
   setLang(localStorage.getItem('lang') || 'fr');
-  setTimeout(handleHash, 200);
+  setTimeout(() => {
+    handleHash();
+    hideLoading();
+    setupScrollAnimations();
+  }, 300);
 })();
 
 // اجعل الدوال متاحة عالمياً
@@ -702,13 +1068,12 @@ window.renderCategory = renderCategory;
 window.renderCategoriesList = renderCategoriesList;
 window.showMetroType = showMetroType;
 window.showStation = showStation;
-window.closeStation = closeStation;
 window.openStationMaps = openStationMaps;
 window.showQR = showQR;
-window.closeQR = closeQR;
 window.showPlace = showPlace;
 window.doSearch = doSearch;
 window.setLang = setLang;
+window.scrollToTop = scrollToTop;
 </script>
 
 </body>
